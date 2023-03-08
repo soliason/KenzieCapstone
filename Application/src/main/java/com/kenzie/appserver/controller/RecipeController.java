@@ -1,7 +1,9 @@
 package com.kenzie.appserver.controller;
 
+import com.kenzie.appserver.controller.model.RecipeResponse;
 import com.kenzie.appserver.service.RecipeService;
 
+import com.kenzie.appserver.service.model.Recipe;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,6 @@ public class RecipeController {
         RecipeResponse recipeResponse = new RecipeResponse();
         recipeResponse.setRecipeId(recipe.getRecipeId());
         recipeResponse.setTitle(recipe.getTitle());
-        return ResponseEntity.ok(RecipeResponse);
+        return ResponseEntity.ok(recipeResponse);
     }
 }

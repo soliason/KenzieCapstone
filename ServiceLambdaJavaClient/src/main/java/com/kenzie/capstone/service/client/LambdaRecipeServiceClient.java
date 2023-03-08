@@ -1,6 +1,7 @@
 package com.kenzie.capstone.service.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kenzie.capstone.service.model.RecipeData;
 
 
 public class LambdaRecipeServiceClient {
@@ -19,7 +20,7 @@ public class LambdaRecipeServiceClient {
         RecipeData recipeData;
         try {
             recipeData = mapper.readValue(response, RecipeData.class);
-        } catch (exception e) {
+        } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
         return recipeData;

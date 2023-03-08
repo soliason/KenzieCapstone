@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
+import com.kenzie.capstone.service.model.RecipeData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +28,7 @@ public class GetRecipeData implements RequestHandler<APIGatewayProxyRequestEvent
         log.info(gson.toJson(input));
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        LambdaRecipeService lambdaRecipeService = serviceComponent.provideLambdaService();
+//////        LambdaRecipeService lambdaRecipeService = serviceComponent.provideLambdaService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -42,19 +43,20 @@ public class GetRecipeData implements RequestHandler<APIGatewayProxyRequestEvent
                     .withBody("DietaryRestriction is invalid");
         }
 
-        try {
-            RecipeData recipeData = lambdaRecipeService.getRecipeData(dietaryRestriction);
-            String output = gson.toJson(recipeData);
-
-            return response
-                    .withStatusCode(200)
-                    .withBody(output);
-
-        } catch (Exception e) {
-            return response
-                    .withStatusCode(400)
-                    .withBody(gson.toJson(e.getMessage()));
-        }
+//        try {
+////////            RecipeData recipeData = lambdaRecipeService.getRecipeData(dietaryRestriction);
+////////            String output = gson.toJson(recipeData);
+//
+//            return response
+//                    .withStatusCode(200)
+//                    .withBody(output);
+//
+//        } catch (Exception e) {
+//            return response
+//                    .withStatusCode(400)
+//                    .withBody(gson.toJson(e.getMessage()));
+//        }
+        return null;
     }
 }
 
