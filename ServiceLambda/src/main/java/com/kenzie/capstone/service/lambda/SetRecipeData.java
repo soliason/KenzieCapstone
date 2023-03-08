@@ -27,7 +27,7 @@ public class SetRecipeData implements RequestHandler<APIGatewayProxyRequestEvent
         log.info(gson.toJson(input));
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        LambdaRecipeService lambdaRecipeService = serviceComponent.provideLambdaService();
+/////        LambdaRecipeService lambdaRecipeService = serviceComponent.provideLambdaService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -42,18 +42,19 @@ public class SetRecipeData implements RequestHandler<APIGatewayProxyRequestEvent
                     .withBody("data is invalid");
         }
 
-        try {
-            RecipeData recipeData = lambdaRecipeService.setRecipeData(data);
-            String output = gson.toJson(recipeData);
-
-            return response
-                    .withStatusCode(200)
-                    .withBody(output);
-
-        } catch (Exception e) {
-            return response
-                    .withStatusCode(400)
-                    .withBody(gson.toJson(e.getMessage()));
-        }
+//        try {
+//            RecipeData recipeData = lambdaRecipeService.setRecipeData(data);
+//            String output = gson.toJson(recipeData);
+//
+//            return response
+//                    .withStatusCode(200)
+//                    .withBody(output);
+//
+//        } catch (Exception e) {
+//            return response
+//                    .withStatusCode(400)
+//                    .withBody(gson.toJson(e.getMessage()));
+//        }
+        return null;
     }
 }
