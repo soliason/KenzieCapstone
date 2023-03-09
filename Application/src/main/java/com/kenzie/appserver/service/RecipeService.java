@@ -24,15 +24,15 @@ public class RecipeService {
         RecipeData recipeFromLambda = lambdaRecipeServiceClient.getRecipeData(dietaryRestriction);
 
         // getting data from the local repository
-//        Recipe dataFromDynamo = recipeRepository
-//                .findById(dietaryRestriction)
-//                .map(recipe -> new Recipe(recipe.getRecipeId(), recipe.getTitle()))
-//                .orElse(null);
-//
-//        return dataFromDynamo;
-        return null;
+        Recipe dataFromDynamo = recipeRepository
+                .findById(dietaryRestriction)
+                .map(recipe -> new Recipe(recipe.getRecipeId(), recipe.getTitle(), recipe.getIngredients(),
+                        recipe.getSteps(), recipe.getIsGlutenFree(), recipe.getIsDairyFree(), recipe.getIsEggFree(),
+                        recipe.getIsVegetarian(), recipe.getIsVegan()))
+                .orElse(null);
 
-
+        return dataFromDynamo;
+        //return null;
         //return recipeFromLambda;
     }
 
