@@ -50,6 +50,10 @@ public class Recipe {
                 .orElse(0.0);
     }
 
+    public List<Integer> getRatings() {
+        return ratings;
+    }
+
     public String getRecipeId() {
         return recipeId;
     }
