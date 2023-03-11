@@ -3,7 +3,7 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       "AttributeDefinitions":
-        - "AttributeName": "recipeId"
+        - "AttributeName": "id"
           "AttributeType": "S"
       "KeySchema":
         - "AttributeName": "recipeId"
