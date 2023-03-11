@@ -7,6 +7,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kenzie.capstone.service.LambdaRecipeService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.RecipeData;
@@ -28,35 +29,34 @@ public class GetRecipeData implements RequestHandler<APIGatewayProxyRequestEvent
         log.info(gson.toJson(input));
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-//////        LambdaRecipeService lambdaRecipeService = serviceComponent.provideLambdaService();
+        LambdaRecipeService lambdaRecipeService = serviceComponent.provideLambdaRecipeService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        String dietaryRestriction = input.getPathParameters().get("dietaryRestriction");
+        String recipeId = input.getPathParameters().get("recipeId");
 
-        if (dietaryRestriction == null || dietaryRestriction.length() == 0) {
+        if (recipeId == null || recipeId.length() == 0) {
             return response
                     .withStatusCode(400)
-                    .withBody("DietaryRestriction is invalid");
+                    .withBody("recipeId is invalid");
         }
 
-//        try {
-////////            RecipeData recipeData = lambdaRecipeService.getRecipeData(dietaryRestriction);
-////////            String output = gson.toJson(recipeData);
-//
-//            return response
-//                    .withStatusCode(200)
-//                    .withBody(output);
-//
-//        } catch (Exception e) {
-//            return response
-//                    .withStatusCode(400)
-//                    .withBody(gson.toJson(e.getMessage()));
-//        }
-        return null;
+        try {
+            RecipeData recipeData = lambdaRecipeService.getRecipeData(recipeId);
+            String output = gson.toJson(recipeData);
+
+            return response
+                    .withStatusCode(200)
+                    .withBody(output);
+
+        } catch (Exception e) {
+            return response
+                    .withStatusCode(400)
+                    .withBody(gson.toJson(e.getMessage()));
+        }
     }
 }
 

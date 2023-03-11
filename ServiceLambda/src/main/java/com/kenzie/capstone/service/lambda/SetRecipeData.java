@@ -7,11 +7,14 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import com.kenzie.capstone.service.LambdaRecipeService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
+import com.kenzie.capstone.service.model.RecipeData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +30,7 @@ public class SetRecipeData implements RequestHandler<APIGatewayProxyRequestEvent
         log.info(gson.toJson(input));
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-/////        LambdaRecipeService lambdaRecipeService = serviceComponent.provideLambdaService();
+        LambdaRecipeService lambdaRecipeService = serviceComponent.provideLambdaRecipeService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -42,19 +45,23 @@ public class SetRecipeData implements RequestHandler<APIGatewayProxyRequestEvent
                     .withBody("data is invalid");
         }
 
-//        try {
-//            RecipeData recipeData = lambdaRecipeService.setRecipeData(data);
-//            String output = gson.toJson(recipeData);
-//
-//            return response
-//                    .withStatusCode(200)
-//                    .withBody(output);
-//
-//        } catch (Exception e) {
-//            return response
-//                    .withStatusCode(400)
-//                    .withBody(gson.toJson(e.getMessage()));
-//        }
-        return null;
+        RecipeData recipeData = gson.fromJson(data, RecipeData.class);
+        String recipeId = input.getPathParameters().get("recipeId");
+
+        try {
+            recipeData = lambdaRecipeService.setRecipeData(recipeData.getTitle(), recipeData.getIngredients(), recipeData.getSteps(),
+                                            recipeData.isGlutenFree(), recipeData.isDairyFree(), recipeData.isEggFree(),
+                                            recipeData.isVegetarian(), recipeData.isVegan(), new ArrayList<>());
+            String output = gson.toJson(recipeData);
+
+            return response
+                    .withStatusCode(200)
+                    .withBody(output);
+
+        } catch (Exception e) {
+            return response
+                    .withStatusCode(400)
+                    .withBody(gson.toJson(e.getMessage()));
+        }
     }
 }
