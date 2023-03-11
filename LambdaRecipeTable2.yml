@@ -1,0 +1,30 @@
+Resources:
+  UserTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      "AttributeDefinitions":
+        - "AttributeName": "recipeId"
+          "AttributeType": "S"
+        - AttributeName: "title"
+          "AttributeType": "S"
+        - AttributeName: "ingredients"
+          "AttributeType": "SS"
+        - "AttributeName": "recipeSteps"
+          AttributeType: "SS"
+        - AttributeName: "isGlutenFree"
+          AttributeType: "B"
+        - "AttributeName": "isDairyFree"
+          AttributeType: "B"
+        - "AttributeName": "isEggFree"
+          AttributeType: "B"
+        - "AttributeName": "isVegetarian"
+          AttributeType: "B"
+        - "AttributeName": "isVegan"
+          AttributeType: "B"
+      "KeySchema":
+        - "AttributeName": "id"
+          "KeyType": "HASH"
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: false
+      BillingMode: PAY_PER_REQUEST
+      TableName: "LambdaExample"

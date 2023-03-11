@@ -9,6 +9,7 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    recipeGuiPage: path.resolve(__dirname, 'src', 'pages', 'recipeGuiPage.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -19,7 +20,7 @@ module.exports = {
     port: 8080,
     open: true,
     openPage: 'http://localhost:8080',
-    // diableHostChecks, otherwise we get an error about headers and the page won't render
+    // disableHostChecks, otherwise we get an error about headers and the page won't render
     disableHostCheck: true,
     contentBase: 'packaging_additional_published_artifacts',
     // overlay shows a full-screen overlay in the browser when there are compiler errors or warnings
@@ -27,7 +28,7 @@ module.exports = {
     proxy: [
       {
         context: [
-          '/example',
+          '/'
         ],
         target: 'http://localhost:5001'
       }
@@ -39,6 +40,11 @@ module.exports = {
       filename: 'index.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
+          template: './src/recipeGui.html',
+          filename: 'recipeGui.html',
+          inject: false
+        }),
     new CopyPlugin({
       patterns: [
         {
