@@ -6,7 +6,7 @@ import com.kenzie.capstone.service.model.RecipeData;
 
 public class LambdaRecipeServiceClient {
 
-    private static final String GET_RECIPE_ENDPOINT = "recipe/{dietaryRestriction}";
+    private static final String GET_RECIPE_ENDPOINT = "recipe/{recipeId}";
 
     private static final String SET_RECIPE_ENDPOINT = "recipe";
 
@@ -14,9 +14,9 @@ public class LambdaRecipeServiceClient {
 
     public LambdaRecipeServiceClient() {this.mapper = new ObjectMapper();}
 
-    public RecipeData getRecipeData(String dietaryRestriction) {
+    public RecipeData getRecipeData(String recipeId) {
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.getEndpoint(GET_RECIPE_ENDPOINT.replace("{dietaryRestriction}", dietaryRestriction));
+        String response = endpointUtility.getEndpoint(GET_RECIPE_ENDPOINT.replace("{recipeId}", recipeId));
         RecipeData recipeData;
         try {
             recipeData = mapper.readValue(response, RecipeData.class);
