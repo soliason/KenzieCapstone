@@ -8,6 +8,8 @@ import com.kenzie.capstone.service.client.LambdaRecipeServiceClient;
 import com.kenzie.capstone.service.model.RecipeData;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RecipeService {
     private RecipeRepository recipeRepository;
@@ -24,19 +26,27 @@ public class RecipeService {
         RecipeData recipeFromLambda = lambdaRecipeServiceClient.getRecipeData(recipeId);
 
         // getting data from the local repository
-        Recipe dataFromDynamo = recipeRepository
-                .findById(recipeId)
-                .map(recipe -> new Recipe(recipe.getRecipeId(), recipe.getTitle(), recipe.getIngredients(),
-                        recipe.getSteps(), recipe.getIsGlutenFree(), recipe.getIsDairyFree(), recipe.getIsEggFree(),
-                        recipe.getIsVegetarian(), recipe.getIsVegan()))
-                .orElse(null);
+//        Recipe dataFromDynamo = recipeRepository
+//                .findById(recipeId)
+//                .map(recipe -> new Recipe(recipe.getRecipeId(), recipe.getTitle(), recipe.getIngredients(),
+//                        recipe.getSteps(), recipe.getIsGlutenFree(), recipe.getIsDairyFree(), recipe.getIsEggFree(),
+//                        recipe.getIsVegetarian(), recipe.getIsVegan()))
+//                .orElse(null);
 
-        return dataFromDynamo;
+        //return dataFromDynamo;
         //return null;
-        //return recipeFromLambda;
+
+        Recipe recipe = new Recipe(recipeFromLambda.getRecipeId(),
+                recipeFromLambda.getTitle(), recipeFromLambda.getIngredients(),
+                recipeFromLambda.getSteps(), recipeFromLambda.isGlutenFree(),
+                recipeFromLambda.isDairyFree(), recipeFromLambda.isEggFree(),
+                recipeFromLambda.isVegetarian(), recipeFromLambda.isVegan());
+        return recipe;
     }
 
-    public Recipe addNewRecipe(String title) {
+    public Recipe addNewRecipe(String title, List<String> ingredients, List<String> steps,
+                               boolean isGlutenFree, boolean isDairyFree, boolean isEggFree,
+                               boolean isVegetarian, boolean isVegan) {
 
         // sending data to Lambda
         RecipeData recipeFromLambda = lambdaRecipeServiceClient.setRecipeData(title);
