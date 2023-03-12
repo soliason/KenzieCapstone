@@ -45,7 +45,9 @@ public class RecipeController {
     @PostMapping
     public ResponseEntity<RecipeResponse> addNewRecipe(@RequestBody RecipeCreateRequest recipeCreateRequest) {
 
-        Recipe recipe = recipeService.addNewRecipe(recipeCreateRequest.getTitle());
+        Recipe recipe = recipeService.addNewRecipe(recipeCreateRequest.getTitle(), recipeCreateRequest.getIngredients(),
+                recipeCreateRequest.getSteps(), recipeCreateRequest.isGlutenFree(), recipeCreateRequest.isDairyFree(),
+                recipeCreateRequest.isEggFree(), recipeCreateRequest.isVegetarian(), recipeCreateRequest.isVegan());
 
         RecipeResponse recipeResponse = new RecipeResponse();
         recipeResponse.setRecipeId(recipe.getRecipeId());
