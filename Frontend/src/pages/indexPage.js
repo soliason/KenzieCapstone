@@ -1,0 +1,1 @@
+console.log("java script works for index page");

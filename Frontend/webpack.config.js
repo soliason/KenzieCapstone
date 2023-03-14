@@ -8,8 +8,10 @@ module.exports = {
     usedExports: true
   },
   entry: {
+    indexPage: path.resolve(__dirname, 'src', 'pages', 'indexPage.js'),
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
     recipeGuiPage: path.resolve(__dirname, 'src', 'pages', 'recipeGuiPage.js'),
+    recipePage: path.resolve(__dirname, 'src', 'pages', 'recipePage.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -36,13 +38,23 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: 'index.html',
-      inject: false
-    }),
+          template: './src/index.html',
+          filename: 'index.html',
+          inject: false
+        }),
+    new HtmlWebpackPlugin({
+          template: './src/example.html',
+          filename: 'example.html',
+          inject: false
+        }),
     new HtmlWebpackPlugin({
           template: './src/recipeGui.html',
           filename: 'recipeGui.html',
+          inject: false
+        }),
+    new HtmlWebpackPlugin({
+          template: './src/recipe.html',
+          filename: 'recipe.html',
           inject: false
         }),
     new CopyPlugin({

@@ -8,9 +8,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import com.kenzie.capstone.service.LambdaRecipeService;
+import com.kenzie.capstone.service.converter.JsonStringToRecipeConverter;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
+import com.kenzie.capstone.service.exceptions.InvalidDataException;
 import com.kenzie.capstone.service.model.RecipeData;
+import com.kenzie.capstone.service.model.RecipeRequest;
+import com.kenzie.capstone.service.model.RecipeResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +28,7 @@ public class SetRecipeData implements RequestHandler<APIGatewayProxyRequestEvent
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
+        JsonStringToRecipeConverter jsonStringToRecipeConverter = new JsonStringToRecipeConverter();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
@@ -31,37 +36,20 @@ public class SetRecipeData implements RequestHandler<APIGatewayProxyRequestEvent
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
         LambdaRecipeService lambdaRecipeService = serviceComponent.provideLambdaRecipeService();
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-
-        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
-                .withHeaders(headers);
-
-        String data = input.getBody();
-
-        if (data == null || data.length() == 0) {
-            return response
-                    .withStatusCode(400)
-                    .withBody("data is invalid");
-        }
-
-        RecipeData recipeData = gson.fromJson(data, RecipeData.class);
-        String recipeId = input.getPathParameters().get("recipeId");
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
 
         try {
-            recipeData = lambdaRecipeService.setRecipeData(recipeData.getTitle(), recipeData.getIngredients(), recipeData.getSteps(),
-                                            recipeData.isGlutenFree(), recipeData.isDairyFree(), recipeData.isEggFree(),
-                                            recipeData.isVegetarian(), recipeData.isVegan(), new ArrayList<>());
-            String output = gson.toJson(recipeData);
+            RecipeRequest recipeRequest = jsonStringToRecipeConverter.convert(input.getBody());
+            RecipeResponse recipeResponse = lambdaRecipeService.setRecipeData(recipeRequest);
 
             return response
                     .withStatusCode(200)
-                    .withBody(output);
+                    .withBody(gson.toJson(recipeResponse));
 
-        } catch (Exception e) {
+        } catch (InvalidDataException e) {
             return response
                     .withStatusCode(400)
-                    .withBody(gson.toJson(e.getMessage()));
+                    .withBody(gson.toJson(e.errorPayload()));
         }
     }
 }

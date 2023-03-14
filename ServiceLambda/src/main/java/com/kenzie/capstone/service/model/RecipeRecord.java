@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import java.util.List;
 import java.util.Objects;
 
-@DynamoDBTable(tableName = "LambdaRecipes")
+@DynamoDBTable(tableName = "LambdaRecipe")
 public class RecipeRecord {
 
     private String recipeId;
@@ -75,7 +75,7 @@ public class RecipeRecord {
         this.isDairyFree = isDairyFree;
     }
 
-    @DynamoDBAttribute(attributeName = "isEggFree")
+    @DynamoDBAttribute(attributeName = "eggFree")
     public boolean getIsEggFree(){
         return this.isEggFree;
     }
@@ -84,7 +84,7 @@ public class RecipeRecord {
         this.isEggFree = isEggFree;
     }
 
-    @DynamoDBAttribute(attributeName = "isVegetarian")
+    @DynamoDBAttribute(attributeName = "vegetarian")
     public boolean getIsVegetarian(){
         return this.isVegetarian;
     }
@@ -93,7 +93,7 @@ public class RecipeRecord {
         this.isVegetarian = isVegetarian;
     }
 
-    @DynamoDBAttribute(attributeName = "isVegan")
+    @DynamoDBAttribute(attributeName = "vegan")
     public boolean getIsVegan(){
         return this.isVegan;
     }
