@@ -39,7 +39,7 @@ export default class RecipeGuiClient extends BaseClass {
     async getRecipe(id, errorCallback) {
         try {
 
-            const response = await this.client.get(`/recipe`);
+            const response = await this.client.get(`/recipe/${id}`);
             console.log(response.data);
             return response.data;
             console.log(response.data);
@@ -51,14 +51,14 @@ export default class RecipeGuiClient extends BaseClass {
     async createRecipe(name, errorCallback) {
         try {
             const response = await this.client.post(`recipe`, {
-                title: "Chicken Soup",
-//                ingredients: ["water", "chicken", "salt"],
-//                steps: ["heat water", "add chicken", "wait", "eat"],
-//                isGlutenFree: true,
-//                isDairyFree: true,
-//                isEggFree: true,
-//                isVegetarian: false,
-//                isVegan: false,
+                title: "Gerauld secret sauce",
+                ingredients: ["water", "flour pasta", "salt"],
+                steps: ["heat water", "add pasta", "wait", "eat"],
+                isGlutenFree: true,
+                isDairyFree: false,
+                isEggFree: true,
+                isVegetarian: false,
+                isVegan: false,
             });
             return response.data;
         } catch (error) {

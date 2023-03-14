@@ -26,7 +26,8 @@ public class Recipe {
                   boolean isDairyFree,
                   boolean isEggFree,
                   boolean isVegetarian,
-                  boolean isVegan){
+                  boolean isVegan,
+                  List<Integer> ratings){
         this.recipeId = recipeId;
         this.title = title;
         this.ingredients = ingredients;
@@ -36,7 +37,7 @@ public class Recipe {
         this.isEggFree = isEggFree;
         this.isVegetarian = isVegetarian;
         this.isVegan = isVegan;
-        this.ratings = new ArrayList<>();
+        this.ratings = ratings;
     }
 
     public void addRatingToRecipe(int rating){

@@ -27,18 +27,19 @@ class RecipeGuiPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
     async renderRecipe() {
-//        let resultArea = document.getElementById("result-info");
-//
-//        const recipe = this.dataStore.get("recipe");
-//
-//        if (recipe) {
-//            resultArea.innerHTML = `
-//                <div>ID: ${example.id}</div>
-//                <div>Name: ${example.name}</div>
-//            `
-//        } else {
-//            resultArea.innerHTML = "No Item";
-//        }
+        let resultArea = document.getElementById("result-info");
+
+        const recipe = this.dataStore.get("recipe");
+
+        if (recipe) {
+            resultArea.innerHTML = `
+                <div>RECIPE ID: ${recipe.recipeId}</div>
+                <div>TITLE: ${recipe.title}</div>
+                <div>ISVEGAN: ${recipe.isVegan}</div>
+            `
+        } else {
+            resultArea.innerHTML = "No Item";
+        }
     }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
@@ -48,6 +49,7 @@ class RecipeGuiPage extends BaseClass {
         event.preventDefault();
 
         let id = document.getElementById("id-field").value;
+        console.log(id);
         this.dataStore.set("recipe", null);
 
         let result = await this.client.getRecipe(id, this.errorHandler);
@@ -70,7 +72,7 @@ class RecipeGuiPage extends BaseClass {
         this.dataStore.set("recipe", createdRecipe);
 
         if (createdRecipe) {
-            this.showMessage(`Created ${createdRecipe.name}!`)
+            this.showMessage(`Created ${createdRecipe.title}!`)
         } else {
             this.errorHandler("Error creating!  Try again...");
         }

@@ -29,7 +29,10 @@ public class ExampleService {
                 .map(example -> new Example(example.getId(), example.getName()))
                 .orElse(null);
 
-        return dataFromDynamo;
+        Example exampleDataFromLambda = new Example(id, dataFromLambda.getData());
+
+        //return dataFromDynamo;
+        return exampleDataFromLambda;
     }
 
     public Example addNewExample(String name) {

@@ -1,20 +1,42 @@
 package com.kenzie.capstone.service.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+@JsonInclude (JsonInclude.Include.NON_NULL)
 public class RecipeData {
 
+    @JsonProperty ("recipeId")
     private String recipeId;
+
+    @JsonProperty("title")
     private String title;
+
+    @JsonProperty("ingredients")
     private List<String> ingredients;
+
+    @JsonProperty("steps")
     private List<String> steps;
+
+    @JsonProperty("isGlutenFree")
     private boolean isGlutenFree;
+
+    @JsonProperty("isDairyFree")
     private boolean isDairyFree;
+
+    @JsonProperty("isEggFree")
     private boolean isEggFree;
+
+    @JsonProperty("isVegetarian")
     private boolean isVegetarian;
+
+    @JsonProperty("isVegan")
     private boolean isVegan;
+
+    @JsonProperty("ratings")
     private List<Integer> ratings;
 
     public RecipeData(String recipeId,
@@ -25,7 +47,8 @@ public class RecipeData {
                       boolean isDairyFree,
                       boolean isEggFree,
                       boolean isVegetarian,
-                      boolean isVegan){
+                      boolean isVegan,
+                      List<Integer> ratings){
         this.recipeId = recipeId;
         this.title = title;
         this.ingredients = ingredients;
@@ -35,7 +58,7 @@ public class RecipeData {
         this.isEggFree = isEggFree;
         this.isVegetarian = isVegetarian;
         this.isVegan = isVegan;
-        this.ratings = new ArrayList<>();
+        this.ratings = ratings;
     }
 
     public RecipeData(){}

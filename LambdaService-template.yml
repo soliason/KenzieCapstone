@@ -60,7 +60,7 @@ Resources:
       CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
       Handler: com.kenzie.capstone.service.lambda.GetRecipeData
       Runtime: java11
-      Description: Get Recipe Data for dietary Restriction
+      Description: Get Recipe Data for recipe id
       MemorySize: 512
       Timeout: 240
       # Function's execution role
@@ -76,7 +76,7 @@ Resources:
         UpdateResource:
           Type: Api
           Properties:
-            Path: /recipe/{dietaryRestriction}
+            Path: /recipe/{recipeId}
             Method: get
   SetRecipeDataFunction:
     Type: AWS::Serverless::Function
