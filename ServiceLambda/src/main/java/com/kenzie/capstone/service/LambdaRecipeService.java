@@ -1,12 +1,10 @@
 package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.RecipeDao;
-import com.kenzie.capstone.service.model.RecipeData;
-import com.kenzie.capstone.service.model.RecipeRecord;
-import com.kenzie.capstone.service.model.RecipeRequest;
-import com.kenzie.capstone.service.model.RecipeResponse;
+import com.kenzie.capstone.service.model.*;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,6 +49,34 @@ public class LambdaRecipeService {
         return recipeResponse;
 //        return new RecipeData(recipeId, title, ingredients, steps, isGlutenFree, isDairyFree,
 //                                    isEggFree, isVegetarian, isVegan);
+    }
+
+    public List<RecipeData> getRecipesByDietaryRestriction(DietaryRestrictionData data){
+        List<RecipeRecord> records = recipeDao.getRecipesByDietaryRestriction(data);
+        if (records.size() > 0) {
+            List<RecipeData> recipeDataList = new ArrayList<>();
+            for (RecipeRecord recipeRecord : records){
+                recipeDataList.add(recipeRecordToRecipeData(recipeRecord));
+            }
+            return recipeDataList;
+        }
+        return null;
+    }
+
+    //helper functions
+
+    private RecipeData recipeRecordToRecipeData(RecipeRecord record){
+        RecipeData data = new RecipeData();
+        data.setRecipeId(record.getRecipeId());
+        data.setTitle(record.getTitle());
+        data.setIngredients(record.getIngredients());
+        data.setSteps(record.getSteps());
+        data.setGlutenFree(record.getIsGlutenFree());
+        data.setDairyFree(record.getIsDairyFree());
+        data.setEggFree(record.getIsEggFree());
+        data.setVegetarian(record.getIsVegetarian());
+        data.setVegan(record.getIsVegan());
+        return data;
     }
 
 }
