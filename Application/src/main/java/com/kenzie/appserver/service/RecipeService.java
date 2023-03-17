@@ -1,10 +1,12 @@
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.controller.model.DietaryRestrictionInfoRequest;
 import com.kenzie.appserver.controller.model.RecipeCreateRequest;
 import com.kenzie.appserver.repositories.RecipeRepository;
 import com.kenzie.appserver.repositories.model.RecipeRecord;
 import com.kenzie.appserver.service.model.Recipe;
 import com.kenzie.capstone.service.client.LambdaRecipeServiceClient;
+import com.kenzie.capstone.service.model.DietaryRestrictionData;
 import com.kenzie.capstone.service.model.RecipeData;
 import com.kenzie.capstone.service.model.RecipeRequest;
 import com.kenzie.capstone.service.model.RecipeResponse;
@@ -31,12 +33,12 @@ public class RecipeService {
         RecipeData recipeFromLambda = lambdaRecipeServiceClient.getRecipeData(recipeId);
 
         // getting data from the local repository
-        Recipe dataFromDynamo = recipeRepository
-                .findById(recipeId)
-                .map(recipe -> new Recipe(recipe.getRecipeId(), recipe.getTitle(), recipe.getIngredients(),
-                        recipe.getSteps(), recipe.getIsGlutenFree(), recipe.getIsDairyFree(), recipe.getIsEggFree(),
-                        recipe.getIsVegetarian(), recipe.getIsVegan(), recipe.getRatings()))
-                .orElse(null);
+//        Recipe dataFromDynamo = recipeRepository
+//                .findById(recipeId)
+//                .map(recipe -> new Recipe(recipe.getRecipeId(), recipe.getTitle(), recipe.getIngredients(),
+//                        recipe.getSteps(), recipe.getIsGlutenFree(), recipe.getIsDairyFree(), recipe.getIsEggFree(),
+//                        recipe.getIsVegetarian(), recipe.getIsVegan(), recipe.getRatings()))
+//                .orElse(null);
 
         //return dataFromDynamo;
         //return null;
@@ -78,6 +80,42 @@ public class RecipeService {
                             recipeFromLambda.isDairyFree(), recipeFromLambda.isEggFree(),
                             recipeFromLambda.isVegetarian(), recipeFromLambda.isVegan(), recipeFromLambda.getRatings());
         return recipe;
+    }
+
+    public List<Recipe> findByDietaryRestriction(DietaryRestrictionInfoRequest dietaryRestrictionInfoRequest){
+        //do something with the cache first?
+
+        //getting it from the lambda
+        DietaryRestrictionData data = dietaryRestrictionInfoRequestToData(dietaryRestrictionInfoRequest);
+        List<RecipeData> recipesFromLambda = lambdaRecipeServiceClient.getRecipesByDietaryRestriction(data);
+
+        List<Recipe> recipes = new ArrayList<>();
+        for (RecipeData recipeData : recipesFromLambda){
+            recipes.add(recipeDataToRecipe(recipeData));
+        }
+        return recipes;
+    }
+
+    //helper methods
+
+    private Recipe recipeDataToRecipe(RecipeData data){
+        Recipe recipe = new Recipe(data.getRecipeId(),
+                data.getTitle(), data.getIngredients(),
+                data.getSteps(), data.isGlutenFree(),
+                data.isDairyFree(), data.isEggFree(),
+                data.isVegetarian(), data.isVegan(), data.getRatings());
+
+        return recipe;
+    }
+
+    private DietaryRestrictionData dietaryRestrictionInfoRequestToData(DietaryRestrictionInfoRequest request){
+        DietaryRestrictionData data = new DietaryRestrictionData();
+        data.setGlutenFree(request.isGlutenFree());
+        data.setDairyFree(request.isDairyFree());
+        data.setEggFree(request.isEggFree());
+        data.setVegetarian(request.isVegetarian());
+        data.setVegan(request.isVegan());
+        return data;
     }
 
 }

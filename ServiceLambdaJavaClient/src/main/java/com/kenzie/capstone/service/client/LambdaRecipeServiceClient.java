@@ -1,7 +1,9 @@
 package com.kenzie.capstone.service.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kenzie.capstone.service.model.DietaryRestrictionData;
 import com.kenzie.capstone.service.model.RecipeData;
 import com.kenzie.capstone.service.model.RecipeRequest;
 import com.kenzie.capstone.service.model.RecipeResponse;
@@ -14,6 +16,8 @@ public class LambdaRecipeServiceClient {
     private static final String GET_RECIPE_ENDPOINT = "recipe/{recipeId}";
 
     private static final String SET_RECIPE_ENDPOINT = "recipe";
+
+    private static final String GET_DIETARY_RESTRICTION_ENDPOINT = "recipe/dietaryRestriction";
 
     //private static final String ADD_REFERRAL_ENDPOINT = "recipe";
 
@@ -57,5 +61,20 @@ public class LambdaRecipeServiceClient {
             throw new ApiGatewayException ("Unable to map deserialize JSON: " + e);
         }
         return recipeResponse;
+    }
+
+    public List<RecipeData> getRecipesByDietaryRestriction(DietaryRestrictionData dietaryRestrictionData) {
+
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String response = endpointUtility.getEndpoint(GET_DIETARY_RESTRICTION_ENDPOINT);
+        List<RecipeData> recipeDataList;
+
+        try {
+            recipeDataList = mapper.readValue(response, new TypeReference<>(){});
+        } catch (Exception e) {
+            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+        }
+
+        return recipeDataList;
     }
 }

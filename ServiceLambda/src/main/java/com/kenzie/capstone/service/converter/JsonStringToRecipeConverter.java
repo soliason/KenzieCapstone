@@ -14,7 +14,7 @@ public class JsonStringToRecipeConverter {
             RecipeRequest recipeRequest = gson.fromJson(body, RecipeRequest.class);
             return recipeRequest;
         } catch (Exception e) {
-            throw new InvalidDataException ("Referral could not be deserialized");
+            throw new InvalidDataException ("Recipe Request could not be deserialized");
         }
     }
 }
