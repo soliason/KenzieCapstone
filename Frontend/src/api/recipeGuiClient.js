@@ -36,17 +36,38 @@ export default class RecipeGuiClient extends BaseClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
+//    async getRecipe(id, errorCallback) {
+//        console.log("hitting here");
+//      try {
+//        const params = {
+//          isGlutenFree: 'false',
+//          isDairyFree: 'false',
+//          isEggFree: 'true',
+//          isVegetarian: 'false',
+//          isVegan: 'false'
+//        };
+//
+//        const response = await this.client.get(`/recipe/dietaryRestriction`, { params });
+//        return response.data;
+//      } catch (error) {
+//        this.handleError("getRecipe", error, errorCallback);
+//      }
+//    }
+
     async getRecipe(id, errorCallback) {
         try {
-
-            const response = await this.client.get(`/recipe/${id}`);
-            console.log(response.data);
+            const isGlutenFree = false;
+            const isDairyFree = false;
+            const isEggFree = true;
+            const isVegetarian = false;
+            const isVegan = false;
+            const response = await this.client.get(`/recipe/dietaryRestriction/${isGlutenFree}/${isDairyFree}/${isEggFree}/${isVegetarian}/${isVegan}`);
             return response.data;
-            console.log(response.data);
         } catch (error) {
-            this.handleError("getRecipe", error, errorCallback)
+            this.handleError("getConcert", error, errorCallback)
         }
     }
+
 
     async createRecipe(name, errorCallback) {
         try {
