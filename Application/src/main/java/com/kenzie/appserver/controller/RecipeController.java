@@ -66,9 +66,21 @@ public class RecipeController {
         return ResponseEntity.ok(recipeResponse);
     }
 
-    @GetMapping("/dietaryRestriction")
+    @GetMapping("/dietaryRestriction/{isGlutenFree}/{isDairyFree}/{isEggFree}/{isVegetarian}/{isVegan}")
     public ResponseEntity<List<RecipeResponse>> getRecipesByDietaryRestriction(
-            @RequestBody DietaryRestrictionInfoRequest dietaryRestrictionInfoRequest){
+            @PathVariable ("isGlutenFree") Boolean isGlutenFree,
+            @PathVariable("isDairyFree") Boolean isDairyFree,
+            @PathVariable ("isEggFree") Boolean isEggFree,
+            @PathVariable ("isVegetarian") Boolean isVegetarian,
+            @PathVariable ("isVegan") Boolean isVegan){
+
+        DietaryRestrictionInfoRequest dietaryRestrictionInfoRequest = new DietaryRestrictionInfoRequest ();
+        dietaryRestrictionInfoRequest.setGlutenFree(isGlutenFree);
+        dietaryRestrictionInfoRequest.setDairyFree(isDairyFree);
+        dietaryRestrictionInfoRequest.setEggFree(isEggFree);
+        dietaryRestrictionInfoRequest.setVegetarian(isVegetarian);
+        dietaryRestrictionInfoRequest.setVegan(isVegan);
+
         List<Recipe> recipes = recipeService.findByDietaryRestriction(dietaryRestrictionInfoRequest);
 
         if (recipes == null){
@@ -81,6 +93,7 @@ public class RecipeController {
         }
 
         return ResponseEntity.ok(responseList);
+
     }
 
     //helper methods
