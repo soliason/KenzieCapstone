@@ -17,7 +17,10 @@ public class LambdaRecipeServiceClient {
 
     private static final String SET_RECIPE_ENDPOINT = "recipe";
 
-    private static final String GET_DIETARY_RESTRICTION_ENDPOINT = "recipe/dietaryRestriction";
+    //private static final String GET_DIETARY_RESTRICTION_ENDPOINT = "recipe/dietaryRestriction";
+
+    private static final String GET_DIETARY_RESTRICTION_ENDPOINT =
+            "recipe/dietaryRestriction/{isGlutenFree}/{isDairyFree}/{isEggFree}/{isVegetarian}/{isVegan}";
 
     //private static final String ADD_REFERRAL_ENDPOINT = "recipe";
 
@@ -65,8 +68,22 @@ public class LambdaRecipeServiceClient {
 
     public List<RecipeData> getRecipesByDietaryRestriction(DietaryRestrictionData dietaryRestrictionData) {
 
+        String gluten = String.valueOf(dietaryRestrictionData.isGlutenFree());
+        String dairy = String.valueOf(dietaryRestrictionData.isDairyFree());
+        String egg = String.valueOf(dietaryRestrictionData.isEggFree());
+        String vegetarian = String.valueOf(dietaryRestrictionData.isVegetarian());
+        String vegan = String.valueOf(dietaryRestrictionData.isVegan());
+
+
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.getEndpoint(GET_DIETARY_RESTRICTION_ENDPOINT);
+        //String response = endpointUtility.getEndpoint(GET_DIETARY_RESTRICTION_ENDPOINT);
+        String response = endpointUtility.getEndpoint(
+                GET_DIETARY_RESTRICTION_ENDPOINT.replace("{isGlutenFree}", gluten)
+                        .replace("{isDairyFree}", dairy)
+                        .replace("{isEggFree}", egg)
+                        .replace("{isVegetarian}", vegetarian)
+                        .replace("{isVegan}", vegan));
+
         List<RecipeData> recipeDataList;
 
         try {
