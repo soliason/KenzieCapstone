@@ -9,7 +9,7 @@ class RecipeGuiPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'onCreate', 'renderRecipe'], this);
+        this.bindClassMethods(['onGet', 'onGet2', 'onCreate', 'renderRecipe'], this);
         this.dataStore = new DataStore();
     }
 
@@ -18,6 +18,7 @@ class RecipeGuiPage extends BaseClass {
      */
     async mount() {
         document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
+        document.getElementById('get-by-res-form').addEventListener('submit', this.onGet2);
         document.getElementById('create-form').addEventListener('submit', this.onCreate);
         this.client = new RecipeGuiClient();
 
@@ -60,6 +61,31 @@ class RecipeGuiPage extends BaseClass {
             this.errorHandler("Error doing GET!  Try again...");
         }
     }
+
+    async onGet2(event) {
+            // Prevent the page from refreshing on form submit
+            event.preventDefault();
+
+            let gluten = document.getElementById("gluten-field").value;
+            let dairy = document.getElementById("dairy-field").value;
+            let egg = document.getElementById("egg-field").value;
+            let vegetarian = document.getElementById("vegetarian-field").value;
+            let vegan = document.getElementById("vegan-field").value;
+            console.log(gluten);
+            console.log(dairy);
+            console.log(egg);
+            console.log(vegetarian);
+            console.log(vegan);
+            this.dataStore.set("recipe", null);
+
+            let result = await this.client.getRecipe(gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
+            this.dataStore.set("recipe", result);
+            if (result) {
+                this.showMessage(`Got ${result.name}!`)
+            } else {
+                this.errorHandler("Error doing GET!  Try again...");
+            }
+        }
 
     async onCreate(event) {
         // Prevent the page from refreshing on form submit

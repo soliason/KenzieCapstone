@@ -56,7 +56,7 @@ export default class RecipeGuiClient extends BaseClass {
 
     async getRecipe(id, errorCallback) {
         try {
-            const isGlutenFree = false;
+            const isGlutenFree = true;
             const isDairyFree = false;
             const isEggFree = true;
             const isVegetarian = false;
