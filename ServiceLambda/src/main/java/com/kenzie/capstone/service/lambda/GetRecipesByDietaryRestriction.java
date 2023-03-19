@@ -38,16 +38,17 @@ public class GetRecipesByDietaryRestriction implements RequestHandler<APIGateway
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        String data = input.getBody();
+        //String data = input.getBody();
+        Map<String, String> data = input.getPathParameters();
 
-        if (data == null || data.length() == 0) {
+        if (data == null || data.size() == 0) {
             return response
                     .withStatusCode(400)
                     .withBody("data is invalid");
         }
 
         try {
-            DietaryRestrictionData dietaryRestrictionData = converter.convert(data);
+            DietaryRestrictionData dietaryRestrictionData = mapToDietaryRestrictionData(data);
             List<RecipeData> recipeData = lambdaRecipeService.getRecipesByDietaryRestriction(dietaryRestrictionData);
             String output = gson.toJson(recipeData);
 
@@ -60,5 +61,17 @@ public class GetRecipesByDietaryRestriction implements RequestHandler<APIGateway
                     .withStatusCode(400)
                     .withBody(gson.toJson(e.getMessage()));
         }
+    }
+
+    private DietaryRestrictionData mapToDietaryRestrictionData(Map<String, String> data) {
+
+        DietaryRestrictionData dietaryRestrictionData = new DietaryRestrictionData();
+        dietaryRestrictionData.setGlutenFree(Boolean.parseBoolean(data.get("isGlutenFree")));
+        dietaryRestrictionData.setDairyFree(Boolean.parseBoolean(data.get("isDairyFree")));
+        dietaryRestrictionData.setEggFree(Boolean.parseBoolean(data.get("isEggFree")));
+        dietaryRestrictionData.setVegetarian(Boolean.parseBoolean(data.get("isVegetarian")));
+        dietaryRestrictionData.setVegan(Boolean.parseBoolean(data.get("isVegan")));
+
+        return dietaryRestrictionData;
     }
 }
