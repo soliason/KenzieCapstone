@@ -75,25 +75,21 @@ public class RecipeRecord {
         this.isDairyFree = isDairyFree;
     }
 
-    @DynamoDBAttribute(attributeName = "eggFree")
-    public boolean getIsEggFree(){
-        return this.isEggFree;
-    }
+    @DynamoDBAttribute(attributeName = "isEggFree")
+    public boolean getIsEggFree(){ return this.isEggFree;}
 
     public void setIsEggFree(boolean isEggFree){
         this.isEggFree = isEggFree;
     }
 
-    @DynamoDBAttribute(attributeName = "vegetarian")
-    public boolean getIsVegetarian(){
-        return this.isVegetarian;
-    }
+    @DynamoDBAttribute(attributeName = "isVegetarian")
+    public boolean getIsVegetarian(){ return this.isVegetarian;}
 
     public void setIsVegetarian(boolean isVegetarian){
         this.isVegetarian = isVegetarian;
     }
 
-    @DynamoDBAttribute(attributeName = "vegan")
+    @DynamoDBAttribute(attributeName = "isVegan")
     public boolean getIsVegan(){
         return this.isVegan;
     }
@@ -116,7 +112,11 @@ public class RecipeRecord {
         if (this == o) return true;
         if (!(o instanceof RecipeRecord)) return false;
         RecipeRecord that = (RecipeRecord) o;
-        return isGlutenFree == that.isGlutenFree && isDairyFree == that.isDairyFree && isEggFree == that.isEggFree && isVegetarian == that.isVegetarian && isVegan == that.isVegan && getRecipeId().equals(that.getRecipeId()) && getTitle().equals(that.getTitle()) && getIngredients().equals(that.getIngredients()) && getSteps().equals(that.getSteps()) && getRatings().equals(that.getRatings());
+        return isGlutenFree == that.isGlutenFree && isDairyFree == that.isDairyFree &&
+                isEggFree == that.isEggFree && isVegetarian == that.isVegetarian &&
+                isVegan == that.isVegan && getRecipeId().equals(that.getRecipeId()) &&
+                getTitle().equals(that.getTitle()) && getIngredients().equals(that.getIngredients()) &&
+                getSteps().equals(that.getSteps()) && getRatings().equals(that.getRatings());
     }
 
     @Override
