@@ -12,14 +12,15 @@ import com.kenzie.capstone.service.model.DietaryRestrictionData;
 import com.kenzie.capstone.service.model.RecipeData;
 import com.kenzie.capstone.service.model.RecipeRecord;
 import com.kenzie.capstone.service.model.RecipeRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class RecipeDao {
 
+    static final Logger log = LogManager.getLogger();
     private DynamoDBMapper mapper;
 
     public RecipeDao(DynamoDBMapper mapper){
@@ -66,42 +67,52 @@ public class RecipeDao {
     }
 
     public List<RecipeRecord> getRecipesByDietaryRestriction(DietaryRestrictionData dietaryRestrictionInfo){
+
         try {
             Map<String, AttributeValue> valueMap = new HashMap<>();
             DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+            StringBuilder sb = new StringBuilder();
+            List<String> filterExpressions = new ArrayList<>();
 
-            if (dietaryRestrictionInfo.isGlutenFree()){
-                valueMap.put(":glutenFree", new AttributeValue().withBOOL(true));
-                scanExpression
-                        .withFilterExpression("isGlutenFree equals :glutenFree");
+            if (dietaryRestrictionInfo.isGlutenFree()) {
+                valueMap.put(":glutenFree", new AttributeValue().withN(String.valueOf(1)));
+                filterExpressions.add("isGlutenFree = :glutenFree");
             }
-            if (dietaryRestrictionInfo.isDairyFree()){
-                valueMap.put(":dairyFree", new AttributeValue().withBOOL(true));
-                scanExpression
-                        .withFilterExpression("isDairyFree equals :dairyFree");
+            if (dietaryRestrictionInfo.isDairyFree()) {
+                valueMap.put(":dairyFree", new AttributeValue().withN(String.valueOf(1)));
+                filterExpressions.add("isDairyFree = :dairyFree");
             }
-            if (dietaryRestrictionInfo.isEggFree()){
-                valueMap.put(":eggFree", new AttributeValue().withBOOL(true));
-                scanExpression
-                        .withFilterExpression("isEggFree equals :eggFree");
+            if (dietaryRestrictionInfo.isEggFree()) {
+                valueMap.put(":eggFree", new AttributeValue().withN(String.valueOf(1)));
+                filterExpressions.add("isEggFree = :eggFree");
             }
-            if (dietaryRestrictionInfo.isVegetarian()){
-                valueMap.put(":vegetarian", new AttributeValue().withBOOL(true));
-                scanExpression
-                        .withFilterExpression("isVegetarian equals :vegetarian");
+            if (dietaryRestrictionInfo.isVegetarian()) {
+                valueMap.put(":vegetarian", new AttributeValue().withN(String.valueOf(1)));
+                filterExpressions.add("isVegetarian = :vegetarian");
             }
-            if (dietaryRestrictionInfo.isVegan()){
-                valueMap.put(":vegan", new AttributeValue().withBOOL(true));
-                scanExpression
-                        .withFilterExpression("isVegan equals :vegan");
+            if (dietaryRestrictionInfo.isVegan()) {
+                valueMap.put(":vegan", new AttributeValue().withN(String.valueOf(1)));
+                filterExpressions.add("isVegan = :vegan");
             }
+
+            for (int i = 0; i < filterExpressions.size(); i++){
+                if (i < filterExpressions.size() - 1){
+                    sb.append(filterExpressions.get(i)).append(" AND ");
+                } else {
+                    sb.append(filterExpressions.get(i));
+                }
+            }
+
+            scanExpression.withFilterExpression(sb.toString());
             scanExpression.withExpressionAttributeValues(valueMap);
+
             PaginatedScanList<RecipeRecord> recipeList = mapper.scan(RecipeRecord.class, scanExpression);
 
             return recipeList;
 
-        } catch (ConditionalCheckFailedException e) {
-            throw new IllegalArgumentException("something bad happened");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new IllegalArgumentException("something else bad happened");
         }
     }
 }

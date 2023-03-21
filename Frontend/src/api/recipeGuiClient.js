@@ -77,7 +77,7 @@ export default class RecipeGuiClient extends BaseClass {
                 steps: ["heat water", "add pasta", "wait", "eat"],
                 isGlutenFree: true,
                 isDairyFree: false,
-                isEggFree: true,
+                isEggFree: false,
                 isVegetarian: false,
                 isVegan: false,
             });
