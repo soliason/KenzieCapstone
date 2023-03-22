@@ -13,7 +13,7 @@ export default class RecipeGuiClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getRecipe', 'createRecipe'];
+        const methodsToBind = ['clientLoaded', 'getRecipeByDR', 'getRecipeById', 'createRecipe'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -36,50 +36,42 @@ export default class RecipeGuiClient extends BaseClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
-//    async getRecipe(id, errorCallback) {
-//        console.log("hitting here");
-//      try {
-//        const params = {
-//          isGlutenFree: 'false',
-//          isDairyFree: 'false',
-//          isEggFree: 'true',
-//          isVegetarian: 'false',
-//          isVegan: 'false'
-//        };
-//
-//        const response = await this.client.get(`/recipe/dietaryRestriction`, { params });
-//        return response.data;
-//      } catch (error) {
-//        this.handleError("getRecipe", error, errorCallback);
-//      }
-//    }
+    async getRecipeById(id, errorCallback) {
+        console.log("hitting here");
+      try {
+        const response = await this.client.get(`/recipe/${id}`);
+        return response.data;
+      } catch (error) {
+        this.handleError("getRecipe", error, errorCallback);
+      }
+    }
 
-    async getRecipe(id, errorCallback) {
+    async getRecipeByDR(gluten, dairy, egg, vegetarian, vegan, errorCallback) {
         try {
-            const isGlutenFree = true;
-            const isDairyFree = false;
-            const isEggFree = true;
-            const isVegetarian = false;
-            const isVegan = false;
+            const isGlutenFree = gluten;
+            const isDairyFree = dairy;
+            const isEggFree = egg;
+            const isVegetarian = vegetarian;
+            const isVegan = vegan;
             const response = await this.client.get(`/recipe/dietaryRestriction/${isGlutenFree}/${isDairyFree}/${isEggFree}/${isVegetarian}/${isVegan}`);
             return response.data;
         } catch (error) {
-            this.handleError("getConcert", error, errorCallback)
+            this.handleError("getRecipe", error, errorCallback)
         }
     }
 
 
-    async createRecipe(name, errorCallback) {
+    async createRecipe(title, ingredients, steps, gluten, dairy, egg, vegetarian, vegan, errorCallback) {
         try {
             const response = await this.client.post(`recipe`, {
-                title: "Gerauld secret sauce",
-                ingredients: ["water", "flour pasta", "salt"],
-                steps: ["heat water", "add pasta", "wait", "eat"],
-                isGlutenFree: true,
-                isDairyFree: false,
-                isEggFree: false,
-                isVegetarian: false,
-                isVegan: false,
+                title: title,
+                ingredients: [ingredients],
+                steps: [steps],
+                isGlutenFree: gluten,
+                isDairyFree: dairy,
+                isEggFree: egg,
+                isVegetarian: vegetarian,
+                isVegan: vegan,
             });
             return response.data;
         } catch (error) {
