@@ -3,6 +3,7 @@ package com.kenzie.appserver.controller;
 import com.kenzie.appserver.controller.model.DietaryRestrictionInfoRequest;
 import com.kenzie.appserver.controller.model.RecipeCreateRequest;
 import com.kenzie.appserver.controller.model.RecipeResponse;
+import com.kenzie.appserver.controller.model.RecipeSummaryResponse;
 import com.kenzie.appserver.service.RecipeService;
 
 import com.kenzie.appserver.service.model.Recipe;
@@ -67,7 +68,7 @@ public class RecipeController {
     }
 
     @GetMapping("/dietaryRestriction/{isGlutenFree}/{isDairyFree}/{isEggFree}/{isVegetarian}/{isVegan}")
-    public ResponseEntity<List<RecipeResponse>> getRecipesByDietaryRestriction(
+    public ResponseEntity<List<RecipeSummaryResponse>> getRecipesByDietaryRestriction(
             @PathVariable ("isGlutenFree") Boolean isGlutenFree,
             @PathVariable("isDairyFree") Boolean isDairyFree,
             @PathVariable ("isEggFree") Boolean isEggFree,
@@ -87,9 +88,9 @@ public class RecipeController {
             return ResponseEntity.notFound().build();
         }
 
-        List<RecipeResponse> responseList = new ArrayList<>();
+        List<RecipeSummaryResponse> responseList = new ArrayList<>();
         for (Recipe recipe : recipes) {
-            responseList.add(createRecipeResponse(recipe));
+            responseList.add(createRecipeSummaryResponse(recipe));
         }
 
         return ResponseEntity.ok(responseList);
@@ -113,6 +114,15 @@ public class RecipeController {
         recipeResponse.setRatings(recipe.getRatings());
 
         return recipeResponse;
+    }
+
+    private RecipeSummaryResponse createRecipeSummaryResponse(Recipe recipe) {
+
+        RecipeSummaryResponse recipeSummaryResponse = new RecipeSummaryResponse();
+        recipeSummaryResponse.setRecipeId(recipe.getRecipeId());
+        recipeSummaryResponse.setTitle(recipe.getTitle());
+
+        return recipeSummaryResponse;
     }
 
 }
