@@ -9,7 +9,7 @@ class RecipeGuiPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'onGet2', 'onCreate', 'renderRecipe', 'renderRecipe2'], this);
+        this.bindClassMethods(['onGet', 'onGet2', 'onCreate', 'renderRecipe'], this);
         this.dataStore = new DataStore();
     }
 
@@ -20,17 +20,15 @@ class RecipeGuiPage extends BaseClass {
         document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
         document.getElementById('get-by-res-form').addEventListener('submit', this.onGet2);
         document.getElementById('create-form').addEventListener('submit', this.onCreate);
-
         this.client = new RecipeGuiClient();
 
         this.dataStore.addChangeListener(this.renderRecipe)
-        this.dataStore.addChangeListener(this.renderRecipe2)
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
 
     async renderRecipe() {
-        let resultArea = document.getElementById("result-getById");
+        let resultArea = document.getElementById("result-info");
 
         const recipe = this.dataStore.get("recipe");
 
@@ -38,43 +36,15 @@ class RecipeGuiPage extends BaseClass {
             resultArea.innerHTML = `
                 <div>RECIPE ID: ${recipe.recipeId}</div>
                 <div>TITLE: ${recipe.title}</div>
-                <div>Ingredients: ${recipe.ingredients}</div>
-                <div>Steps: ${recipe.steps}</div>
-                <div>GlutenFree: ${recipe.isGlutenFree}</div>
-                <div>EggFree: ${recipe.isEggFree}</div>
-                <div>DairyFree: ${recipe.isDairyFree}</div>
-                <div>Vegetarian: ${recipe.isVegetarian}</div>
-                <div>Vegan: ${recipe.isVegan}</div>
+                <div>ISVEGAN: ${recipe.isVegan}</div>
             `
         } else {
             resultArea.innerHTML = "No Item";
         }
     }
 
-    async renderRecipe2() {
-            let resultArea = document.getElementById("result-getByDR");
-
-            const recipes = this.dataStore.get("recipeDR");
-
-            //need loop for list
-
-            if (recipes) {
-                        resultArea.innerHTML = `
-                                <div>
-                    ${recipes.map((recipe) => ` <div>
-                                            <p>${recipe.recipeId}</p>
-                                            <p>${recipe.title}</p>
-                                        </div>
-                                    `).join('')}
-                    </div>
-                            `
-                    } else {
-                        resultArea.innerHTML = "No Item";
-                    }
-        }
-
     // Event Handlers --------------------------------------------------------------------------------------------------
-    //byId
+
     async onGet(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
@@ -83,7 +53,7 @@ class RecipeGuiPage extends BaseClass {
         console.log(id);
         this.dataStore.set("recipe", null);
 
-        let result = await this.client.getRecipeById(id, this.errorHandler);
+        let result = await this.client.getRecipe(id, this.errorHandler);
         this.dataStore.set("recipe", result);
         if (result) {
             this.showMessage(`Got ${result.name}!`)
@@ -91,7 +61,7 @@ class RecipeGuiPage extends BaseClass {
             this.errorHandler("Error doing GET!  Try again...");
         }
     }
-    //byDR
+
     async onGet2(event) {
             // Prevent the page from refreshing on form submit
             event.preventDefault();
@@ -101,13 +71,15 @@ class RecipeGuiPage extends BaseClass {
             let egg = document.getElementById("egg-field").value;
             let vegetarian = document.getElementById("vegetarian-field").value;
             let vegan = document.getElementById("vegan-field").value;
-            this.dataStore.set("recipeDR", null);
+            console.log(gluten);
+            console.log(dairy);
+            console.log(egg);
+            console.log(vegetarian);
+            console.log(vegan);
+            this.dataStore.set("recipe", null);
 
-            let result = await this.client.getRecipeByDR(gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
-            console.log("the result:");
-
-            this.dataStore.set("recipeDR", result);
-
+            let result = await this.client.getRecipe(gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
+            this.dataStore.set("recipe", result);
             if (result) {
                 this.showMessage(`Got ${result.name}!`)
             } else {
@@ -120,16 +92,9 @@ class RecipeGuiPage extends BaseClass {
         event.preventDefault();
         this.dataStore.set("recipe", null);
 
-        let title = document.getElementById("title").value;
-        let ingredients = document.getElementById("ingredients").value;
-        let steps = document.getElementById("steps").value;
-        let gluten = document.getElementById("gluten").value;
-        let dairy = document.getElementById("dairy").value;
-        let egg = document.getElementById("egg").value;
-        let vegetarian = document.getElementById("vegetarian").value;
-        let vegan = document.getElementById("vegan").value;
+//        let name = document.getElementById("create-name-field").value;
 
-        const createdRecipe = await this.client.createRecipe(title, ingredients, steps, gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
+        const createdRecipe = await this.client.createRecipe("name", this.errorHandler);
         this.dataStore.set("recipe", createdRecipe);
 
         if (createdRecipe) {
