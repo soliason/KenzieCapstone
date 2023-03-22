@@ -12,6 +12,7 @@ module.exports = {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
     recipeGuiPage: path.resolve(__dirname, 'src', 'pages', 'recipeGuiPage.js'),
     recipePage: path.resolve(__dirname, 'src', 'pages', 'recipePage.js'),
+    postRecipePage: path.resolve(__dirname, 'src', 'pages', 'postRecipePage.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -57,6 +58,11 @@ module.exports = {
           filename: 'recipe.html',
           inject: false
         }),
+    new HtmlWebpackPlugin({
+              template: './src/postRecipe.html',
+              filename: 'postRecipe.html',
+              inject: false
+            }),
     new CopyPlugin({
       patterns: [
         {

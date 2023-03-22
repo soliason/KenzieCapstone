@@ -1,11 +1,11 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
-import RecipeClient from "../api/recipeClient";
+import PostRecipeClient from "../api/postRecipeClient";
 
 /**
  * Logic needed for the view playlist page of the website.
  */
-class RecipePage extends BaseClass {
+class PostRecipePage extends BaseClass {
 
     constructor() {
         super();
@@ -19,9 +19,9 @@ class RecipePage extends BaseClass {
     async mount() {
         document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
         document.getElementById('get-by-res-form').addEventListener('submit', this.onGet2);
+        document.getElementById('create-form').addEventListener('submit', this.onCreate);
 
-
-        this.client = new RecipeClient();
+        this.client = new RecipeGuiClient();
 
         this.dataStore.addChangeListener(this.renderRecipe)
         this.dataStore.addChangeListener(this.renderRecipe2)
@@ -144,8 +144,8 @@ class RecipePage extends BaseClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const recipePage = new RecipePage();
-    recipePage.mount();
+    const postRecipePage = new PostRecipePage();
+    postRecipePage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

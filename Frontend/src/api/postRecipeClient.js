@@ -9,7 +9,7 @@ import axios from 'axios'
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class RecipeClient extends BaseClass {
+export default class PostRecipeClient extends BaseClass {
 
     constructor(props = {}){
         super();
@@ -36,29 +36,10 @@ export default class RecipeClient extends BaseClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
-    async getRecipeById(id, errorCallback) {
-        console.log("hitting here");
-      try {
-        const response = await this.client.get(`/recipe/${id}`);
-        return response.data;
-      } catch (error) {
-        this.handleError("getRecipe", error, errorCallback);
-      }
-    }
 
-    async getRecipeByDR(gluten, dairy, egg, vegetarian, vegan, errorCallback) {
-        try {
-            const isGlutenFree = gluten;
-            const isDairyFree = dairy;
-            const isEggFree = egg;
-            const isVegetarian = vegetarian;
-            const isVegan = vegan;
-            const response = await this.client.get(`/recipe/dietaryRestriction/${isGlutenFree}/${isDairyFree}/${isEggFree}/${isVegetarian}/${isVegan}`);
-            return response.data;
-        } catch (error) {
-            this.handleError("getRecipe", error, errorCallback)
-        }
-    }
+
+
+
 
 
     async createRecipe(title, ingredients, steps, gluten, dairy, egg, vegetarian, vegan, errorCallback) {
