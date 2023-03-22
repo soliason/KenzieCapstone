@@ -21,15 +21,42 @@
     </div>
 </header>
 <div class="card">
-    <h2>Recipe GUI</h2>
-    <h2>To Change Recipe Info to Seed Database, change data in file recipeGuiClient.js</h2>
-    <h2>starting on line 50</h2>
+    <h1>Create Recipe</h1>
     <form class="card-content" id="create-form">
         <p class="form-field">
-<!--            <label>Name</label>-->
-<!--            <input type="text" required class="validated-field" id="create-name-field">-->
+            <label>Title</label>
+            <input type="text" required class="validated-field" id="title">
         </p>
-        <button type="submit">PUSH THIS TO SEED AWS DATABASE FOR TESTING ON FRONT END OR BACK END</button>
+        <p class="form-field">
+            <label>Ingredients</label>
+            <input type="text" required class="validated-field" id="ingredients">
+        </p>
+        <p class="form-field">
+            <label>Steps</label>
+            <input type="text" required class="validated-field" id="steps">
+        </p>
+        <p class="form-field">
+            <label>GlutenFree</label>
+            <input type="text" required class="validated-field" id="gluten">
+        </p>
+        <p class="form-field">
+            <label>EggFree</label>
+            <input type="text" required class="validated-field" id="egg">
+        </p>
+        <p class="form-field">
+            <label>DairyFree</label>
+            <input type="text" required class="validated-field" id="dairy">
+        </p>
+        <p class="form-field">
+            <label>Vegetarian</label>
+            <input type="text" required class="validated-field" id="vegetarian">
+        </p>
+        <p class="form-field">
+            <label>Vegan</label>
+            <input type="text" required class="validated-field" id="vegan">
+        </p>
+
+        <button type="submit">Post Recipe</button>
     </form>
 </div>
 <div class="card">
@@ -39,12 +66,12 @@
             <label>ID</label>
             <input type="text" required class="validated-field" id="id-field">
         </p>
-        <button type="submit">Get</button>
+        <button type="submit">Get by Id</button>
     </form>
 </div>
 <div class="card" id="result">
     <h2>Result:</h2>
-    <p id="result-info"></p>
+    <p id="result-getById"></p>
 </div>
 <div class="card">
     <h2>Get By Dietary Restriction</h2>
@@ -69,13 +96,14 @@
             <label>isVegan</label>
             <input type="text" required class="validated-field" id="vegan-field">
         </p>
-        <button type="submit">Get</button>
+        <button type="submit">Get by dietary Restriction</button>
     </form>
 </div>
 <div class="card" id="result2">
     <h2>Result:</h2>
-    <p id="result-info2"></p>
+    <p id="result-getByDR"></p>
 </div>
 
 </body>
 </html>
+
