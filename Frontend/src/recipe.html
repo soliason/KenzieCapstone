@@ -14,15 +14,60 @@
         <a class="header_home" href="recipe.html">Recipe Page</a>
     </div>
     <div class="site-title">
+        <a class="header_home" href="postRecipe.html">Post Recipe Page</a>
+    </div>
+    <div class="site-title">
         <a class="header_home" href="example.html">Example Page</a>
     </div>
     <div class="site-title">
         <a class="header_home" href="recipeGui.html">Recipe Gui</a>
     </div>
 </header>
-<div>FUTURE RECIPE PAGE </div>
 
-
+<div class="card">
+    <h2>Get By ID</h2>
+    <form class="card-content" id="get-by-id-form">
+        <p class="form-field">
+            <label>ID</label>
+            <input type="text" required class="validated-field" id="id-field">
+        </p>
+        <button type="submit">Get by Id</button>
+    </form>
+</div>
+<div class="card" id="result">
+    <h2>Result:</h2>
+    <p id="result-getById"></p>
+</div>
+<div class="card">
+    <h2>Get By Dietary Restriction</h2>
+    <form class="card-content" id="get-by-res-form">
+        <p class="form-field">
+            <label>isGlutenFree</label>
+            <input type="text" required class="validated-field" id="gluten-field">
+        </p>
+        <p class="form-field">
+            <label>isDairyFree</label>
+            <input type="text" required class="validated-field" id="dairy-field">
+        </p>
+        <p class="form-field">
+            <label>isEggFree</label>
+            <input type="text" required class="validated-field" id="egg-field">
+        </p>
+        <p class="form-field">
+            <label>isVegetarian</label>
+            <input type="text" required class="validated-field" id="vegetarian-field">
+        </p>
+        <p class="form-field">
+            <label>isVegan</label>
+            <input type="text" required class="validated-field" id="vegan-field">
+        </p>
+        <button type="submit">Get by dietary Restriction</button>
+    </form>
+</div>
+<div class="card" id="result2">
+    <h2>Result:</h2>
+    <p id="result-getByDR"></p>
+</div>
 
 </body>
 </html>

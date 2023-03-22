@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="recipeGuiPage.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/recipeGui.css">
+    <script type="text/javascript" src="postRecipePage.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/postRecipe.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
-<body class="background">
+<body>
 <header class="header" id="header">
     <div class="site-title">
         <a class="header_home" href="index.html">Index Page</a>
@@ -61,50 +61,6 @@
 
         <button type="submit">Post Recipe</button>
     </form>
-</div>
-<div class="card">
-    <h2>Get By ID</h2>
-    <form class="card-content" id="get-by-id-form">
-        <p class="form-field">
-            <label>ID</label>
-            <input type="text" required class="validated-field" id="id-field">
-        </p>
-        <button type="submit">Get by Id</button>
-    </form>
-</div>
-<div class="card" id="result">
-    <h2>Result:</h2>
-    <p id="result-getById"></p>
-</div>
-<div class="card">
-    <h2>Get By Dietary Restriction</h2>
-    <form class="card-content" id="get-by-res-form">
-        <p class="form-field">
-            <label>isGlutenFree</label>
-            <input type="text" required class="validated-field" id="gluten-field">
-        </p>
-        <p class="form-field">
-            <label>isDairyFree</label>
-            <input type="text" required class="validated-field" id="dairy-field">
-        </p>
-        <p class="form-field">
-            <label>isEggFree</label>
-            <input type="text" required class="validated-field" id="egg-field">
-        </p>
-        <p class="form-field">
-            <label>isVegetarian</label>
-            <input type="text" required class="validated-field" id="vegetarian-field">
-        </p>
-        <p class="form-field">
-            <label>isVegan</label>
-            <input type="text" required class="validated-field" id="vegan-field">
-        </p>
-        <button type="submit">Get by dietary Restriction</button>
-    </form>
-</div>
-<div class="card" id="result2">
-    <h2>Result:</h2>
-    <p id="result-getByDR"></p>
 </div>
 
 </body>
