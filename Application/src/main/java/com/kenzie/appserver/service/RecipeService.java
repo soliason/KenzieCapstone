@@ -1,5 +1,7 @@
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.config.CacheConfig;
+import com.kenzie.appserver.config.CacheStore;
 import com.kenzie.appserver.controller.model.DietaryRestrictionInfoRequest;
 import com.kenzie.appserver.controller.model.RecipeCreateRequest;
 import com.kenzie.appserver.repositories.RecipeRepository;
@@ -22,12 +24,21 @@ public class RecipeService {
     private RecipeRepository recipeRepository;
     private LambdaRecipeServiceClient lambdaRecipeServiceClient;
 
-    public RecipeService(RecipeRepository recipeRepository, LambdaRecipeServiceClient lambdaRecipeServiceClient) {
+    private CacheStore cache;
+
+    public RecipeService(RecipeRepository recipeRepository, LambdaRecipeServiceClient lambdaRecipeServiceClient, CacheStore cache) {
         this.recipeRepository = recipeRepository;
         this.lambdaRecipeServiceClient = lambdaRecipeServiceClient;
+        this.cache = cache;
     }
 
     public Recipe findById(String recipeId) {
+
+        //get it from the cache if it exists
+        Recipe cachedRecipe = cache.get(recipeId);
+        if (cachedRecipe != null){
+            return cachedRecipe;
+        }
 
         // getting data from the lambda
         RecipeData recipeFromLambda = lambdaRecipeServiceClient.getRecipeData(recipeId);
@@ -83,16 +94,19 @@ public class RecipeService {
     }
 
     public List<Recipe> findByDietaryRestriction(DietaryRestrictionInfoRequest dietaryRestrictionInfoRequest){
-        //do something with the cache first?
 
         //getting it from the lambda
         DietaryRestrictionData data = dietaryRestrictionInfoRequestToData(dietaryRestrictionInfoRequest);
         List<RecipeData> recipesFromLambda = lambdaRecipeServiceClient.getRecipesByDietaryRestriction(data);
 
+        //convert and also cache
         List<Recipe> recipes = new ArrayList<>();
         for (RecipeData recipeData : recipesFromLambda){
-            recipes.add(recipeDataToRecipe(recipeData));
+            Recipe recipe = recipeDataToRecipe(recipeData);
+            recipes.add(recipe);
+            cache.add(recipe.getRecipeId(), recipe);
         }
+
         //return recipes;
         return recipes;
     }
