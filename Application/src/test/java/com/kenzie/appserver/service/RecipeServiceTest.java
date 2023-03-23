@@ -2,11 +2,14 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.config.CacheStore;
 import com.kenzie.appserver.controller.model.DietaryRestrictionInfoRequest;
+import com.kenzie.appserver.controller.model.RecipeCreateRequest;
 import com.kenzie.appserver.repositories.RecipeRepository;
 import com.kenzie.appserver.service.model.Recipe;
 import com.kenzie.capstone.service.client.LambdaRecipeServiceClient;
 import com.kenzie.capstone.service.model.RecipeData;
 
+import com.kenzie.capstone.service.model.RecipeRequest;
+import com.kenzie.capstone.service.model.RecipeResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -131,5 +134,37 @@ public class RecipeServiceTest {
         Assertions.assertEquals(returnedList.get(0).getRecipeId(), "testing123");
     }
 
+    @Test
+    void addNewRecipe(){
+        //GIVEN
+        RecipeCreateRequest request = new RecipeCreateRequest();
+        request.setTitle("testRecipe");
+        request.setIngredients(new ArrayList<>());
+        request.setSteps(new ArrayList<>());
+        request.setGlutenFree(true);
+        request.setDairyFree(false);
+        request.setEggFree(false);
+        request.setVegetarian(true);
+        request.setVegan(false);
+
+        RecipeResponse response = new RecipeResponse();
+        response.setTitle("testRecipe");
+        response.setIngredients(new ArrayList<>());
+        response.setSteps(new ArrayList<>());
+        response.setGlutenFree(true);
+        response.setDairyFree(false);
+        response.setEggFree(false);
+        response.setVegetarian(true);
+        response.setVegan(false);
+        response.setRecipeId("test");
+        response.setRatings(new ArrayList<>());
+
+        //WHEN
+        when(lambdaRecipeServiceClient.setRecipeData(any())).thenReturn(response);
+        Recipe returnedRecipe = recipeService.addNewRecipe(request);
+
+        //THEN
+        Assertions.assertEquals("testRecipe", returnedRecipe.getTitle());
+    }
 
 }
