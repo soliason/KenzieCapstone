@@ -9,7 +9,7 @@ class RecipePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'onGet2', 'onCreate', 'renderRecipe', 'renderRecipe2'], this);
+        this.bindClassMethods(['onGet', 'onGet2', 'onCreate', 'renderRecipe2'], this);
         this.dataStore = new DataStore();
     }
 
@@ -17,39 +17,37 @@ class RecipePage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
-        document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
         document.getElementById('get-by-res-form').addEventListener('submit', this.onGet2);
-
-
+        document.getElementById('clickListen').addEventListener('click', this.onDropDown);
         this.client = new RecipeClient();
 
-        this.dataStore.addChangeListener(this.renderRecipe)
+
         this.dataStore.addChangeListener(this.renderRecipe2)
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
 
-    async renderRecipe() {
-        let resultArea = document.getElementById("result-getById");
-
-        const recipe = this.dataStore.get("recipe");
-
-        if (recipe) {
-            resultArea.innerHTML = `
-                <div>RECIPE ID: ${recipe.recipeId}</div>
-                <div>TITLE: ${recipe.title}</div>
-                <div>Ingredients: ${recipe.ingredients}</div>
-                <div>Steps: ${recipe.steps}</div>
-                <div>GlutenFree: ${recipe.isGlutenFree}</div>
-                <div>EggFree: ${recipe.isEggFree}</div>
-                <div>DairyFree: ${recipe.isDairyFree}</div>
-                <div>Vegetarian: ${recipe.isVegetarian}</div>
-                <div>Vegan: ${recipe.isVegan}</div>
-            `
-        } else {
-            resultArea.innerHTML = "No Item";
-        }
-    }
+//    async renderRecipe() {
+//        let resultArea = document.getElementById("result-getById");
+//
+//        const recipe = this.dataStore.get("recipe");
+//
+//        if (recipe) {
+//            resultArea.innerHTML = `
+//                <div>RECIPE ID: ${recipe.recipeId}</div>
+//                <div>TITLE: ${recipe.title}</div>
+//                <div>Ingredients: ${recipe.ingredients}</div>
+//                <div>Steps: ${recipe.steps}</div>
+//                <div>GlutenFree: ${recipe.isGlutenFree}</div>
+//                <div>EggFree: ${recipe.isEggFree}</div>
+//                <div>DairyFree: ${recipe.isDairyFree}</div>
+//                <div>Vegetarian: ${recipe.isVegetarian}</div>
+//                <div>Vegan: ${recipe.isVegan}</div>
+//            `
+//        } else {
+//            resultArea.innerHTML = "No Item";
+//        }
+//    }
 
     async renderRecipe2() {
             let resultArea = document.getElementById("result-getByDR");
@@ -62,8 +60,8 @@ class RecipePage extends BaseClass {
                         resultArea.innerHTML = `
                                 <div>
                     ${recipes.map((recipe) => ` <div>
-                                            <p>${recipe.recipeId}</p>
-                                            <p>${recipe.title}</p>
+                                            <p>Recipe Id: ${recipe.recipeId}</p>
+                                            <p>Recipe Title: ${recipe.title}</p>
                                         </div>
                                     `).join('')}
                     </div>
@@ -74,6 +72,32 @@ class RecipePage extends BaseClass {
         }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
+    async onDropDown(event) {
+//            event.preventDefault()
+//            let selectElement = document.querySelector('#dropdown_value');
+//            let output = selectElement.value;
+//            console.log("output is: ");
+//            console.log(output);
+//            let result = await this.client.getAccommodations(output, this.errorHandler);
+//            let resultArea = document.getElementById("result-info4");
+//
+//            //currently the content won't update when the user selects another option... trying this:
+//            resultArea.innerHTML = "";
+//
+//            if (result.accommodations) {
+//                resultArea.innerHTML = `
+//                        <div>
+//            ${result.accommodations.map((accommodation) => ` <div>
+//                                    <p>${accommodation}</p>
+//                                </div>
+//                            `).join('')}
+//            </div>
+//                    `
+//            } else {
+//                resultArea.innerHTML = "No Item";
+//            }
+    }
+
     //byId
     async onGet(event) {
         // Prevent the page from refreshing on form submit
@@ -95,6 +119,7 @@ class RecipePage extends BaseClass {
     async onGet2(event) {
             // Prevent the page from refreshing on form submit
             event.preventDefault();
+            console.log("button works");
 
             let gluten = document.getElementById("gluten-field").value;
             let dairy = document.getElementById("dairy-field").value;

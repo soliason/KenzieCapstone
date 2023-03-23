@@ -13,7 +13,7 @@ export default class PostRecipeClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getRecipeByDR', 'getRecipeById', 'createRecipe'];
+        const methodsToBind = ['clientLoaded', 'createRecipe'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
