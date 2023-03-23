@@ -2,10 +2,7 @@ package com.kenzie.appserver.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.kenzie.appserver.IntegrationTest;
-import com.kenzie.appserver.controller.model.DietaryRestrictionInfoRequest;
-import com.kenzie.appserver.controller.model.ExampleCreateRequest;
-import com.kenzie.appserver.controller.model.RecipeCreateRequest;
-import com.kenzie.appserver.controller.model.RecipeResponse;
+import com.kenzie.appserver.controller.model.*;
 import com.kenzie.appserver.service.ExampleService;
 import com.kenzie.appserver.service.RecipeService;
 import com.kenzie.appserver.service.model.Example;
@@ -22,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,7 +36,6 @@ class RecipeControllerTest {
     private MockMvc mvc;
 
     @Autowired
-    //ExampleService exampleService;
     RecipeService recipeService;
 
     private final MockNeat mockNeat = MockNeat.threadLocal();
@@ -47,24 +44,22 @@ class RecipeControllerTest {
 
     @Test
     public void getRecipesByDietaryRestriction() throws Exception {
-        DietaryRestrictionInfoRequest request = new DietaryRestrictionInfoRequest();
-        request.setGlutenFree(true);
-        request.setDairyFree(false);
-        request.setEggFree(false);
-        request.setVegetarian(false);
-        request.setVegan(false);
 
-        ResultActions actions = mvc.perform(get("/recipe/dietaryRestriction", request)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        ResultActions actions = mvc.perform(
+                get("/recipe/dietaryRestriction/{isGlutenFree}/{isDairyFree}/{isEggFree}/{isVegetarian}/{isVegan}",
+                        true, false, false, false, false)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
 
         String responseBody = actions.andReturn().getResponse().getContentAsString();
-        List<RecipeResponse> responses = mapper.readValue(responseBody, new TypeReference<List<RecipeResponse>>() {});
+        List<RecipeSummaryResponse> responses = mapper.readValue(responseBody, new TypeReference<>() {
+        });
+
         if (!responses.isEmpty()){
             boolean areTheyAllGlutenFree = true;
-            for (RecipeResponse recipeResponse : responses){
-                if (recipeResponse.isGlutenFree() == false){
+            for (RecipeSummaryResponse recipeSummaryResponse : responses){
+                Recipe recipe = recipeService.findById(recipeSummaryResponse.getRecipeId());
+                if (!recipe.isGlutenFree()){
                     areTheyAllGlutenFree = false;
                     break;
                 }
@@ -75,68 +70,47 @@ class RecipeControllerTest {
         }
     }
 
-//    @Test
-//    public void getById_Exists() throws Exception {
-//
-//        String title = mockNeat.strings().valStr();
-//        //String recipeId = UUID.randomUUID().toString();
-//        List<String> ingredients = new ArrayList<>();
-//        ingredients.add("beast");
-//        List<String> steps = new ArrayList<>();
-//        ingredients.add("roast it");
-//
-//        RecipeCreateRequest recipeCreateRequest = new RecipeCreateRequest();
-//        recipeCreateRequest.s
-//        Recipe persistedRecipe = recipeService.addNewRecipe("roast beast", ingredients, steps, true,
-//                true, true, false, false);
-//        mvc.perform(get("/recipe/{recipeId}", persistedRecipe.getRecipeId())
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("recipeId")
-//                        .isString())
-//                .andExpect(jsonPath("title")
-//                        .value(is(title)))
-//                .andExpect(status().is2xxSuccessful());
-//    }
-//
-//    @Test
-//    public void createRecipe_CreateSuccessful() throws Exception {
-//        //String name = mockNeat.strings().valStr();
-//        String title = mockNeat.strings().valStr();
-//        List<String> ingredients = new ArrayList<>();
-//        ingredients.add("beast");
-//        List<String> steps = new ArrayList<>();
-//        ingredients.add("roast it");
-//
-//        RecipeCreateRequest recipeCreateRequest = new RecipeCreateRequest();
-//        recipeCreateRequest.setTitle(title);
-//        recipeCreateRequest.setIngredients(ingredients);
-//        recipeCreateRequest.setSteps(steps);
-//        recipeCreateRequest.setGlutenFree(true);
-//        recipeCreateRequest.setDairyFree(true);
-//        recipeCreateRequest.setEggFree(false);
-//        recipeCreateRequest.setVegetarian(false);
-//        recipeCreateRequest.setVegan(false);
-//
-//        mapper.registerModule(new JavaTimeModule());
-//
-//        mvc.perform(post("/recipe")
-//                        .accept(MediaType.APPLICATION_JSON)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(mapper.writeValueAsString(recipeCreateRequest)))
-//                .andExpect(jsonPath("recipeId")
-//                        .exists())
-//    //            .andExpect(jsonPath("title")
-//    //                    .value(is(title)))
-//                .andExpect(status().is2xxSuccessful());
-//    }
-//
-//    @Test
-//    public void getRecipe_getSuccessful() {
-//
-//        String recipeId = "1234";
-//
-//        Recipe recipeTest = recipeService.findById("1234");
-//
-//        Assertions.assertEquals(recipeTest.getTitle(), "chicken soup");
-//    }
+    @Test
+    public void getById_Exists() throws Exception {
+
+        mvc.perform(get("/recipe/{recipeId}", "5436c565-19f2-49e6-a6df-61ac920430b2")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("recipeId")
+                        .isString())
+                .andExpect(jsonPath("title")
+                        .value(is("Gerauld secret sauce")))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void createRecipe_CreateSuccessful() throws Exception {
+
+        String title = mockNeat.strings().valStr();
+        List<String> ingredients = new ArrayList<>();
+        ingredients.add("beast");
+        List<String> steps = new ArrayList<>();
+        steps.add("roast it");
+
+        RecipeCreateRequest recipeCreateRequest = new RecipeCreateRequest();
+        recipeCreateRequest.setTitle(title);
+        recipeCreateRequest.setIngredients(ingredients);
+        recipeCreateRequest.setSteps(steps);
+        recipeCreateRequest.setGlutenFree(true);
+        recipeCreateRequest.setDairyFree(true);
+        recipeCreateRequest.setEggFree(false);
+        recipeCreateRequest.setVegetarian(false);
+        recipeCreateRequest.setVegan(false);
+
+        mapper.registerModule(new JavaTimeModule());
+
+        mvc.perform(post("/recipe")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(recipeCreateRequest)))
+                .andExpect(jsonPath("recipeId")
+                        .exists())
+                .andExpect(jsonPath("title")
+                        .value(is(title)))
+                .andExpect(status().is2xxSuccessful());
+    }
 }
