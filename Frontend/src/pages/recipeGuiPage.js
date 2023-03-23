@@ -128,6 +128,9 @@ class RecipeGuiPage extends BaseClass {
         let egg = document.getElementById("egg").value;
         let vegetarian = document.getElementById("vegetarian").value;
         let vegan = document.getElementById("vegan").value;
+        let test = true;
+        console.log(vegan);
+        console.log(true);
 
         const createdRecipe = await this.client.createRecipe(title, ingredients, steps, gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
         this.dataStore.set("recipe", createdRecipe);
