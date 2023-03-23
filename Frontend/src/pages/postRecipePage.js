@@ -17,11 +17,9 @@ class PostRecipePage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
-        document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
-        document.getElementById('get-by-res-form').addEventListener('submit', this.onGet2);
         document.getElementById('create-form').addEventListener('submit', this.onCreate);
 
-        this.client = new RecipeGuiClient();
+        this.client = new PostRecipeClient();
 
         this.dataStore.addChangeListener(this.renderRecipe)
         this.dataStore.addChangeListener(this.renderRecipe2)
@@ -128,6 +126,14 @@ class PostRecipePage extends BaseClass {
         let egg = document.getElementById("egg").value;
         let vegetarian = document.getElementById("vegetarian").value;
         let vegan = document.getElementById("vegan").value;
+        console.log(title);
+        console.log(ingredients);
+        console.log(steps);
+        console.log(gluten);
+        console.log(dairy);
+        console.log(egg);
+        console.log(vegetarian);
+        console.log(vegan);
 
         const createdRecipe = await this.client.createRecipe(title, ingredients, steps, gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
         this.dataStore.set("recipe", createdRecipe);

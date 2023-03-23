@@ -47,6 +47,7 @@ export default class RecipeClient extends BaseClass {
     }
 
     async getRecipeByDR(gluten, dairy, egg, vegetarian, vegan, errorCallback) {
+        console.log("in recipeClient, do veriables work?" + gluten)
         try {
             const isGlutenFree = gluten;
             const isDairyFree = dairy;
