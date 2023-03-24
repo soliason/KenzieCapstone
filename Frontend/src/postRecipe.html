@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <script type="text/javascript" src="postRecipePage.js"></script>
+    <script type="text/javascript" src="./pages/postRecipePage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/postRecipe.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <title>Dream Team</title>
 </head>
 <body>
-<header class="header" id="header">
-    <div class="site-title">
-        <a class="header_home" href="index.html">Index Page</a>
+<div class="wrapper">
+    <div class="banner">
+        <div class="header">
+            <div class="menu">
+                <span><a class="nav-links" href="index.html">Home</a></span>
+                <span> <a class="nav-links" href="recipe.html">Recipe</a></span>
+                <span><a class="nav-links" href="postRecipe.html">Add Recipe</a></span>
+                <span> <a class="nav-links" href="recipeGui.html">RecipeGui</a></span>
+
+            </div>
+        </div>
+        <div class="main">
+            <span class="content-box slide-in text">Dream Team Dietary Restrictions</span>
+            <img class="arrow" src="https://i.ibb.co/MSv2H70/arrow.png" alt="">
+        </div>
     </div>
-    <div class="site-title">
-        <a class="header_home" href="recipe.html">Recipe Page</a>
-    </div>
-    <div class="site-title">
-        <a class="header_home" href="postRecipe.html">Post Recipe Page</a>
-    </div>
-    <div class="site-title">
-        <a class="header_home" href="example.html">Example Page</a>
-    </div>
-    <div class="site-title">
-        <a class="header_home" href="recipeGui.html">Recipe Gui</a>
-    </div>
-</header>
 <div class="card">
     <h1>Create Recipe</h1>
     <form class="card-content" id="create-form">
@@ -62,6 +62,6 @@
         <button type="submit">Post Recipe</button>
     </form>
 </div>
-
+</div>
 </body>
 </html>
