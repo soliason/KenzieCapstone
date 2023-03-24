@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,900;1,700&display=swap");
+
+:root {
+    --normal-font: 400;
+    --bold-font: 600;
+    --bolder-font: 900;
+    --primary-color: #0652dd;
+    --secondary-color: #ea2027;
+    --line-height: 1.7rem;
+    --transition: 0.4s ease-in;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: var(--transition);
+}
+
+body {
+    font-family: "Roboto", sans-serf;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+.fist {
+    color: var(--secondary-color);
+}
+
+.jab {
+    color: var(--primary-color);
+}
+
+.tv {
+    color: var(--secondary-color);
+}
+.logo {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-item {
+    margin-left: 2rem;
+}
+
+.nav-link {
+    font-weight: var(--bold-font);
+}
+nav {
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    box-shadow: 2px 3px 2px #f1f1f1;
+}
+iframe {
+    max-width: 30rem;
+    border-top: 40px groove var(--primary-color);
+    border-bottom: 40px groove var(--primary-color);
+    border-right: 28px solid var(--secondary-color);
+    border-left: 28px solid var(--secondary-color);
+}
+
+.stand-1 {
+    height: 90px;
+    width: 6px;
+    background-color: var(--primary-color);
+    transform: rotate(40deg);
+    position: relative;
+    top: -16px;
+    left: 200px;
+}
+.stand-2 {
+    height: 90px;
+    width: 6px;
+    background-color: var(--secondary-color);
+    transform: rotate(-40deg);
+    position: relative;
+    top: -105px;
+    left: 255px;
+}
+.checkbox {
+    opacity: 0;
+    position: absolute;
+}
+.label {
+    width: 50px;
+    height: 29px;
+    background-color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 30px;
+    padding: 6px;
+    position: relative;
+}
+.switcher {
+    background-color: #fff;
+    position: absolute;
+    top: 5px;
+    left: 2px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+}
+.moon {
+    color: #ffa502;
+}
+
+.sun {
+    color: #ff4757;
+}
+.checkbox:checked + .label .switcher {
+    transform: translateX(24px);
+}
+body.dark {
+    background-color: #1e272e;
+}
+
+body.dark .bar {
+    background-color: #fff;
+}
+
+body.dark p {
+    color: #fff;
+}
+
+body.dark h3 {
+    color: #fff;
+}
+
+body.dark nav {
+    background-color: #1e272e;
+    box-shadow: 2px 3px 2px #111010;
+}
+
+body.dark ul {
+    background-color: #1e272e;
+}
+
+body.dark .name {
+    color: var(--primary-color);
+}
+
+body.dark .role {
+    color: var(--secondary-color);
+}
+
+body.dark footer {
+    color: #fff;
+    border-top: 1px solid #111010;
+    box-shadow: 0px -2px 3px #111010;
+}
+
+/*dark mode*/
+.mode {
+    float: right;
+}
+
+.change {
+    cursor: pointer;
+    border: 1px solid #555;
+    border-radius: 40%;
+    width: 20px;
+    text-align: center;
+    padding: 5px;
+    margin-left: 8px;
+}
+
+.dark {
+    background-color: #222;
+    color: #e6e6e6;
+}
