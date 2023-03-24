@@ -2,6 +2,7 @@ import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import PostRecipeClient from "../api/postRecipeClient";
 
+console.log("post Recipe Page is working");
 /**
  * Logic needed for the view playlist page of the website.
  */
@@ -9,7 +10,7 @@ class PostRecipePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'onGet2', 'onCreate', 'renderRecipe', 'renderRecipe2'], this);
+        this.bindClassMethods(['onCreate'], this);
         this.dataStore = new DataStore();
     }
 
@@ -21,97 +22,17 @@ class PostRecipePage extends BaseClass {
 
         this.client = new PostRecipeClient();
 
-        this.dataStore.addChangeListener(this.renderRecipe)
-        this.dataStore.addChangeListener(this.renderRecipe2)
+
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
 
-    async renderRecipe() {
-        let resultArea = document.getElementById("result-getById");
 
-        const recipe = this.dataStore.get("recipe");
-
-        if (recipe) {
-            resultArea.innerHTML = `
-                <div>RECIPE ID: ${recipe.recipeId}</div>
-                <div>TITLE: ${recipe.title}</div>
-                <div>Ingredients: ${recipe.ingredients}</div>
-                <div>Steps: ${recipe.steps}</div>
-                <div>GlutenFree: ${recipe.isGlutenFree}</div>
-                <div>EggFree: ${recipe.isEggFree}</div>
-                <div>DairyFree: ${recipe.isDairyFree}</div>
-                <div>Vegetarian: ${recipe.isVegetarian}</div>
-                <div>Vegan: ${recipe.isVegan}</div>
-            `
-        } else {
-            resultArea.innerHTML = "No Item";
-        }
-    }
-
-    async renderRecipe2() {
-            let resultArea = document.getElementById("result-getByDR");
-
-            const recipes = this.dataStore.get("recipeDR");
-
-            //need loop for list
-
-            if (recipes) {
-                        resultArea.innerHTML = `
-                                <div>
-                    ${recipes.map((recipe) => ` <div>
-                                            <p>${recipe.recipeId}</p>
-                                            <p>${recipe.title}</p>
-                                        </div>
-                                    `).join('')}
-                    </div>
-                            `
-                    } else {
-                        resultArea.innerHTML = "No Item";
-                    }
-        }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
-    //byId
-    async onGet(event) {
-        // Prevent the page from refreshing on form submit
-        event.preventDefault();
 
-        let id = document.getElementById("id-field").value;
-        console.log(id);
-        this.dataStore.set("recipe", null);
 
-        let result = await this.client.getRecipeById(id, this.errorHandler);
-        this.dataStore.set("recipe", result);
-        if (result) {
-            this.showMessage(`Got ${result.name}!`)
-        } else {
-            this.errorHandler("Error doing GET!  Try again...");
-        }
-    }
-    //byDR
-    async onGet2(event) {
-            // Prevent the page from refreshing on form submit
-            event.preventDefault();
 
-            let gluten = document.getElementById("gluten-field").value;
-            let dairy = document.getElementById("dairy-field").value;
-            let egg = document.getElementById("egg-field").value;
-            let vegetarian = document.getElementById("vegetarian-field").value;
-            let vegan = document.getElementById("vegan-field").value;
-            this.dataStore.set("recipeDR", null);
-
-            let result = await this.client.getRecipeByDR(gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
-            console.log("the result:");
-
-            this.dataStore.set("recipeDR", result);
-
-            if (result) {
-                this.showMessage(`Got ${result.name}!`)
-            } else {
-                this.errorHandler("Error doing GET!  Try again...");
-            }
-        }
 
     async onCreate(event) {
         // Prevent the page from refreshing on form submit

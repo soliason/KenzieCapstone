@@ -18,7 +18,7 @@ class RecipePage extends BaseClass {
      */
     async mount() {
         document.getElementById('get-by-res-form').addEventListener('submit', this.onGet2);
-        document.getElementById('clickListen').addEventListener('click', this.onDropDown);
+//        document.getElementById('clickListen').addEventListener('click', this.onDropDown);
         this.client = new RecipeClient();
 
 
@@ -121,12 +121,14 @@ class RecipePage extends BaseClass {
             event.preventDefault();
             console.log("button works");
 
+
             let gluten = document.getElementById("gluten-field").value;
             let dairy = document.getElementById("dairy-field").value;
             let egg = document.getElementById("egg-field").value;
             let vegetarian = document.getElementById("vegetarian-field").value;
             let vegan = document.getElementById("vegan-field").value;
             this.dataStore.set("recipeDR", null);
+            console.log(gluten);
 
             let result = await this.client.getRecipeByDR(gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
             console.log("the result:");
