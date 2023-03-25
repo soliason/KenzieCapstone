@@ -53,6 +53,7 @@ public class LambdaRecipeService {
 
     public List<RecipeData> getRecipesByDietaryRestriction(DietaryRestrictionData data){
         List<RecipeRecord> records = recipeDao.getRecipesByDietaryRestriction(data);
+
         if (records.size() > 0) {
             List<RecipeData> recipeDataList = new ArrayList<>();
             for (RecipeRecord recipeRecord : records){
@@ -98,6 +99,7 @@ public class LambdaRecipeService {
         data.setEggFree(record.getIsEggFree());
         data.setVegetarian(record.getIsVegetarian());
         data.setVegan(record.getIsVegan());
+        data.setRatings(record.getRatings());
         return data;
     }
 
