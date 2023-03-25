@@ -101,8 +101,8 @@ public class RecipeRequest {
         return isEggFree;
     }
 
-    public void setEggFree (boolean eggFree) {
-        isEggFree = eggFree;
+    public void setEggFree (boolean isEggFree) {
+        this.isEggFree = isEggFree;
     }
 
     public boolean isVegetarian () {
@@ -117,8 +117,8 @@ public class RecipeRequest {
         return isVegan;
     }
 
-    public void setVegan (boolean vegan) {
-        isVegan = vegan;
+    public void setVegan (boolean isVegan) {
+        this.isVegan = isVegan;
     }
 
     public List<Integer> getRatings () {
