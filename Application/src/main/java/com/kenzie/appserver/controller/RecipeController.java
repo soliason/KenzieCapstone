@@ -1,9 +1,6 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.DietaryRestrictionInfoRequest;
-import com.kenzie.appserver.controller.model.RecipeCreateRequest;
-import com.kenzie.appserver.controller.model.RecipeResponse;
-import com.kenzie.appserver.controller.model.RecipeSummaryResponse;
+import com.kenzie.appserver.controller.model.*;
 import com.kenzie.appserver.service.RecipeService;
 
 import com.kenzie.appserver.service.model.Recipe;
@@ -97,6 +94,15 @@ public class RecipeController {
 
     }
 
+    @PutMapping("/rating")
+    public ResponseEntity<RecipeResponse> updateRecipe(@RequestBody RecipeUpdateRequest recipeUpdateRequest){
+
+        Recipe updatedRecipe = recipeService.updateRecipe(recipeUpdateRequest);
+
+        RecipeResponse recipeResponse = createRecipeResponse(updatedRecipe);
+        return ResponseEntity.ok(recipeResponse);
+    }
+
     //helper methods
 
     private RecipeResponse createRecipeResponse(Recipe recipe) {
@@ -121,6 +127,8 @@ public class RecipeController {
         RecipeSummaryResponse recipeSummaryResponse = new RecipeSummaryResponse();
         recipeSummaryResponse.setRecipeId(recipe.getRecipeId());
         recipeSummaryResponse.setTitle(recipe.getTitle());
+        recipeSummaryResponse.setRatings(recipe.getRatings());
+        recipeSummaryResponse.setAverageRating();
 
         return recipeSummaryResponse;
     }

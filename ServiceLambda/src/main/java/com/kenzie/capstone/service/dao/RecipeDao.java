@@ -66,6 +66,21 @@ public class RecipeDao {
         return recipeRecord;
     }
 
+    public RecipeRecord updateRecipeData(RecipeRecord recipeRecord){
+
+        try {
+            mapper.save(recipeRecord, new DynamoDBSaveExpression()
+                    .withExpected(ImmutableMap.of(
+                            "recipeId",
+                            new ExpectedAttributeValue().withExists(true)
+                    )));
+        } catch (ConditionalCheckFailedException e) {
+            throw new IllegalArgumentException("recipeId does not exist");
+        }
+
+        return recipeRecord;
+    }
+
     public List<RecipeRecord> getRecipesByDietaryRestriction(DietaryRestrictionData dietaryRestrictionInfo){
 
         try {
@@ -115,4 +130,6 @@ public class RecipeDao {
             throw new IllegalArgumentException("something else bad happened");
         }
     }
+    
+
 }

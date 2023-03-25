@@ -40,18 +40,12 @@ public class Recipe {
         this.ratings = ratings;
     }
 
-    public void addRatingToRecipe(int rating){
-        ratings.add(rating);
-    }
-
     public double getAverageRating(){
         return ratings.stream()
                 .mapToDouble(a -> a)
                 .average()
                 .orElse(0.0);
     }
-
-
 
     public List<Integer> getRatings() {
         return ratings;

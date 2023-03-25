@@ -3,10 +3,7 @@ package com.kenzie.capstone.service.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kenzie.capstone.service.model.DietaryRestrictionData;
-import com.kenzie.capstone.service.model.RecipeData;
-import com.kenzie.capstone.service.model.RecipeRequest;
-import com.kenzie.capstone.service.model.RecipeResponse;
+import com.kenzie.capstone.service.model.*;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public class LambdaRecipeServiceClient {
 
     private static final String SET_RECIPE_ENDPOINT = "recipe";
 
-    //private static final String GET_DIETARY_RESTRICTION_ENDPOINT = "recipe/dietaryRestriction";
+    private static final String UPDATE_RATING_ENDPOINT = "recipe/rating";
 
     private static final String GET_DIETARY_RESTRICTION_ENDPOINT =
             "recipe/dietaryRestriction/{isGlutenFree}/{isDairyFree}/{isEggFree}/{isVegetarian}/{isVegan}";
@@ -42,14 +39,7 @@ public class LambdaRecipeServiceClient {
 
     public RecipeResponse setRecipeData(RecipeRequest recipeRequest) {
         EndpointUtility endpointUtility = new EndpointUtility();
-//        String response = endpointUtility.postEndpoint(SET_RECIPE_ENDPOINT, recipeRequest.toString());
-//        RecipeData recipeData;
-//        try {
-//            recipeData = mapper.readValue(response, RecipeData.class);
-//        } catch (Exception e) {
-//            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
-//        }
-//        return recipeData;
+
         String request;
         try {
             request = mapper.writeValueAsString(recipeRequest);
@@ -93,5 +83,24 @@ public class LambdaRecipeServiceClient {
         }
 
         return recipeDataList;
+    }
+
+    public RecipeResponse updateRecipeData(RecipeUpdateRequestLambda recipeUpdateRequestLambda){
+        EndpointUtility endpointUtility = new EndpointUtility();
+
+        String request;
+        try {
+            request = mapper.writeValueAsString(recipeUpdateRequestLambda);
+        } catch(JsonProcessingException e) {
+            throw new ApiGatewayException("Unable to serialize request: " + e);
+        }
+        String response = endpointUtility.putEndpoint(UPDATE_RATING_ENDPOINT, request);
+        RecipeResponse recipeResponse;
+        try {
+            recipeResponse = mapper.readValue(response, RecipeResponse.class);
+        } catch (Exception e) {
+            throw new ApiGatewayException ("Unable to map deserialize JSON: " + e);
+        }
+        return recipeResponse;
     }
 }

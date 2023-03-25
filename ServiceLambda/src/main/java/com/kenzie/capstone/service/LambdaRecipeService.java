@@ -63,6 +63,28 @@ public class LambdaRecipeService {
         return null;
     }
 
+    public RecipeResponse updateRecipeData(RecipeUpdateRequestLambda recipeRequest){
+        RecipeRecord recipeRecord = new RecipeRecord();
+        recipeRecord.setRecipeId(recipeRequest.getRecipeId());
+        recipeRecord.setTitle(recipeRequest.getTitle());
+        recipeRecord.setIngredients(recipeRequest.getIngredients());
+        recipeRecord.setSteps(recipeRequest.getSteps());
+        recipeRecord.setIsDairyFree(recipeRequest.isDairyFree());
+        recipeRecord.setIsGlutenFree(recipeRequest.isGlutenFree());
+        recipeRecord.setIsEggFree(recipeRequest.isEggFree());
+        recipeRecord.setIsVegetarian(recipeRequest.isVegetarian());
+        recipeRecord.setIsVegan(recipeRequest.isVegan());
+        recipeRecord.setRatings(recipeRequest.getRatings());
+
+        recipeDao.updateRecipeData(recipeRecord);
+
+        RecipeResponse recipeResponse = new RecipeResponse(recipeRequest.getRecipeId(), recipeRequest.getTitle(), recipeRequest.getIngredients(),
+                recipeRequest.getSteps(), recipeRequest.isGlutenFree(), recipeRequest.isDairyFree(), recipeRequest.isEggFree(),
+                recipeRequest.isVegetarian (), recipeRequest.isVegan(), recipeRequest.getRatings());
+
+        return recipeResponse;
+    }
+
     //helper functions
 
     private RecipeData recipeRecordToRecipeData(RecipeRecord record){

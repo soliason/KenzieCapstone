@@ -4,14 +4,12 @@ import com.kenzie.appserver.config.CacheConfig;
 import com.kenzie.appserver.config.CacheStore;
 import com.kenzie.appserver.controller.model.DietaryRestrictionInfoRequest;
 import com.kenzie.appserver.controller.model.RecipeCreateRequest;
+import com.kenzie.appserver.controller.model.RecipeUpdateRequest;
 import com.kenzie.appserver.repositories.RecipeRepository;
 import com.kenzie.appserver.repositories.model.RecipeRecord;
 import com.kenzie.appserver.service.model.Recipe;
 import com.kenzie.capstone.service.client.LambdaRecipeServiceClient;
-import com.kenzie.capstone.service.model.DietaryRestrictionData;
-import com.kenzie.capstone.service.model.RecipeData;
-import com.kenzie.capstone.service.model.RecipeRequest;
-import com.kenzie.capstone.service.model.RecipeResponse;
+import com.kenzie.capstone.service.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -85,12 +83,11 @@ public class RecipeService {
 //        recipeRecord.setIsVegan(recipeFromLambda.isVegan());
 //        recipeRepository.save(recipeRecord);
 
-        Recipe recipe = new Recipe(recipeFromLambda.getRecipeId(),
+        return new Recipe(recipeFromLambda.getRecipeId(),
                             recipeFromLambda.getTitle(), recipeFromLambda.getIngredients(),
                             recipeFromLambda.getSteps(), recipeFromLambda.isGlutenFree(),
                             recipeFromLambda.isDairyFree(), recipeFromLambda.isEggFree(),
                             recipeFromLambda.isVegetarian(), recipeFromLambda.isVegan(), recipeFromLambda.getRatings());
-        return recipe;
     }
 
     public List<Recipe> findByDietaryRestriction(DietaryRestrictionInfoRequest dietaryRestrictionInfoRequest){
@@ -109,6 +106,33 @@ public class RecipeService {
 
         //return recipes;
         return recipes;
+    }
+
+    public Recipe updateRecipe(RecipeUpdateRequest recipeUpdateRequest){
+
+        Recipe recipe = cache.get(recipeUpdateRequest.getRecipeId());
+        cache.evict(recipeUpdateRequest.getRecipeId());
+
+        RecipeUpdateRequestLambda recipeUpdateRequestLambda = new RecipeUpdateRequestLambda();
+        recipeUpdateRequestLambda.setRecipeId(recipeUpdateRequest.getRecipeId());
+        recipeUpdateRequestLambda.setTitle(recipe.getTitle());
+        recipeUpdateRequestLambda.setIngredients(recipe.getIngredients());
+        recipeUpdateRequestLambda.setSteps(recipe.getSteps());
+        recipeUpdateRequestLambda.setGlutenFree(recipe.isGlutenFree());
+        recipeUpdateRequestLambda.setDairyFree(recipe.isDairyFree());
+        recipeUpdateRequestLambda.setEggFree(recipe.isEggFree());
+        recipeUpdateRequestLambda.setVegetarian(recipe.isVegetarian());
+        recipeUpdateRequestLambda.setVegan(recipe.isVegan());
+        recipeUpdateRequestLambda.setRatings(recipe.getRatings());
+        recipeUpdateRequestLambda.addRating(recipeUpdateRequest.getNewRating());
+
+        RecipeResponse recipeFromLambda = lambdaRecipeServiceClient.updateRecipeData(recipeUpdateRequestLambda);
+
+        return new Recipe(recipeFromLambda.getRecipeId(),
+                recipeFromLambda.getTitle(), recipeFromLambda.getIngredients(),
+                recipeFromLambda.getSteps(), recipeFromLambda.isGlutenFree(),
+                recipeFromLambda.isDairyFree(), recipeFromLambda.isEggFree(),
+                recipeFromLambda.isVegetarian(), recipeFromLambda.isVegan(), recipeFromLambda.getRatings());
     }
 
     //helper methods
