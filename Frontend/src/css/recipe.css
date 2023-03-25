@@ -6,7 +6,7 @@
 }
 
 .background {
-    background-color: #eaeded;
+    background-color: blue;
     margin: 0;
     counter-reset: section;
 }
@@ -74,6 +74,10 @@
 .card-content .form-field {
     display: flex;
     flex-direction: column;
+}
+
+#hidden-results {
+    display: none;
 }
 
 #concert-list li {
