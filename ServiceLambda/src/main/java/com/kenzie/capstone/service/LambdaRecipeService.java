@@ -98,6 +98,7 @@ public class LambdaRecipeService {
         data.setEggFree(record.getIsEggFree());
         data.setVegetarian(record.getIsVegetarian());
         data.setVegan(record.getIsVegan());
+        data.setRatings(record.getRatings());
         return data;
     }
 
