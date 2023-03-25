@@ -37,7 +37,7 @@ export default class RecipeClient extends BaseClass {
      * @returns The concert
      */
     async getRecipeById(id, errorCallback) {
-        console.log("hitting here");
+    console.log("got here");
       try {
         const response = await this.client.get(`/recipe/${id}`);
         return response.data;
@@ -47,7 +47,7 @@ export default class RecipeClient extends BaseClass {
     }
 
     async getRecipeByDR(gluten, dairy, egg, vegetarian, vegan, errorCallback) {
-        console.log("in recipeClient, do veriables work?" + gluten)
+
         try {
             const isGlutenFree = gluten;
             const isDairyFree = dairy;

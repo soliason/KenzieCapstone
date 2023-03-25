@@ -6,13 +6,61 @@ Parameters:
     Type: String
     Default: dev
 Resources:
+  GetExampleDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.GetExampleData
+      Runtime: java11
+      Description: Get Example Data for given id
+      MemorySize: 512
+      Timeout: 240
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        UpdateResource:
+          Type: Api
+          Properties:
+            Path: /example/{id}
+            Method: get
+  SetExampleDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.SetExampleData
+      Runtime: java11
+      Description: Set Example Data
+      MemorySize: 512
+      Timeout: 240
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        UpdateResource:
+          Type: Api
+          Properties:
+            Path: /example
+            Method: post
   GetRecipeDataFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
       Handler: com.kenzie.capstone.service.lambda.GetRecipeData
       Runtime: java11
-      Description: Get Recipe Data for given dietary restriction
+      Description: Get Recipe Data for recipe id
       MemorySize: 512
       Timeout: 240
       # Function's execution role
@@ -30,15 +78,15 @@ Resources:
           Properties:
             Path: /recipe/{recipeId}
             Method: get
-  GetExampleDataFunction:
+  SetRecipeDataFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.GetRecipeData
+      Handler: com.kenzie.capstone.service.lambda.SetRecipeData
       Runtime: java11
-      Description: Get all recipes in database
+      Description: Set Recipe Data
       MemorySize: 512
-      Timeout: 2408
+      Timeout: 240
       # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -52,6 +100,30 @@ Resources:
         UpdateResource:
           Type: Api
           Properties:
-            Path: /recipe/
+            Path: /recipe
+            Method: post
+  GetRecipesByDietaryRestrictionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.GetRecipesByDietaryRestriction
+      Runtime: java11
+      Description: Get Recipe Data for dietary restrictions
+      MemorySize: 512
+      Timeout: 240
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        UpdateResource:
+          Type: Api
+          Properties:
+            Path: /recipe/dietaryRestriction/{isGlutenFree}/{isDairyFree}/{isEggFree}/{isVegetarian}/{isVegan}
             Method: get
 
