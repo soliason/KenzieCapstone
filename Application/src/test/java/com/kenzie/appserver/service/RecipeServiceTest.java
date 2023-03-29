@@ -3,6 +3,7 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.config.CacheStore;
 import com.kenzie.appserver.controller.model.DietaryRestrictionInfoRequest;
 import com.kenzie.appserver.controller.model.RecipeCreateRequest;
+import com.kenzie.appserver.controller.model.RecipeUpdateRequest;
 import com.kenzie.appserver.repositories.RecipeRepository;
 import com.kenzie.appserver.service.model.Recipe;
 import com.kenzie.capstone.service.client.LambdaRecipeServiceClient;
@@ -165,6 +166,50 @@ public class RecipeServiceTest {
 
         //THEN
         Assertions.assertEquals("testRecipe", returnedRecipe.getTitle());
+    }
+
+    @Test
+    void updateRecipe(){
+        //GIVEN
+        RecipeUpdateRequest recipeUpdateRequest = new RecipeUpdateRequest();
+
+        recipeUpdateRequest.setRecipeId("testing123");
+        recipeUpdateRequest.setNewRating(5);
+
+        Recipe cachedRecipe = new Recipe("testing123",
+                "test",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                true,
+                false,
+                false,
+                false,
+                false,
+                new ArrayList<>());
+
+        RecipeResponse recipeResponse = new RecipeResponse();
+        recipeResponse.setTitle("test");
+        recipeResponse.setIngredients(new ArrayList<>());
+        recipeResponse.setSteps(new ArrayList<>());
+        recipeResponse.setGlutenFree(true);
+        recipeResponse.setDairyFree(false);
+        recipeResponse.setEggFree(false);
+        recipeResponse.setVegetarian(false);
+        recipeResponse.setVegan(false);
+        recipeResponse.setRecipeId("testing123");
+        List<Integer> ratings = new ArrayList<>();
+        ratings.add(recipeUpdateRequest.getNewRating());
+        recipeResponse.setRatings(ratings);
+
+        //WHEN
+        when(cache.get(recipeUpdateRequest.getRecipeId())).thenReturn(cachedRecipe);
+        when(lambdaRecipeServiceClient.updateRecipeData(any())).thenReturn(recipeResponse);
+
+        Recipe returnedRecipe = recipeService.updateRecipe(recipeUpdateRequest);
+
+        //THEN
+        Assertions.assertEquals(recipeUpdateRequest.getRecipeId(), returnedRecipe.getRecipeId());
+        Assertions.assertTrue(returnedRecipe.getRatings().contains(5));
     }
 
 }

@@ -111,6 +111,11 @@ public class RecipeService {
     public Recipe updateRecipe(RecipeUpdateRequest recipeUpdateRequest){
 
         Recipe recipe = cache.get(recipeUpdateRequest.getRecipeId());
+
+        if (recipe == null){
+            recipe = findById(recipeUpdateRequest.getRecipeId());
+        }
+
         cache.evict(recipeUpdateRequest.getRecipeId());
 
         RecipeUpdateRequestLambda recipeUpdateRequestLambda = new RecipeUpdateRequestLambda();
