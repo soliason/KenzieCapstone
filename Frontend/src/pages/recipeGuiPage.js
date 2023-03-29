@@ -9,7 +9,7 @@ class RecipeGuiPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'onGet2', 'onCreate', 'renderRecipe', 'renderRecipe2'], this);
+        this.bindClassMethods(['onGet', 'onGet2', 'onCreate', 'renderRecipe', 'renderRecipe2', 'testPut'], this);
         this.dataStore = new DataStore();
     }
 
@@ -20,6 +20,7 @@ class RecipeGuiPage extends BaseClass {
         document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
         document.getElementById('get-by-res-form').addEventListener('submit', this.onGet2);
         document.getElementById('create-form').addEventListener('submit', this.onCreate);
+        document.getElementById('test-put-form').addEventListener('submit', this.testPut);
 
         this.client = new RecipeGuiClient();
 
@@ -91,6 +92,15 @@ class RecipeGuiPage extends BaseClass {
             this.errorHandler("Error doing GET!  Try again...");
         }
     }
+
+    async testPut(event) {
+            // Prevent the page from refreshing on form submit
+            event.preventDefault();
+
+            let result = await this.client.testPut(this.errorHandler);
+            console.log(result);
+        }
+
     //byDR
     async onGet2(event) {
             // Prevent the page from refreshing on form submit
