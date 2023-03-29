@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.kenzie.appserver.service.model.Recipe;
 import net.andreinc.mockneat.MockNeat;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -73,12 +75,12 @@ class RecipeControllerTest {
     @Test
     public void getById_Exists() throws Exception {
 
-        mvc.perform(get("/recipe/{recipeId}", "5436c565-19f2-49e6-a6df-61ac920430b2")
+        mvc.perform(get("/recipe/{recipeId}", "3072cefb-ba0b-43c2-bd32-59a5b9e84b29")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("recipeId")
                         .isString())
                 .andExpect(jsonPath("title")
-                        .value(is("Gerauld secret sauce")))
+                        .value(is("Lemon Raspberry Gelatin Gummies")))
                 .andExpect(status().is2xxSuccessful());
     }
 
@@ -111,6 +113,40 @@ class RecipeControllerTest {
                         .exists())
                 .andExpect(jsonPath("title")
                         .value(is(title)))
+                .andExpect(status().is2xxSuccessful());
+
+
+    }
+
+    @Test
+    public void updateRecipe() throws Exception {
+        RecipeCreateRequest request = new RecipeCreateRequest();
+        request.setTitle("testRecipe");
+        request.setIngredients(new ArrayList<>());
+        request.setSteps(new ArrayList<>());
+        request.setGlutenFree(true);
+        request.setDairyFree(false);
+        request.setEggFree(false);
+        request.setVegetarian(true);
+        request.setVegan(false);
+
+        Recipe createdRecipe = recipeService.addNewRecipe(request);
+
+        RecipeUpdateRequest recipeUpdateRequest = new RecipeUpdateRequest();
+
+        recipeUpdateRequest.setRecipeId(createdRecipe.getRecipeId());
+        recipeUpdateRequest.setNewRating(5);
+
+        mapper.registerModule(new JavaTimeModule());
+
+        mvc.perform(put("/recipe/rating")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(recipeUpdateRequest)))
+                .andExpect(jsonPath("recipeId")
+                        .exists())
+                .andExpect(jsonPath("ratings")
+                        .value(contains(5)))
                 .andExpect(status().is2xxSuccessful());
     }
 }
