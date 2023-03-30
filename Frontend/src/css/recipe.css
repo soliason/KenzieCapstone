@@ -39,6 +39,14 @@
     margin-left: 20px;
 }
 
+#hidden-results {
+    display: none;
+}
+
+#dietary-restrictions {
+    display: block;
+}
+
 .button, button {
     background: #aed9ff;
     padding: 3px;
@@ -78,6 +86,10 @@
 
 #hidden-results {
     display: none;
+}
+
+#dietary-restrictions {
+    display: block;
 }
 
 #concert-list li {
