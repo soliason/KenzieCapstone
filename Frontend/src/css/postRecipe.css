@@ -6,7 +6,7 @@
 }
 
 .background {
-    background-color: #eaeded;
+    background-color: blue;
     margin: 0;
     counter-reset: section;
 }

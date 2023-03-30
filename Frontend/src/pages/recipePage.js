@@ -2,42 +2,25 @@ import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import RecipeClient from "../api/recipeClient";
 
-/**
- * Logic needed for the view playlist page of the website.
- */
 class RecipePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'getRecipesMatchingDR', 'onCreate', 'renderRecipe', 'renderRecipe2', 'getRecipe'], this);
+        this.bindClassMethods(['onGet', 'rateMe', 'getRecipesMatchingDR', 'getRandomRecipe', 'onCreate', 'renderRecipe', 'renderRecipe2', 'getRecipe'], this);
         this.dataStore = new DataStore();
     }
 
-    /**
-     * Once the page has loaded, set up the event handlers and fetch the concert list.
-     */
     async mount() {
-        document.getElementById('get-by-res-form').addEventListener('submit', this.getRecipesMatchingDR);
         document.getElementById('result-getByDR').addEventListener('click', this.onGet);
+        document.getElementById("submitBtn").addEventListener('click', this.getRecipesMatchingDR);
+        document.getElementById("result-getById").addEventListener('submit', this.rateMe);
+        document.getElementById("submitBtn2").addEventListener('click', this.getRandomRecipe);
 
         this.client = new RecipeClient();
 
         this.dataStore.addChangeListener(this.renderRecipe)
         this.dataStore.addChangeListener(this.renderRecipe2)
     }
-
-    // Hide an Element_____________________________________
-
-//    async myFunction() {
-//          console.log("pushed");
-//          var x = document.getElementById("testing");
-//          if (x.style.display === "none") {
-//            x.style.display = "block";
-//          } else {
-//            x.style.display = "none";
-//          }
-//    }
-
     // Render Methods --------------------------------------------------------------------------------------------------
 
     async renderRecipe() {
@@ -48,7 +31,7 @@ class RecipePage extends BaseClass {
             if (recipe) {
                 resultArea.innerHTML = `
                     <h6>TITLE: </h6>
-                    <p>     ${recipe.title}</p>
+                    <p>${recipe.title}</p>
                     <div>Ingredients: ${recipe.ingredients}</div>
                     <div>Steps: ${recipe.steps}</div>
                     <br>
@@ -57,6 +40,30 @@ class RecipePage extends BaseClass {
                     <div>DairyFree: ${recipe.isDairyFree}</div>
                     <div>Vegetarian: ${recipe.isVegetarian}</div>
                     <div>Vegan: ${recipe.isVegan}</div>
+                    <br>
+                    <br>
+                    <h3>Rate Me</h3>
+                    <form>
+                            <label>
+                                <input type="checkbox" name=${recipe.recipeId} id="oneS" value=1> One Star
+                            </label>
+                            <br>
+                            <label>
+                                <input type="checkbox" id="twoS" name=${recipe.recipeId} value=2> Two Stars
+                            </label>
+                            <br>
+                            <label>
+                                <input type="checkbox" id="threeS" name=${recipe.recipeId} value=3> Three Stars
+                            </label>
+                            <br>
+                            <label>
+                                <input type="checkbox" id="fourS" name=${recipe.recipeId} value=4> Four Stars
+                            </label>
+                            <br>
+                            <button type="submit" id="recipeButton">Submit</button>
+                        </form>
+                    <br>
+                    <button type="submit"><a class="nav-link active" aria-current="page" href="recipe.html">Search For More Recipes</a></button>
                 `
             } else {
                 resultArea.innerHTML = "No Item";
@@ -73,7 +80,7 @@ class RecipePage extends BaseClass {
                                 <div>
                     ${recipes.map((recipe) => ` <div>
                                             <h1 id = ${recipe.recipeId}>${recipe.title}</h1>
-                                            <h2>Rating: COMING SOON</h2>
+                                            <h2>Rating: ${recipe.averageRating} of 4 Stars</h2>
                                         </div>
                                     `).join('')}
                     </div>
@@ -84,70 +91,166 @@ class RecipePage extends BaseClass {
         }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
-    async onDropDown(event) {
-//            event.preventDefault()
-//            let selectElement = document.querySelector('#dropdown_value');
-//            let output = selectElement.value;
-//            console.log("output is: ");
-//            console.log(output);
-//            let result = await this.client.getAccommodations(output, this.errorHandler);
-//            let resultArea = document.getElementById("result-info4");
-//
-//            //currently the content won't update when the user selects another option... trying this:
-//            resultArea.innerHTML = "";
-//
-//            if (result.accommodations) {
-//                resultArea.innerHTML = `
-//                        <div>
-//            ${result.accommodations.map((accommodation) => ` <div>
-//                                    <p>${accommodation}</p>
-//                                </div>
-//                            `).join('')}
-//            </div>
-//                    `
-//            } else {
-//                resultArea.innerHTML = "No Item";
-//            }
+    async rateMe(event) {
+        event.preventDefault();
+
+        let oneS = document.getElementById("oneS");
+        let twoS = document.getElementById("twoS");
+        let threeS = document.getElementById("threeS");
+        let fourS = document.getElementById("fourS");
+
+        if(oneS.checked) {
+            let recipeId = oneS.name;
+            let rating = 1;
+            let result = await this.client.rate(recipeId, rating, this.errorHandler);
+            if (!result) {
+                this.errorHandler("Error doing GET!  Try again...");
+            } else {
+                this.showMessage("Your Rating Has Been Saved!")
+            }
+        }
+        if(twoS.checked) {
+            let recipeId = twoS.name;
+            let rating = 2;
+            let result = await this.client.rate(recipeId, rating, this.errorHandler);
+            if (!result) {
+                this.errorHandler("Error doing GET!  Try again...");
+            } else {
+                this.showMessage("Your Rating Has Been Saved!")
+            }
+        }
+        if(threeS.checked) {
+            let recipeId = threeS.name;
+            let rating = 3;
+            let result = await this.client.rate(recipeId, rating, this.errorHandler);
+            if (!result) {
+                this.errorHandler("Error doing GET!  Try again...");
+            } else {
+                this.showMessage("Your Rating Has Been Saved!")
+            }
+        }
+        if(fourS.checked) {
+            let recipeId = oneS.name;
+            let rating = 4;
+            let result = await this.client.rate(recipeId, rating, this.errorHandler);
+            if (!result) {
+                this.errorHandler("Error doing GET!  Try again...");
+            } else {
+                this.showMessage("Your Rating Has Been Saved!")
+            }
+        }
     }
 
-    //byId
+    async getRandomRecipe(event) {
+        event.preventDefault();
+
+        this.dataStore.set("recipe", null);
+
+        var gluten = document.getElementById("GF2");
+        var dairy = document.getElementById("DF2");
+        var egg = document.getElementById("EF2");
+        var vegetarian = document.getElementById("vegetarian2");
+        var vegan = document.getElementById("vegan2");
+        var glutenValue = false;
+        var dairyValue = false;
+        var eggValue = false;
+        var vegetarianValue = false;
+        var veganValue = false;
+
+        if (gluten.checked == true) {
+            glutenValue = true;
+        }
+        if (dairy.checked == true) {
+            dairyValue = true;
+        }
+        if (egg.checked == true) {
+            eggValue = true;
+        }
+        if (vegetarian.checked == true) {
+            vegetarianValue = true;
+        }
+        if (vegan.checked == true) {
+            veganValue = true;
+        }
+
+        let result = await this.client.getRecipeByDR(glutenValue, dairyValue, eggValue, vegetarianValue, veganValue, this.errorHandler);
+        let max = result.length - 1;
+        let randomNumber = Math.floor(Math.random() * (max - 0));
+        let recipeId = result[randomNumber].recipeId;
+        let result2 = await this.client.getRecipeById(recipeId, this.errorHandler);
+        console.log("before hide");
+        let dietaryRestrictions = document.getElementById("dietary-restrictions");
+        let recipeToSee = document.getElementById("result3");
+        dietaryRestrictions.style.display = "none";
+        result3.style.display = "block";
+        console.log("after")
+
+        this.dataStore.set("recipe", result2);
+        if (!result) {
+            this.errorHandler("Error doing GET!  Try again...");
+        }
+    }
+
     async onGet(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
+        console.log("onGet");
 
         let id = event.target.id;
 
         this.dataStore.set("recipe", null);
+        let dietaryRestrictions = document.getElementById("hideMe");
 
         let result = await this.client.getRecipeById(id, this.errorHandler);
-        console.log(result);
+        let hide = document.getElementById("hidden-results");
+        let unhide = document.getElementById("result3")
+        hide.style.display = "none";
+        unhide.style.display = "block";
         this.dataStore.set("recipe", result);
         if (!result) {
             this.errorHandler("Error doing GET!  Try again...");
         }
     }
-    //byDR
+
     async getRecipesMatchingDR(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
 
-        let gluten = document.getElementById("gluten-field").value;
-        let dairy = document.getElementById("dairy-field").value;
-        let egg = document.getElementById("egg-field").value;
-        let vegetarian = document.getElementById("vegetarian-field").value;
-        let vegan = document.getElementById("vegan-field").value;
+        var gluten = document.getElementById("GF");
+        var dairy = document.getElementById("DF");
+        var egg = document.getElementById("EF");
+        var vegetarian = document.getElementById("vegetarian");
+        var vegan = document.getElementById("vegan");
+        var glutenValue = false;
+        var dairyValue = false;
+        var eggValue = false;
+        var vegetarianValue = false;
+        var veganValue = false;
+
+        if (gluten.checked == true) {
+            glutenValue = true;
+        }
+        if (dairy.checked == true) {
+            dairyValue = true;
+        }
+        if (egg.checked == true) {
+            eggValue = true;
+        }
+        if (vegetarian.checked == true) {
+            vegetarianValue = true;
+        }
+        if (vegan.checked == true) {
+            veganValue = true;
+        }
 
         this.dataStore.set("recipeDR", null);
 
-        let result = await this.client.getRecipeByDR(gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
+        let result = await this.client.getRecipeByDR(glutenValue, dairyValue, eggValue, vegetarianValue, veganValue, this.errorHandler);
 
-        let dietaryRestrictions = document.getElementById("dietary-restrictions");
-
-        if (dietaryRestrictions.style.display === "none") {
-            dietaryRestrictions.style.display = "block";
-        } else {
-            dietaryRestrictions.style.display = "none";
-        }
+        let dietaryRestrictions = document.getElementById("hideMe");
+        let dietaryRestrictions2 = document.getElementById("hideMe2");
+        dietaryRestrictions.style.display = "none";
+        dietaryRestrictions2.style.display = "none";
 
         let resultsElement = document.getElementById("hidden-results");
 
@@ -160,12 +263,9 @@ class RecipePage extends BaseClass {
         let resultsElement2 = document.getElementById("dietary-restrictions");
         resultsElement2.style.display = "none";
 
-
-
         this.dataStore.set("recipeDR", result);
 
         if (!result) {
-
             this.errorHandler("Error doing GET!  Try again...");
         }
     }
@@ -177,7 +277,6 @@ class RecipePage extends BaseClass {
         console.log(id);
         let result = await this.client.getRecipeById(id, this.errorHandler);
         console.log(result);
-
     }
 
     async onCreate(event) {
