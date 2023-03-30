@@ -136,6 +136,12 @@ public class RecipeService {
                 recipeFromLambda.isVegetarian(), recipeFromLambda.isVegan(), recipeFromLambda.getRatings());
     }
 
+    public void deleteRecipe(String recipeId) {
+
+        lambdaRecipeServiceClient.deleteById(recipeId);
+        cache.evict(recipeId);
+
+    }
     //helper methods
 
     private Recipe recipeDataToRecipe(RecipeData data){

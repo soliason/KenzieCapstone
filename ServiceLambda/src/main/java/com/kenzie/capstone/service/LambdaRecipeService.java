@@ -90,6 +90,11 @@ public class LambdaRecipeService {
         return recipeResponse;
     }
 
+    public void deleteRecipeData(String recipeId) {
+
+        recipeDao.deleteRecipeData(recipeId);
+    }
+
     //helper functions
 
     private RecipeData recipeRecordToRecipeData(RecipeRecord record){
