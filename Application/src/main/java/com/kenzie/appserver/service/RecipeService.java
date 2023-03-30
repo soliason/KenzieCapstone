@@ -1,12 +1,10 @@
 package com.kenzie.appserver.service;
 
-import com.kenzie.appserver.config.CacheConfig;
 import com.kenzie.appserver.config.CacheStore;
 import com.kenzie.appserver.controller.model.DietaryRestrictionInfoRequest;
 import com.kenzie.appserver.controller.model.RecipeCreateRequest;
 import com.kenzie.appserver.controller.model.RecipeUpdateRequest;
 import com.kenzie.appserver.repositories.RecipeRepository;
-import com.kenzie.appserver.repositories.model.RecipeRecord;
 import com.kenzie.appserver.service.model.Recipe;
 import com.kenzie.capstone.service.client.LambdaRecipeServiceClient;
 import com.kenzie.capstone.service.model.*;
@@ -14,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.UUID.randomUUID;
 
 @Service
 public class RecipeService {
@@ -123,11 +119,11 @@ public class RecipeService {
         recipeUpdateRequestLambda.setTitle(recipe.getTitle());
         recipeUpdateRequestLambda.setIngredients(recipe.getIngredients());
         recipeUpdateRequestLambda.setSteps(recipe.getSteps());
-        recipeUpdateRequestLambda.setGlutenFree(recipe.isGlutenFree());
-        recipeUpdateRequestLambda.setDairyFree(recipe.isDairyFree());
-        recipeUpdateRequestLambda.setEggFree(recipe.isEggFree());
-        recipeUpdateRequestLambda.setVegetarian(recipe.isVegetarian());
-        recipeUpdateRequestLambda.setVegan(recipe.isVegan());
+        recipeUpdateRequestLambda.setIsGlutenFree(recipe.isGlutenFree());
+        recipeUpdateRequestLambda.setIsDairyFree(recipe.isDairyFree());
+        recipeUpdateRequestLambda.setIsEggFree(recipe.isEggFree());
+        recipeUpdateRequestLambda.setIsVegetarian(recipe.isVegetarian());
+        recipeUpdateRequestLambda.setIsVegan(recipe.isVegan());
         recipeUpdateRequestLambda.setRatings(recipe.getRatings());
         recipeUpdateRequestLambda.addRating(recipeUpdateRequest.getNewRating());
 
@@ -154,11 +150,11 @@ public class RecipeService {
 
     private DietaryRestrictionData dietaryRestrictionInfoRequestToData(DietaryRestrictionInfoRequest request){
         DietaryRestrictionData data = new DietaryRestrictionData();
-        data.setGlutenFree(request.isGlutenFree());
-        data.setDairyFree(request.isDairyFree());
-        data.setEggFree(request.isEggFree());
-        data.setVegetarian(request.isVegetarian());
-        data.setVegan(request.isVegan());
+        data.setIsGlutenFree(request.isGlutenFree());
+        data.setIsDairyFree(request.isDairyFree());
+        data.setIsEggFree(request.isEggFree());
+        data.setIsVegetarian(request.isVegetarian());
+        data.setIsVegan(request.isVegan());
         return data;
     }
 

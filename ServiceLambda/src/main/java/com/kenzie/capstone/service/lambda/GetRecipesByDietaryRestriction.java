@@ -66,11 +66,11 @@ public class GetRecipesByDietaryRestriction implements RequestHandler<APIGateway
     private DietaryRestrictionData mapToDietaryRestrictionData(Map<String, String> data) {
 
         DietaryRestrictionData dietaryRestrictionData = new DietaryRestrictionData();
-        dietaryRestrictionData.setGlutenFree(Boolean.parseBoolean(data.get("isGlutenFree")));
-        dietaryRestrictionData.setDairyFree(Boolean.parseBoolean(data.get("isDairyFree")));
-        dietaryRestrictionData.setEggFree(Boolean.parseBoolean(data.get("isEggFree")));
-        dietaryRestrictionData.setVegetarian(Boolean.parseBoolean(data.get("isVegetarian")));
-        dietaryRestrictionData.setVegan(Boolean.parseBoolean(data.get("isVegan")));
+        dietaryRestrictionData.setIsGlutenFree(Boolean.parseBoolean(data.get("isGlutenFree")));
+        dietaryRestrictionData.setIsDairyFree(Boolean.parseBoolean(data.get("isDairyFree")));
+        dietaryRestrictionData.setIsEggFree(Boolean.parseBoolean(data.get("isEggFree")));
+        dietaryRestrictionData.setIsVegetarian(Boolean.parseBoolean(data.get("isVegetarian")));
+        dietaryRestrictionData.setIsVegan(Boolean.parseBoolean(data.get("isVegan")));
 
         return dietaryRestrictionData;
     }

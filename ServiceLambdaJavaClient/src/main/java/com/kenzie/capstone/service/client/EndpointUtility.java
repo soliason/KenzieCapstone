@@ -5,6 +5,8 @@ import com.amazonaws.services.apigateway.AmazonApiGatewayClientBuilder;
 import com.amazonaws.services.apigateway.model.GetRestApisRequest;
 import com.amazonaws.services.apigateway.model.GetRestApisResult;
 import com.amazonaws.services.apigateway.model.RestApi;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -29,6 +31,8 @@ import java.util.regex.Pattern;
 
 public class EndpointUtility {
     private String apiEndpoint;
+
+    static final Logger log = LogManager.getLogger();
 
     public EndpointUtility() {
         this.apiEndpoint = getApiEndpint();
@@ -228,6 +232,7 @@ public class EndpointUtility {
                 .PUT(HttpRequest.BodyPublishers.ofString(data))
                 .build();
         try {
+            log.info("about to do client.send:" + request.toString());
             HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             int statusCode = httpResponse.statusCode();
@@ -253,6 +258,7 @@ public class EndpointUtility {
                 .GET()
                 .build();
         try {
+            log.info("about to do client.send:" + request.toString());
             HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             int statusCode = httpResponse.statusCode();

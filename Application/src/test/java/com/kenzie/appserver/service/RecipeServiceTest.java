@@ -9,7 +9,6 @@ import com.kenzie.appserver.service.model.Recipe;
 import com.kenzie.capstone.service.client.LambdaRecipeServiceClient;
 import com.kenzie.capstone.service.model.RecipeData;
 
-import com.kenzie.capstone.service.model.RecipeRequest;
 import com.kenzie.capstone.service.model.RecipeResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,11 +49,11 @@ public class RecipeServiceTest {
         ingredients.add("stuff");
         data.setSteps(steps);
         data.setIngredients(ingredients);
-        data.setGlutenFree(true);
-        data.setDairyFree(false);
-        data.setEggFree(false);
-        data.setVegetarian(false);
-        data.setVegan(false);
+        data.setIsGlutenFree(true);
+        data.setIsDairyFree(false);
+        data.setIsEggFree(false);
+        data.setIsVegetarian(false);
+        data.setIsVegan(false);
 
         //WHEN
         when(lambdaRecipeServiceClient.getRecipeData(id)).thenReturn(data);
@@ -101,11 +100,11 @@ public class RecipeServiceTest {
     void findByDietaryRestriction(){
         //GIVEN
         DietaryRestrictionInfoRequest request = new DietaryRestrictionInfoRequest();
-        request.setGlutenFree(true);
-        request.setDairyFree(false);
-        request.setEggFree(true);
-        request.setVegetarian(false);
-        request.setVegan(false);
+        request.setIsGlutenFree(true);
+        request.setIsDairyFree(false);
+        request.setIsEggFree(true);
+        request.setIsVegetarian(false);
+        request.setIsVegan(false);
 
         RecipeData data = new RecipeData();
         data.setRecipeId("testing123");
@@ -118,11 +117,11 @@ public class RecipeServiceTest {
         List<String> steps = new ArrayList<>();
         steps.add(step);
         data.setSteps(steps);
-        data.setGlutenFree(true);
-        data.setDairyFree(false);
-        data.setEggFree(true);
-        data.setVegetarian(false);
-        data.setVegan(false);
+        data.setIsGlutenFree(true);
+        data.setIsDairyFree(false);
+        data.setIsEggFree(true);
+        data.setIsVegetarian(false);
+        data.setIsVegan(false);
         data.setRatings(new ArrayList<>());
         List<RecipeData> recipeList = new ArrayList<>();
         recipeList.add(data);
@@ -142,21 +141,21 @@ public class RecipeServiceTest {
         request.setTitle("testRecipe");
         request.setIngredients(new ArrayList<>());
         request.setSteps(new ArrayList<>());
-        request.setGlutenFree(true);
-        request.setDairyFree(false);
-        request.setEggFree(false);
-        request.setVegetarian(true);
-        request.setVegan(false);
+        request.setIsGlutenFree(true);
+        request.setIsDairyFree(false);
+        request.setIsEggFree(false);
+        request.setIsVegetarian(true);
+        request.setIsVegan(false);
 
         RecipeResponse response = new RecipeResponse();
         response.setTitle("testRecipe");
         response.setIngredients(new ArrayList<>());
         response.setSteps(new ArrayList<>());
-        response.setGlutenFree(true);
-        response.setDairyFree(false);
-        response.setEggFree(false);
-        response.setVegetarian(true);
-        response.setVegan(false);
+        response.setIsGlutenFree(true);
+        response.setIsDairyFree(false);
+        response.setIsEggFree(false);
+        response.setIsVegetarian(true);
+        response.setIsVegan(false);
         response.setRecipeId("test");
         response.setRatings(new ArrayList<>());
 
@@ -191,11 +190,11 @@ public class RecipeServiceTest {
         recipeResponse.setTitle("test");
         recipeResponse.setIngredients(new ArrayList<>());
         recipeResponse.setSteps(new ArrayList<>());
-        recipeResponse.setGlutenFree(true);
-        recipeResponse.setDairyFree(false);
-        recipeResponse.setEggFree(false);
-        recipeResponse.setVegetarian(false);
-        recipeResponse.setVegan(false);
+        recipeResponse.setIsGlutenFree(true);
+        recipeResponse.setIsDairyFree(false);
+        recipeResponse.setIsEggFree(false);
+        recipeResponse.setIsVegetarian(false);
+        recipeResponse.setIsVegan(false);
         recipeResponse.setRecipeId("testing123");
         List<Integer> ratings = new ArrayList<>();
         ratings.add(recipeUpdateRequest.getNewRating());

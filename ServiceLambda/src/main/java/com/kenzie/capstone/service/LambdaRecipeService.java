@@ -2,6 +2,8 @@ package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.RecipeDao;
 import com.kenzie.capstone.service.model.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.UUID;
 public class LambdaRecipeService {
 
     private RecipeDao recipeDao;
+
+    static final Logger log = LogManager.getLogger();
 
     @Inject
     public LambdaRecipeService(RecipeDao recipeDao) {
@@ -66,6 +70,7 @@ public class LambdaRecipeService {
     public RecipeResponse updateRecipeData(RecipeUpdateRequestLambda recipeRequest){
         RecipeRecord recipeRecord = new RecipeRecord();
         recipeRecord.setRecipeId(recipeRequest.getRecipeId());
+        log.info("inside lambda recipe service - new log:" + recipeRecord.getRecipeId());
         recipeRecord.setTitle(recipeRequest.getTitle());
         recipeRecord.setIngredients(recipeRequest.getIngredients());
         recipeRecord.setSteps(recipeRequest.getSteps());
@@ -93,11 +98,11 @@ public class LambdaRecipeService {
         data.setTitle(record.getTitle());
         data.setIngredients(record.getIngredients());
         data.setSteps(record.getSteps());
-        data.setGlutenFree(record.getIsGlutenFree());
-        data.setDairyFree(record.getIsDairyFree());
-        data.setEggFree(record.getIsEggFree());
-        data.setVegetarian(record.getIsVegetarian());
-        data.setVegan(record.getIsVegan());
+        data.setIsGlutenFree(record.getIsGlutenFree());
+        data.setIsDairyFree(record.getIsDairyFree());
+        data.setIsEggFree(record.getIsEggFree());
+        data.setIsVegetarian(record.getIsVegetarian());
+        data.setIsVegan(record.getIsVegan());
         data.setRatings(record.getRatings());
         return data;
     }

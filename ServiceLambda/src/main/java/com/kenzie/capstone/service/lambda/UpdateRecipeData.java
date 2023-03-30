@@ -23,6 +23,9 @@ public class UpdateRecipeData implements RequestHandler<APIGatewayProxyRequestEv
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
+
+        log.info("made it to the UpdateRecipeData!!!");
+
         JsonStringToRecipeUpdateConverter jsonStringToRecipeConverter = new JsonStringToRecipeUpdateConverter();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -35,6 +38,7 @@ public class UpdateRecipeData implements RequestHandler<APIGatewayProxyRequestEv
 
         try {
             RecipeUpdateRequestLambda recipeRequest = jsonStringToRecipeConverter.convert(input.getBody());
+            log.info("new log statement:" + recipeRequest.getRecipeId());
             RecipeResponse recipeResponse = lambdaRecipeService.updateRecipeData(recipeRequest);
 
             return response
