@@ -13,7 +13,7 @@ export default class RecipeGuiClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getRecipeByDR', 'getRecipeById', 'createRecipe', 'testPut'];
+        const methodsToBind = ['clientLoaded', 'testPut', 'getRecipeByDR', 'getRecipeById', 'createRecipe'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -40,15 +40,15 @@ export default class RecipeGuiClient extends BaseClass {
 
           try {
             const response = await this.client.put(`/recipe/rating`, {
-                recipeId: "2a3e2276-49ab-4c51-8f51-dc2b856f6a07",
-                newRating: 2,
+                recipeId: recipeId,
+                newRating: rating,
 
             });
             return response.data;
           } catch (error) {
             this.handleError("getRecipe", error, errorCallback);
           }
-        }
+    }
 
     async getRecipeById(id, errorCallback) {
         console.log("hitting here");

@@ -21,70 +21,77 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
+                <a class="nav-link" href="index.html">Home</a>
                 <a class="nav-link active" aria-current="page" href="recipe.html">Recipes</a>
                 <a class="nav-link" href="postRecipe.html">Add Your Own Recipe</a>
-                <a class="nav-link" href="index.html">Home</a>
             </div>
         </div>
     </div>
 </nav>
 <div class="card" id = "dietary-restrictions">
-    <h4>Choose Your Dietary Restriction(s)</h4>
-    <form class="card-content" id="get-by-res-form">
-        <p class="form-field">
-            <label>Gluten Free</label>
-            <select class="form-select" id="gluten-field" aria-label="Default select example">
-                <option selected>True or False</option>
-                <option value=true>True</option>
-                <option value=false>False</option>
-            </select>
-        </p>
-        <p class="form-field">
-            <label>Dairy Free</label>
-            <select class="form-select" id="dairy-field" aria-label="Default select example">
-                <option selected>True or False</option>
-                <option value=true>True</option>
-                <option value=false>False</option>
-            </select>
-        </p>
-        <p class="form-field">
-            <label>Egg Free</label>
-            <select class="form-select" id="egg-field" aria-label="Default select example">
-                <option selected>True or False</option>
-                <option value=true>True</option>
-                <option value=false>False</option>
-            </select>
-        </p>
-        <p class="form-field">
-            <label>Vegetarian</label>
-            <select class="form-select" id="vegetarian-field" aria-label="Default select example">
-                <option selected>True or False</option>
-                <option value=true>True</option>
-                <option value=false>False</option>
-            </select>
-        </p>
-        <p class="form-field">
-            <label>Vegan</label>
-            <select class="form-select" id="vegan-field" aria-label="Default select example">
-                <option selected>True or False</option>
-                <option value=true>True</option>
-                <option value=false>False</option>
-            </select>
-        </p>
-        <button type="submit">See Recipes Matching These Dietary Restrictions</button>
-
-    </form>
+    <div id = "hideMe" display = "block">
+        <h4>Choose Your Dietary Restriction(s) To See Your Recipe Choices</h4>
+        <form>
+            <label>
+                <input type="checkbox" id="GF" value="true"> Gluten Free
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" id="DF" value="true"> Dairy Free
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" id="EF" value="true"> Egg Free
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" id="vegetarian" value="true"> Vegetarian
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" id="vegan" value="true"> Vegan
+            </label>
+            <br>
+            <button type="submit" id="submitBtn">Search For Recipes</button>
+        </form>
+    </div>
+    <div id = "hideMe2">
+        <h4>Or Select Your Dietary Restrictions and Let The Dream Team Choose Your Meal</h4>
+        <form>
+            <label>
+                <input type="checkbox" id="GF2" value="true"> Gluten Free
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" id="DF2" value="true"> Dairy Free
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" id="EF2" value="true"> Egg Free
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" id="vegetarian2" value="true"> Vegetarian
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" id="vegan2" value="true"> Vegan
+            </label>
+            <br>
+            <button type="submit" id="submitBtn2">Let The Dream Team Choose For You</button>
+        </form>
+    </div>
 </div>
 <div id = "hidden-results">
     <div class="card" id="result2">
         <h1>Recipes:</h1>
         <p id="result-getByDR"></p>
     </div>
-    <div class="card" id="result3">
-        <h1>Recipe:</h1>
-        <p id="result-getById"></p>
-        <button type="submit">COMING SOON: Or... I'm Feeling Lucky! Let the Dream Team Choose Dinner</button>
-    </div>
+</div>
+<div class="card" id="result3">
+    <h1>Recipe:</h1>
+    <p id="result-getById"></p>
+</div>
 </div>
 </body>
 </html>

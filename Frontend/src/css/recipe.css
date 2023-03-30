@@ -43,7 +43,19 @@
     display: none;
 }
 
+#result3 {
+    display: none;
+}
+
 #dietary-restrictions {
+    display: block;
+}
+
+#hideMe {
+    display: block;
+}
+
+#hideMe2 {
     display: block;
 }
 
