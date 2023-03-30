@@ -33,11 +33,11 @@ public class RecipeController {
         recipeResponse.setTitle(recipe.getTitle());
         recipeResponse.setIngredients(recipe.getIngredients());
         recipeResponse.setSteps(recipe.getSteps());
-        recipeResponse.setGlutenFree(recipe.isGlutenFree());
-        recipeResponse.setDairyFree(recipe.isDairyFree());
-        recipeResponse.setEggFree(recipe.isEggFree());
-        recipeResponse.setVegetarian(recipe.isVegetarian());
-        recipeResponse.setVegan(recipe.isVegan());
+        recipeResponse.setIsGlutenFree(recipe.isGlutenFree());
+        recipeResponse.setIsDairyFree(recipe.isDairyFree());
+        recipeResponse.setIsEggFree(recipe.isEggFree());
+        recipeResponse.setIsVegetarian(recipe.isVegetarian());
+        recipeResponse.setIsVegan(recipe.isVegan());
         recipeResponse.setRatings(recipe.getRatings());
 
         return ResponseEntity.ok(recipeResponse);
@@ -54,11 +54,11 @@ public class RecipeController {
         recipeResponse.setTitle(recipe.getTitle());
         recipeResponse.setIngredients(recipe.getIngredients());
         recipeResponse.setSteps(recipe.getSteps());
-        recipeResponse.setGlutenFree(recipe.isGlutenFree());
-        recipeResponse.setDairyFree(recipe.isDairyFree());
-        recipeResponse.setEggFree(recipe.isEggFree());
-        recipeResponse.setVegetarian(recipe.isVegetarian());
-        recipeResponse.setVegan(recipe.isVegan());
+        recipeResponse.setIsGlutenFree(recipe.isGlutenFree());
+        recipeResponse.setIsDairyFree(recipe.isDairyFree());
+        recipeResponse.setIsEggFree(recipe.isEggFree());
+        recipeResponse.setIsVegetarian(recipe.isVegetarian());
+        recipeResponse.setIsVegan(recipe.isVegan());
         recipeResponse.setRatings(recipe.getRatings());
 
         return ResponseEntity.ok(recipeResponse);
@@ -73,11 +73,11 @@ public class RecipeController {
             @PathVariable ("isVegan") Boolean isVegan){
 
         DietaryRestrictionInfoRequest dietaryRestrictionInfoRequest = new DietaryRestrictionInfoRequest ();
-        dietaryRestrictionInfoRequest.setGlutenFree(isGlutenFree);
-        dietaryRestrictionInfoRequest.setDairyFree(isDairyFree);
-        dietaryRestrictionInfoRequest.setEggFree(isEggFree);
-        dietaryRestrictionInfoRequest.setVegetarian(isVegetarian);
-        dietaryRestrictionInfoRequest.setVegan(isVegan);
+        dietaryRestrictionInfoRequest.setIsGlutenFree(isGlutenFree);
+        dietaryRestrictionInfoRequest.setIsDairyFree(isDairyFree);
+        dietaryRestrictionInfoRequest.setIsEggFree(isEggFree);
+        dietaryRestrictionInfoRequest.setIsVegetarian(isVegetarian);
+        dietaryRestrictionInfoRequest.setIsVegan(isVegan);
 
         List<Recipe> recipes = recipeService.findByDietaryRestriction(dietaryRestrictionInfoRequest);
 
@@ -112,11 +112,11 @@ public class RecipeController {
         recipeResponse.setTitle(recipe.getTitle());
         recipeResponse.setIngredients(recipe.getIngredients());
         recipeResponse.setSteps(recipe.getSteps());
-        recipeResponse.setGlutenFree(recipe.isGlutenFree());
-        recipeResponse.setDairyFree(recipe.isDairyFree());
-        recipeResponse.setEggFree(recipe.isEggFree());
-        recipeResponse.setVegetarian(recipe.isVegetarian());
-        recipeResponse.setVegan(recipe.isVegan());
+        recipeResponse.setIsGlutenFree(recipe.isGlutenFree());
+        recipeResponse.setIsDairyFree(recipe.isDairyFree());
+        recipeResponse.setIsEggFree(recipe.isEggFree());
+        recipeResponse.setIsVegetarian(recipe.isVegetarian());
+        recipeResponse.setIsVegan(recipe.isVegan());
         recipeResponse.setRatings(recipe.getRatings());
 
         return recipeResponse;

@@ -3,7 +3,6 @@ package com.kenzie.capstone.service.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 @JsonInclude (JsonInclude.Include.NON_NULL)
@@ -99,7 +98,7 @@ public class RecipeData {
         return isGlutenFree;
     }
 
-    public void setGlutenFree(boolean glutenFree) {
+    public void setIsGlutenFree(boolean glutenFree) {
         isGlutenFree = glutenFree;
     }
 
@@ -107,7 +106,7 @@ public class RecipeData {
         return isDairyFree;
     }
 
-    public void setDairyFree(boolean dairyFree) {
+    public void setIsDairyFree(boolean dairyFree) {
         isDairyFree = dairyFree;
     }
 
@@ -115,7 +114,7 @@ public class RecipeData {
         return isEggFree;
     }
 
-    public void setEggFree(boolean eggFree) {
+    public void setIsEggFree(boolean eggFree) {
         isEggFree = eggFree;
     }
 
@@ -123,7 +122,7 @@ public class RecipeData {
         return isVegetarian;
     }
 
-    public void setVegetarian(boolean vegetarian) {
+    public void setIsVegetarian(boolean vegetarian) {
         isVegetarian = vegetarian;
     }
 
@@ -131,7 +130,7 @@ public class RecipeData {
         return isVegan;
     }
 
-    public void setVegan(boolean vegan) {
+    public void setIsVegan(boolean vegan) {
         isVegan = vegan;
     }
 

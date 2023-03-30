@@ -68,11 +68,14 @@ public class RecipeDao {
 
     public RecipeRecord updateRecipeData(RecipeRecord recipeRecord){
 
+
+
         try {
             mapper.save(recipeRecord, new DynamoDBSaveExpression()
                     .withExpected(ImmutableMap.of(
                             "recipeId",
-                            new ExpectedAttributeValue().withExists(true)
+                                new ExpectedAttributeValue().withValue(new AttributeValue(recipeRecord.getRecipeId())).withExists(true)
+///                            new ExpectedAttributeValue().withExists(true)
                     )));
         } catch (ConditionalCheckFailedException e) {
             throw new IllegalArgumentException("recipeId does not exist");

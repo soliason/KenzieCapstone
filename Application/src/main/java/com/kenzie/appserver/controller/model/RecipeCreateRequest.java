@@ -67,7 +67,7 @@ public class RecipeCreateRequest {
         return isGlutenFree;
     }
 
-    public void setGlutenFree(boolean glutenFree) {
+    public void setIsGlutenFree(boolean glutenFree) {
         isGlutenFree = glutenFree;
     }
 
@@ -75,7 +75,7 @@ public class RecipeCreateRequest {
         return isDairyFree;
     }
 
-    public void setDairyFree(boolean dairyFree) {
+    public void setIsDairyFree(boolean dairyFree) {
         isDairyFree = dairyFree;
     }
 
@@ -83,7 +83,7 @@ public class RecipeCreateRequest {
         return isEggFree;
     }
 
-    public void setEggFree(boolean eggFree) {
+    public void setIsEggFree(boolean eggFree) {
         isEggFree = eggFree;
     }
 
@@ -91,7 +91,7 @@ public class RecipeCreateRequest {
         return isVegetarian;
     }
 
-    public void setVegetarian(boolean vegetarian) {
+    public void setIsVegetarian(boolean vegetarian) {
         isVegetarian = vegetarian;
     }
 
@@ -99,7 +99,7 @@ public class RecipeCreateRequest {
         return isVegan;
     }
 
-    public void setVegan(boolean vegan) {
+    public void setIsVegan(boolean vegan) {
         isVegan = vegan;
     }
 }

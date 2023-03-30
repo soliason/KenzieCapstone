@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.capstone.service.model.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class LambdaRecipeServiceClient {
     //private static final String ADD_REFERRAL_ENDPOINT = "recipe";
 
     private ObjectMapper mapper;
+
+    static final Logger log = LogManager.getLogger();
 
     public LambdaRecipeServiceClient() {this.mapper = new ObjectMapper();}
 
@@ -87,14 +91,21 @@ public class LambdaRecipeServiceClient {
 
     public RecipeResponse updateRecipeData(RecipeUpdateRequestLambda recipeUpdateRequestLambda){
         EndpointUtility endpointUtility = new EndpointUtility();
+        log.info("LambdaRecipeServiceClient updateRecipeData method line 94 title:" + recipeUpdateRequestLambda.getTitle());
+        log.info("LambdaRecipeServiceClient updateRecipeData method line 95 id:" + recipeUpdateRequestLambda.getRecipeId());
 
         String request;
         try {
-            request = mapper.writeValueAsString(recipeUpdateRequestLambda);
+           request = mapper.writeValueAsString(recipeUpdateRequestLambda);
+///////            request = mapper.writeValueAsString(UPDATE_RATING_ENDPOINT.replace("{recipeId}", recipeUpdateRequestLambda.getRecipeId()));
+            log.info("LambdaRecipeServiceClient updateRecipeData method line 100 request:" + request.toString());
         } catch(JsonProcessingException e) {
             throw new ApiGatewayException("Unable to serialize request: " + e);
         }
+
         String response = endpointUtility.putEndpoint(UPDATE_RATING_ENDPOINT, request);
+//////        String response = endpointUtility.putEndpoint(request, recipeUpdateRequestLambda.setRatings();
+        log.info("LambdaRecipeServiceClient updateRecipeData method line 106 response:" + response.toString());
         RecipeResponse recipeResponse;
         try {
             recipeResponse = mapper.readValue(response, RecipeResponse.class);

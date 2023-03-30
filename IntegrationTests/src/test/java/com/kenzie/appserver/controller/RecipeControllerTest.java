@@ -3,9 +3,7 @@ package com.kenzie.appserver.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.controller.model.*;
-import com.kenzie.appserver.service.ExampleService;
 import com.kenzie.appserver.service.RecipeService;
-import com.kenzie.appserver.service.model.Example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -20,9 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 
 import static org.hamcrest.Matchers.contains;
@@ -97,11 +93,11 @@ class RecipeControllerTest {
         recipeCreateRequest.setTitle(title);
         recipeCreateRequest.setIngredients(ingredients);
         recipeCreateRequest.setSteps(steps);
-        recipeCreateRequest.setGlutenFree(true);
-        recipeCreateRequest.setDairyFree(true);
-        recipeCreateRequest.setEggFree(false);
-        recipeCreateRequest.setVegetarian(false);
-        recipeCreateRequest.setVegan(false);
+        recipeCreateRequest.setIsGlutenFree(true);
+        recipeCreateRequest.setIsDairyFree(true);
+        recipeCreateRequest.setIsEggFree(false);
+        recipeCreateRequest.setIsVegetarian(false);
+        recipeCreateRequest.setIsVegan(false);
 
         mapper.registerModule(new JavaTimeModule());
 
@@ -124,11 +120,11 @@ class RecipeControllerTest {
         request.setTitle("testRecipe");
         request.setIngredients(new ArrayList<>());
         request.setSteps(new ArrayList<>());
-        request.setGlutenFree(true);
-        request.setDairyFree(false);
-        request.setEggFree(false);
-        request.setVegetarian(true);
-        request.setVegan(false);
+        request.setIsGlutenFree(false);
+        request.setIsDairyFree(false);
+        request.setIsEggFree(false);
+        request.setIsVegetarian(false);
+        request.setIsVegan(false);
 
         Recipe createdRecipe = recipeService.addNewRecipe(request);
 
