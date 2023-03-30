@@ -157,6 +157,11 @@ class RecipePage extends BaseClass {
             resultsElement.style.display = "block";
         }
 
+        let resultsElement2 = document.getElementById("dietary-restrictions");
+        resultsElement2.style.display = "none";
+
+
+
         this.dataStore.set("recipeDR", result);
 
         if (!result) {
