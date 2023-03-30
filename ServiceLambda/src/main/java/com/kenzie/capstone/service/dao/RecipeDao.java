@@ -133,6 +133,10 @@ public class RecipeDao {
             throw new IllegalArgumentException("something else bad happened");
         }
     }
-    
+
+    public void deleteRecipeData(String recipeId) {
+
+        mapper.delete(recipeId);
+    }
 
 }

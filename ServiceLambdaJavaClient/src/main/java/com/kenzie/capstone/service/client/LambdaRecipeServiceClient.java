@@ -21,7 +21,7 @@ public class LambdaRecipeServiceClient {
     private static final String GET_DIETARY_RESTRICTION_ENDPOINT =
             "recipe/dietaryRestriction/{isGlutenFree}/{isDairyFree}/{isEggFree}/{isVegetarian}/{isVegan}";
 
-    //private static final String ADD_REFERRAL_ENDPOINT = "recipe";
+    private static final String DELETE_RECIPE_ENDPOINT = "recipe/delete/{recipeId}";
 
     private ObjectMapper mapper;
 
@@ -113,5 +113,25 @@ public class LambdaRecipeServiceClient {
             throw new ApiGatewayException ("Unable to map deserialize JSON: " + e);
         }
         return recipeResponse;
+    }
+
+    public void deleteById(String recipeId) {
+
+        EndpointUtility endpointUtility = new EndpointUtility();
+
+//        String request;
+//        try {
+//            request = mapper.writeValueAsString(recipeId);
+//        } catch(JsonProcessingException e) {
+//            throw new ApiGatewayException("Unable to serialize request: " + e);
+//        }
+        String response = endpointUtility.deleteEndpoint(DELETE_RECIPE_ENDPOINT.replace("{recipeId}", recipeId));
+//        RecipeResponse recipeResponse;
+//        try {
+//            recipeResponse = mapper.readValue(response, RecipeResponse.class);
+//        } catch (Exception e) {
+//            throw new ApiGatewayException ("Unable to map deserialize JSON: " + e);
+//        }
+
     }
 }
