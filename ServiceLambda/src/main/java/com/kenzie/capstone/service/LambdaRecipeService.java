@@ -46,13 +46,12 @@ public class LambdaRecipeService {
         recipeRecord.setRatings(recipeRequest.getRatings());
 
         recipeDao.setRecipeData(recipeRecord);
+
         RecipeResponse recipeResponse = new RecipeResponse(recipeId, recipeRequest.getTitle(), recipeRequest.getIngredients(),
                 recipeRequest.getSteps(), recipeRequest.isGlutenFree(), recipeRequest.isDairyFree(), recipeRequest.isEggFree(),
                 recipeRequest.isVegetarian (), recipeRequest.isVegan(), recipeRequest.getRatings());
 
         return recipeResponse;
-//        return new RecipeData(recipeId, title, ingredients, steps, isGlutenFree, isDairyFree,
-//                                    isEggFree, isVegetarian, isVegan);
     }
 
     public List<RecipeData> getRecipesByDietaryRestriction(DietaryRestrictionData data){
