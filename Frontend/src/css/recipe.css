@@ -45,6 +45,10 @@
 
 #result3 {
     display: none;
+    cursor: pointer;
+}
+#result2 {
+    cursor: pointer;
 }
 
 #dietary-restrictions {
@@ -98,6 +102,7 @@
 
 #hidden-results {
     display: none;
+    cursor: pointer;
 }
 
 #dietary-restrictions {
