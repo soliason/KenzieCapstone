@@ -92,6 +92,20 @@ public class RecipeDao {
             StringBuilder sb = new StringBuilder();
             List<String> filterExpressions = new ArrayList<>();
 
+            if (!dietaryRestrictionInfo.isGlutenFree() &&
+                    !dietaryRestrictionInfo.isDairyFree() &&
+                    !dietaryRestrictionInfo.isEggFree() &&
+                    !dietaryRestrictionInfo.isVegetarian() &&
+                    !dietaryRestrictionInfo.isVegan()){
+                try {
+                    PaginatedScanList<RecipeRecord> recipeList = mapper.scan(RecipeRecord.class, scanExpression);
+                    return recipeList;
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                    throw new IllegalArgumentException("can't get all the recipes");
+                }
+            }
+
             if (dietaryRestrictionInfo.isGlutenFree()) {
                 valueMap.put(":glutenFree", new AttributeValue().withN(String.valueOf(1)));
                 filterExpressions.add("isGlutenFree = :glutenFree");
