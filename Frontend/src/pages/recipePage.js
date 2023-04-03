@@ -6,7 +6,7 @@ class RecipePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'rateMe', 'getRecipesMatchingDR', 'getRandomRecipe', 'onCreate', 'renderRecipe', 'renderRecipe2', 'getRecipe'], this);
+        this.bindClassMethods(['onGet', 'rateMe', 'getRecipesMatchingDR', 'getRandomRecipe', 'onCreate', 'renderRecipe', 'renderRecipeSummary', 'getRecipe'], this);
         this.dataStore = new DataStore();
     }
 
@@ -19,7 +19,7 @@ class RecipePage extends BaseClass {
         this.client = new RecipeClient();
 
         this.dataStore.addChangeListener(this.renderRecipe)
-        this.dataStore.addChangeListener(this.renderRecipe2)
+        this.dataStore.addChangeListener(this.renderRecipeSummary)
     }
     // Render Methods --------------------------------------------------------------------------------------------------
 
@@ -70,17 +70,18 @@ class RecipePage extends BaseClass {
             }
         }
 
-    async renderRecipe2() {
+    async renderRecipeSummary() {
             let resultArea = document.getElementById("result-getByDR");
-
             const recipes = this.dataStore.get("recipeDR");
 
             if (recipes) {
+
                         resultArea.innerHTML = `
                                 <div>
-                    ${recipes.map((recipe) => ` <div>
-                                            <h1 id = ${recipe.recipeId}>${recipe.title}</h1>
+                    ${recipes.map((recipe) => ` <div class = "card-body">
+                                            <h5 class="card-title">${recipe.title}</h5>
                                             <h2>Rating: ${recipe.averageRating} of 4 Stars</h2>
+                                            <a id=${recipe.recipeId} class="btn btn-primary">View Recipe</a>
                                         </div>
                                     `).join('')}
                     </div>
@@ -194,11 +195,10 @@ class RecipePage extends BaseClass {
     async onGet(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
-        console.log("onGet");
 
         let id = event.target.id;
 
-        this.dataStore.set("recipe", null);
+        this.dataStore.set("recipeDR", null);
         let dietaryRestrictions = document.getElementById("hideMe");
 
         let result = await this.client.getRecipeById(id, this.errorHandler);
