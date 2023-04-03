@@ -13,6 +13,7 @@ import com.kenzie.capstone.service.model.RecipeResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,26 @@ public class RecipeServiceTest {
 
         //THEN
         Assertions.assertEquals(id, recipe.getRecipeId());
+    }
+
+    @Test
+    void findById_idNull_throwNewIllegalArgumentException(){
+        //GIVEN
+        String id = null;
+
+        //WHEN
+        //THEN
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.findById(id));
+    }
+
+    @Test
+    void findById_idEmpty_throwNewIllegalArgumentException(){
+        //GIVEN
+        String id = "";
+
+        //WHEN
+        //THEN
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.findById(id));
     }
 
     @Test
@@ -168,6 +189,46 @@ public class RecipeServiceTest {
     }
 
     @Test
+    void addNewRecipe_nullTitle_throwsNewResponseStatusException() {
+
+        //GIVEN
+        RecipeCreateRequest request = new RecipeCreateRequest();
+        request.setTitle(null);
+        request.setIngredients(new ArrayList<>());
+        request.setSteps(new ArrayList<>());
+        request.setIsGlutenFree(true);
+        request.setIsDairyFree(false);
+        request.setIsEggFree(false);
+        request.setIsVegetarian(true);
+        request.setIsVegan(false);
+
+        //WHEN
+        //THEN
+        Assertions.assertThrows(ResponseStatusException.class, () -> recipeService.addNewRecipe(request));
+
+    }
+
+    @Test
+    void addNewRecipe_emptyTitle_throwsNewResponseStatusException() {
+
+        //GIVEN
+        RecipeCreateRequest request = new RecipeCreateRequest();
+        request.setTitle("");
+        request.setIngredients(new ArrayList<>());
+        request.setSteps(new ArrayList<>());
+        request.setIsGlutenFree(true);
+        request.setIsDairyFree(false);
+        request.setIsEggFree(false);
+        request.setIsVegetarian(true);
+        request.setIsVegan(false);
+
+        //WHEN
+        //THEN
+        Assertions.assertThrows(ResponseStatusException.class, () -> recipeService.addNewRecipe(request));
+
+    }
+
+    @Test
     void updateRecipe(){
         //GIVEN
         RecipeUpdateRequest recipeUpdateRequest = new RecipeUpdateRequest();
@@ -211,4 +272,87 @@ public class RecipeServiceTest {
         Assertions.assertTrue(returnedRecipe.getRatings().contains(5));
     }
 
+    @Test
+    void DeleteById_RecipeDeleted() {
+        //GIVEN
+        String id = UUID.randomUUID().toString();
+
+        //WHEN
+        recipeService.deleteRecipe(id);
+
+        //THEN
+        verify(lambdaRecipeServiceClient, times(1)).deleteById(id);
+        verify(cache, times(1)).evict(id);
+    }
+
+    @Test
+    void DeleteById_IdNull_ThrowsNewIllegalArgumentException() {
+        //GIVEN
+        String id = null;
+
+        //WHEN
+        //THEN
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> recipeService.deleteRecipe(id));
+
+    }
+
+    @Test
+    void UpdateRecipe_NullRecipeId_ThrowsNewIllegalArgumentException() {
+        //GIVEN
+        String id = null;
+
+        RecipeUpdateRequest recipeUpdateRequest = new RecipeUpdateRequest();
+        recipeUpdateRequest.setRecipeId(id);
+        recipeUpdateRequest.setNewRating(3);
+
+        //WHEN
+        //THEN
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.updateRecipe(recipeUpdateRequest));
+
+    }
+
+    @Test
+    void UpdateRecipe_InvalidRating_ThrowsNewIllegalArgumentException() {
+        //GIVEN
+        String id = UUID.randomUUID().toString();
+
+        RecipeUpdateRequest recipeUpdateRequest = new RecipeUpdateRequest();
+        recipeUpdateRequest.setRecipeId(id);
+        recipeUpdateRequest.setNewRating(9);
+
+        //WHEN
+        //THEN
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.updateRecipe(recipeUpdateRequest));
+
+    }
+
+    @Test
+    void UpdateRecipe_EmptyRecipeId_ThrowsNewIllegalArgumentException() {
+        //GIVEN
+        String id = "";
+
+        RecipeUpdateRequest recipeUpdateRequest = new RecipeUpdateRequest();
+        recipeUpdateRequest.setRecipeId(id);
+        recipeUpdateRequest.setNewRating(3);
+
+        //WHEN
+        //THEN
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.updateRecipe(recipeUpdateRequest));
+
+    }
+
+    @Test
+    void UpdateRecipe_NullRating_ThrowsNewIllegalArgumentException() {
+        //GIVEN
+        String id = UUID.randomUUID().toString();
+
+        RecipeUpdateRequest recipeUpdateRequest = new RecipeUpdateRequest();
+        recipeUpdateRequest.setRecipeId(id);
+        recipeUpdateRequest.setNewRating(null);
+
+        //WHEN
+        //THEN
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.updateRecipe(recipeUpdateRequest));
+
+    }
 }
