@@ -39,7 +39,7 @@ public class RecipeDao {
         return recipeData;
     }
 
-    public List<RecipeRecord> getRecipeData(String recipeId) {
+    public RecipeRecord getRecipeData(String recipeId) {
         RecipeRecord recipeRecord = new RecipeRecord();
         recipeRecord.setRecipeId(recipeId);
 
@@ -47,7 +47,7 @@ public class RecipeDao {
                 .withHashKeyValues(recipeRecord)
                 .withConsistentRead(false);
 
-        return mapper.query(RecipeRecord.class, queryExpression);
+        return mapper.load(RecipeRecord.class, queryExpression);
     }
 
     public RecipeRecord setRecipeData(RecipeRecord recipeRecord) {
@@ -146,7 +146,15 @@ public class RecipeDao {
 
     public void deleteRecipeData(String recipeId) {
 
-        mapper.delete(recipeId);
+        log.info("RecipeID: " + recipeId);
+        RecipeRecord recipeRecord = new RecipeRecord();
+        recipeRecord.setRecipeId(recipeId);
+        DynamoDBDeleteExpression deleteExpression = new DynamoDBDeleteExpression()
+                .withExpected(ImmutableMap.of("recipeId", new ExpectedAttributeValue()
+                        .withValue(new AttributeValue(recipeId))
+                        .withExists(true)));
+        mapper.delete(recipeRecord, deleteExpression);
+
     }
 
 }
