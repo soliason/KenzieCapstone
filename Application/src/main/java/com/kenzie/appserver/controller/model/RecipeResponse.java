@@ -38,6 +38,9 @@ public class RecipeResponse {
     @JsonProperty("ratings")
     private List<Integer> ratings;
 
+    @JsonProperty("averageRating")
+    private Double averageRating;
+
     public String getRecipeId() {
         return recipeId;
     }
@@ -116,5 +119,16 @@ public class RecipeResponse {
 
     public void setRatings(List<Integer> ratings) {
         this.ratings = ratings;
+    }
+
+    public double getAverageRating(){
+        return ratings.stream()
+                .mapToDouble(a -> a)
+                .average()
+                .orElse(0.0);
+    }
+
+    public void setAverageRating() {
+        this.averageRating = Math.ceil(getAverageRating());
     }
 }

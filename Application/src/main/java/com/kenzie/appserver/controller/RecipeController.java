@@ -118,6 +118,7 @@ public class RecipeController {
         recipeResponse.setIsVegetarian(recipe.isVegetarian());
         recipeResponse.setIsVegan(recipe.isVegan());
         recipeResponse.setRatings(recipe.getRatings());
+        recipeResponse.setAverageRating();
 
         return recipeResponse;
     }
