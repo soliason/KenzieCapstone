@@ -23,12 +23,12 @@ public class LambdaRecipeService {
 
     public RecipeData getRecipeData(String recipeId) {
 
-        List<RecipeRecord> records = recipeDao.getRecipeData(recipeId);
+        RecipeRecord record = recipeDao.getRecipeData(recipeId);
 
-        if (records.size() > 0) {
-            return new RecipeData(records.get(0).getRecipeId(), records.get(0).getTitle(), records.get(0).getIngredients(),
-                    records.get(0).getSteps(), records.get(0).getIsGlutenFree(), records.get(0).getIsDairyFree(),
-                    records.get(0).getIsEggFree(), records.get(0).getIsVegetarian(), records.get(0).getIsVegan(), records.get(0).getRatings());
+        if (record != null) {
+            return new RecipeData(record.getRecipeId(), record.getTitle(), record.getIngredients(),
+                    record.getSteps(), record.getIsGlutenFree(), record.getIsDairyFree(),
+                    record.getIsEggFree(), record.getIsVegetarian(), record.getIsVegan(), record.getRatings());
         }
         return null;
     }
