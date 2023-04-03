@@ -9,7 +9,6 @@ import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaRecipeService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.model.RecipeData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,15 +43,9 @@ public class DeleteRecipeData implements RequestHandler<APIGatewayProxyRequestEv
         }
 
         try {
-///            RecipeData recipeData = lambdaRecipeService.deleteRecipeData(recipeId);
             lambdaRecipeService.deleteRecipeData(recipeId);
-
-///            String output = gson.toJson(recipeData);
-
             return response
                     .withStatusCode(200);
-///                    .withBody(output);
-
         } catch (Exception e) {
             return response
                     .withStatusCode(400)
