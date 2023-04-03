@@ -11,7 +11,6 @@ import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.DietaryRestrictionData;
 import com.kenzie.capstone.service.model.RecipeData;
 import com.kenzie.capstone.service.model.RecipeRecord;
-import com.kenzie.capstone.service.model.RecipeRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -68,14 +67,11 @@ public class RecipeDao {
 
     public RecipeRecord updateRecipeData(RecipeRecord recipeRecord){
 
-
-
         try {
             mapper.save(recipeRecord, new DynamoDBSaveExpression()
                     .withExpected(ImmutableMap.of(
                             "recipeId",
                                 new ExpectedAttributeValue().withValue(new AttributeValue(recipeRecord.getRecipeId())).withExists(true)
-///                            new ExpectedAttributeValue().withExists(true)
                     )));
         } catch (ConditionalCheckFailedException e) {
             throw new IllegalArgumentException("recipeId does not exist");

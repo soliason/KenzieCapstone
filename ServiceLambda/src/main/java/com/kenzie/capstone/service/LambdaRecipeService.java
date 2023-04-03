@@ -22,7 +22,9 @@ public class LambdaRecipeService {
     }
 
     public RecipeData getRecipeData(String recipeId) {
+
         List<RecipeRecord> records = recipeDao.getRecipeData(recipeId);
+
         if (records.size() > 0) {
             return new RecipeData(records.get(0).getRecipeId(), records.get(0).getTitle(), records.get(0).getIngredients(),
                     records.get(0).getSteps(), records.get(0).getIsGlutenFree(), records.get(0).getIsDairyFree(),
@@ -32,6 +34,7 @@ public class LambdaRecipeService {
     }
 
     public RecipeResponse setRecipeData(RecipeRequest recipeRequest) {
+
         String recipeId = UUID.randomUUID().toString();
         RecipeRecord recipeRecord =  new RecipeRecord();
         recipeRecord.setRecipeId(recipeId);
@@ -69,7 +72,6 @@ public class LambdaRecipeService {
     public RecipeResponse updateRecipeData(RecipeUpdateRequestLambda recipeRequest){
         RecipeRecord recipeRecord = new RecipeRecord();
         recipeRecord.setRecipeId(recipeRequest.getRecipeId());
-        log.info("inside lambda recipe service - new log:" + recipeRecord.getRecipeId());
         recipeRecord.setTitle(recipeRequest.getTitle());
         recipeRecord.setIngredients(recipeRequest.getIngredients());
         recipeRecord.setSteps(recipeRequest.getSteps());

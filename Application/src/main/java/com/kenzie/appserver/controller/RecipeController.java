@@ -4,11 +4,14 @@ import com.kenzie.appserver.controller.model.*;
 import com.kenzie.appserver.service.RecipeService;
 
 import com.kenzie.appserver.service.model.Recipe;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/recipe")
@@ -23,7 +26,14 @@ public class RecipeController {
     @GetMapping("/{recipeId}")
     public ResponseEntity<RecipeResponse> getRecipeById(@PathVariable("recipeId") String recipeId) {
 
+        try {
+            UUID.fromString(recipeId);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Recipe Id");
+        }
+
         Recipe recipe = recipeService.findById(recipeId);
+
         if (recipe == null) {
             return ResponseEntity.notFound().build();
         }
@@ -46,6 +56,10 @@ public class RecipeController {
 
     @PostMapping
     public ResponseEntity<RecipeResponse> addNewRecipe(@RequestBody RecipeCreateRequest recipeCreateRequest) {
+
+        if (recipeCreateRequest.getTitle() == null || recipeCreateRequest.getTitle().length() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Recipe");
+        }
 
         Recipe recipe = recipeService.addNewRecipe(recipeCreateRequest);
 
@@ -97,9 +111,19 @@ public class RecipeController {
     @PutMapping("/rating")
     public ResponseEntity<RecipeResponse> updateRecipe(@RequestBody RecipeUpdateRequest recipeUpdateRequest){
 
+        if (recipeUpdateRequest.getRecipeId() == null || recipeUpdateRequest.getRecipeId().length() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Recipe Id");
+        }
+
+        if (recipeUpdateRequest.getNewRating() == null ||
+                recipeUpdateRequest.getNewRating() < 0 || recipeUpdateRequest.getNewRating() > 5) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Recipe Rating");
+        }
+
         Recipe updatedRecipe = recipeService.updateRecipe(recipeUpdateRequest);
 
         RecipeResponse recipeResponse = createRecipeResponse(updatedRecipe);
+
         return ResponseEntity.ok(recipeResponse);
     }
 
