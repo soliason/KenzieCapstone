@@ -52,6 +52,6 @@ public class RecipeSummaryResponse {
     }
 
     public void setAverageRating() {
-        this.averageRating = getAverageRating();
+        this.averageRating = Math.ceil(getAverageRating());
     }
 }
