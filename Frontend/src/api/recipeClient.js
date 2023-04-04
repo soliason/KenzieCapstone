@@ -19,7 +19,6 @@ export default class RecipeClient extends BaseClass {
     }
 
     async getRecipeById(id, errorCallback) {
-    console.log("got here");
       try {
         const response = await this.client.get(`/recipe/${id}`);
         return response.data;
