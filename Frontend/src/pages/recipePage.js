@@ -6,7 +6,7 @@ class RecipePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'rateMe', 'getRecipesMatchingDR', 'getRandomRecipe', 'onCreate', 'renderRecipe', 'renderRecipeSummary', 'getRecipe'], this);
+        this.bindClassMethods(['onGet', 'rateMe', 'getRecipesMatchingDR', 'getRandomRecipe', 'onCreate', 'renderRecipe', 'renderRecipeSummary'], this);
         this.dataStore = new DataStore();
     }
 
@@ -78,18 +78,17 @@ class RecipePage extends BaseClass {
 
             if (recipes) {
 
-                        resultArea.innerHTML = `
-                                <div>
+                    resultArea.innerHTML = `
+                    <div>
                     ${recipes.map((recipe) => ` <div class = "card-body">
-
-                                            <h5 class="card-title">${recipe.title}</h5>
-                                            <h2>Rating: ${recipe.averageRating} of 4 Stars</h2>
-                                            <a id=${recipe.recipeId} class="btn btn-primary">View Recipe</a>
-                                        </div>
-                                    `).join('')}
+                    <h5 class="card-title">${recipe.title}</h5>
+                    <h2>Rating: ${recipe.averageRating} of 4 Stars</h2>
+                    <a id=${recipe.recipeId} class="btn btn-primary">View Recipe</a>
+                    </div>
+                    `).join('')}
                     </div>
                     </div>
-                            `
+                    `
         } else {
             resultArea.innerHTML = "No Item";
         }
@@ -272,15 +271,6 @@ class RecipePage extends BaseClass {
         if (!result) {
             this.errorHandler("Error doing GET!  Try again...");
         }
-    }
-
-    async getRecipe(event) {
-        event.preventDefault();
-
-        let id = event.target.id;
-        console.log(id);
-        let result = await this.client.getRecipeById(id, this.errorHandler);
-        console.log(result);
     }
 
     async onCreate(event) {
