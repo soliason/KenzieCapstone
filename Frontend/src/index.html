@@ -6,40 +6,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dream Team &#58184;</title>
     <link rel="stylesheet" href="./css/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+            integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <style>
+        .mode {
+            float: right;
+        }
+
+        .change {
+            cursor: pointer;
+            border: 1px solid #555;
+            border-radius: 40%;
+            width: 20px;
+            text-align: center;
+            padding: 5px;
+            margin-left: 8px;
+        }
+
+        .dark {
+            background-color: #222;
+            color: #e6e6e6;
+        }
+
+        /*button {*/
+        /*    background-color: #32a852;*/
+        /*    border: none;*/
+        /*    color: white;*/
+        /*    padding: 15px 32px;*/
+        /*    text-align: center;*/
+        /*    text-decoration: none;*/
+        /*    display: inline-block;*/
+        /*    font-size: 16px;*/
+        /*    margin: 4px 2px;*/
+        /*    cursor: pointer;*/
+        /*}*/
+    </style>
 </head>
 <body>
 
 <div class="wrapper">
     <div class="banner">
-        <div class="header">
-            <div class="menu">
-                <span><a class="nav-links" href="index.html">Home</a></span>
-                <span> <a class="nav-links" href="recipe.html">Recipe</a></span>
-                <span><a class="nav-links" href="postRecipe.html">Add Recipe</a></span>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="mode">
+                Dark mode:
+                <span class="change">OFF</span>
             </div>
-        </div>
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Dream Team Recipes</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="index.html">Home</a>
+                        <a class="nav-link active" aria-current="page" href="recipe.html">Recipes</a>
+                        <a class="nav-link" href="postRecipe.html">Add Your Own Recipe</a>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
         <div class="main">
             <span class="content-box slide-in text">Dream Team Dietary Restrictions</span>
-            <img class="arrow" src="https://i.ibb.co/MSv2H70/arrow.png" alt="">
+            <!--            <img class="arrow" src="https://i.ibb.co/MSv2H70/arrow.png" alt="">-->
         </div>
     </div>
+</div>
 
-    <div class="section1">
-        <div class="left">
-            <div class="text-container">
-                <h1>Transform your eating habits</h1>
-                <p>Please use our site to make easy meals according to your dietary restrictions</p>
-                <div class="button">
-                    <a class="nav-links" href="recipe.html">Learn More</a>
-                </div>
+<div class="section1">
+    <div class="left">
+        <div class="text-container">
+            <h1>Transform your eating habits</h1>
+            <p>Please use our site to make easy meals according to your dietary restrictions</p>
+            <div class="button">
+                <a class="nav-links" href="recipe.html">Learn More</a>
             </div>
         </div>
-        <div class="right">
-            <img src="https://i.ibb.co/D79rDCW/egg.jpg" alt="">
-        </div>
     </div>
-
+    <div class="right">
+        <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZWdnc3xlbnwwfHwwfHw%3D&w=1000&q=80" alt="egg">
     </div>
+</div>
+<script>
+    $(".change").on("click", function () {
+        if ($("body").hasClass("dark")) {
+            $("body").removeClass("dark");
+            $(".change").text("OFF");
+        } else {
+            $("body").addClass("dark");
+            $(".change").text("ON");
+        }
+    });
+</script>
 
+<!--    </div>-->
 </body>
 </html>
