@@ -76,15 +76,6 @@ class RecipePage extends BaseClass {
         let resultArea = document.getElementById("result-getByDR");
         const recipes = this.dataStore.get("recipeDR");
 
-        if (recipes) {
-
-            resultArea.innerHTML = `
-                                <div>
-                    ${recipes.map((recipe) => ` <div class="card"></div><div class = "card-body">
-
-            let resultArea = document.getElementById("result-getByDR");
-            const recipes = this.dataStore.get("recipeDR");
-
             if (recipes) {
 
                         resultArea.innerHTML = `
