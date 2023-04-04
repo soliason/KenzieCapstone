@@ -72,6 +72,7 @@ class RecipePage extends BaseClass {
     }
 
     async renderRecipeSummary() {
+
         let resultArea = document.getElementById("result-getByDR");
         const recipes = this.dataStore.get("recipeDR");
 
@@ -80,6 +81,16 @@ class RecipePage extends BaseClass {
             resultArea.innerHTML = `
                                 <div>
                     ${recipes.map((recipe) => ` <div class="card"></div><div class = "card-body">
+
+            let resultArea = document.getElementById("result-getByDR");
+            const recipes = this.dataStore.get("recipeDR");
+
+            if (recipes) {
+
+                        resultArea.innerHTML = `
+                                <div>
+                    ${recipes.map((recipe) => ` <div class = "card-body">
+
                                             <h5 class="card-title">${recipe.title}</h5>
                                             <h2>Rating: ${recipe.averageRating} of 4 Stars</h2>
                                             <a id=${recipe.recipeId} class="btn btn-primary">View Recipe</a>

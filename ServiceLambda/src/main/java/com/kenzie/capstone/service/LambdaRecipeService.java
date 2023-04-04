@@ -22,16 +22,19 @@ public class LambdaRecipeService {
     }
 
     public RecipeData getRecipeData(String recipeId) {
-        List<RecipeRecord> records = recipeDao.getRecipeData(recipeId);
-        if (records.size() > 0) {
-            return new RecipeData(records.get(0).getRecipeId(), records.get(0).getTitle(), records.get(0).getIngredients(),
-                    records.get(0).getSteps(), records.get(0).getIsGlutenFree(), records.get(0).getIsDairyFree(),
-                    records.get(0).getIsEggFree(), records.get(0).getIsVegetarian(), records.get(0).getIsVegan(), records.get(0).getRatings());
+
+        RecipeRecord record = recipeDao.getRecipeData(recipeId);
+
+        if (record != null) {
+            return new RecipeData(record.getRecipeId(), record.getTitle(), record.getIngredients(),
+                    record.getSteps(), record.getIsGlutenFree(), record.getIsDairyFree(),
+                    record.getIsEggFree(), record.getIsVegetarian(), record.getIsVegan(), record.getRatings());
         }
         return null;
     }
 
     public RecipeResponse setRecipeData(RecipeRequest recipeRequest) {
+
         String recipeId = UUID.randomUUID().toString();
         RecipeRecord recipeRecord =  new RecipeRecord();
         recipeRecord.setRecipeId(recipeId);
@@ -46,13 +49,12 @@ public class LambdaRecipeService {
         recipeRecord.setRatings(recipeRequest.getRatings());
 
         recipeDao.setRecipeData(recipeRecord);
+
         RecipeResponse recipeResponse = new RecipeResponse(recipeId, recipeRequest.getTitle(), recipeRequest.getIngredients(),
                 recipeRequest.getSteps(), recipeRequest.isGlutenFree(), recipeRequest.isDairyFree(), recipeRequest.isEggFree(),
                 recipeRequest.isVegetarian (), recipeRequest.isVegan(), recipeRequest.getRatings());
 
         return recipeResponse;
-//        return new RecipeData(recipeId, title, ingredients, steps, isGlutenFree, isDairyFree,
-//                                    isEggFree, isVegetarian, isVegan);
     }
 
     public List<RecipeData> getRecipesByDietaryRestriction(DietaryRestrictionData data){
@@ -70,7 +72,6 @@ public class LambdaRecipeService {
     public RecipeResponse updateRecipeData(RecipeUpdateRequestLambda recipeRequest){
         RecipeRecord recipeRecord = new RecipeRecord();
         recipeRecord.setRecipeId(recipeRequest.getRecipeId());
-        log.info("inside lambda recipe service - new log:" + recipeRecord.getRecipeId());
         recipeRecord.setTitle(recipeRequest.getTitle());
         recipeRecord.setIngredients(recipeRequest.getIngredients());
         recipeRecord.setSteps(recipeRequest.getSteps());

@@ -3,6 +3,7 @@ package com.kenzie.capstone.service;
 import com.kenzie.capstone.service.dao.ExampleDao;
 import com.kenzie.capstone.service.dao.RecipeDao;
 import com.kenzie.capstone.service.model.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -50,7 +51,7 @@ class LambdaRecipeServiceTest {
     }
 
     @Test
-    void getRecipesByDietaryRestrictionTest() {
+    void getRecipesByDietaryRestrictionTest_noRecipes() {
         //GIVEN
         DietaryRestrictionData data = new DietaryRestrictionData();
         data.setIsGlutenFree(true);
@@ -67,13 +68,69 @@ class LambdaRecipeServiceTest {
     }
 
     @Test
-    void getRecipeDataTest(){
+    void getRecipesByDietaryRestrictionListIsReturned(){
         //GIVEN
+        DietaryRestrictionData data = new DietaryRestrictionData();
+        data.setIsGlutenFree(true);
+        data.setIsDairyFree(false);
+        data.setIsEggFree(false);
+        data.setIsVegetarian(false);
+        data.setIsVegan(false);
+
+        RecipeRecord record = new RecipeRecord();
+        record.setRecipeId("test123");
+        record.setTitle("testRecipe");
+        record.setIngredients(new ArrayList<>());
+        record.setSteps(new ArrayList<>());
+        record.setIsGlutenFree(true);
+        record.setIsDairyFree(false);
+        record.setIsEggFree(false);
+        record.setIsVegetarian(false);
+        record.setIsVegan(false);
+        record.setRatings(new ArrayList<>());
+
+        List<RecipeRecord> recipeRecordList = new ArrayList<>();
+        recipeRecordList.add(record);
+
         //WHEN
-        RecipeData data = lambdaRecipeService.getRecipeData("test123");
+        when(recipeDao.getRecipesByDietaryRestriction(data)).thenReturn(recipeRecordList);
+        List<RecipeData> returnedList = lambdaRecipeService.getRecipesByDietaryRestriction(data);
 
         //THEN
-        verify(recipeDao, times(1)).getRecipeData("test123");
+        Assertions.assertTrue(returnedList.size() == 1);
+    }
+
+    @Test
+    void getRecipeData_noRecipe(){
+        //GIVEN
+        //WHEN
+        RecipeData data = lambdaRecipeService.getRecipeData("testing123");
+
+        //THEN
+        verify(recipeDao, times(1)).getRecipeData("testing123");
+    }
+
+    @Test
+    void getRecipeData_recipeIsReturned(){
+        //GIVEN
+        RecipeRecord record = new RecipeRecord();
+        record.setRecipeId("test123");
+        record.setTitle("testRecipe");
+        record.setIngredients(new ArrayList<>());
+        record.setSteps(new ArrayList<>());
+        record.setIsGlutenFree(true);
+        record.setIsDairyFree(false);
+        record.setIsEggFree(false);
+        record.setIsVegetarian(false);
+        record.setIsVegan(false);
+        record.setRatings(new ArrayList<>());
+
+        //WHEN
+        when(recipeDao.getRecipeData("test123")).thenReturn(record);
+        RecipeData returnedData = lambdaRecipeService.getRecipeData("test123");
+
+        //THEN
+        Assertions.assertNotNull(returnedData);
     }
 
     @Test

@@ -12,6 +12,7 @@ import net.andreinc.mockneat.MockNeat;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -83,7 +84,7 @@ class RecipeControllerTest {
     @Test
     public void createRecipe_CreateSuccessful() throws Exception {
 
-        String title = mockNeat.strings().valStr();
+        String title = "this one should be deleted";
         List<String> ingredients = new ArrayList<>();
         ingredients.add("beast");
         List<String> steps = new ArrayList<>();
@@ -101,7 +102,7 @@ class RecipeControllerTest {
 
         mapper.registerModule(new JavaTimeModule());
 
-        mvc.perform(post("/recipe")
+        ResultActions actions = mvc.perform(post("/recipe")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(recipeCreateRequest)))
@@ -111,7 +112,11 @@ class RecipeControllerTest {
                         .value(is(title)))
                 .andExpect(status().is2xxSuccessful());
 
-
+        //cleanup
+        String responseBody = actions.andReturn().getResponse().getContentAsString();
+        RecipeResponse response = mapper.readValue(responseBody, new TypeReference<>() {
+        });
+        recipeService.deleteRecipe(response.getRecipeId());
     }
 
     @Test
@@ -135,7 +140,7 @@ class RecipeControllerTest {
 
         mapper.registerModule(new JavaTimeModule());
 
-        mvc.perform(put("/recipe/rating")
+        ResultActions actions = mvc.perform(put("/recipe/rating")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(recipeUpdateRequest)))
@@ -144,5 +149,11 @@ class RecipeControllerTest {
                 .andExpect(jsonPath("ratings")
                         .value(contains(5)))
                 .andExpect(status().is2xxSuccessful());
+
+        //cleanup
+        String responseBody = actions.andReturn().getResponse().getContentAsString();
+        RecipeResponse response = mapper.readValue(responseBody, new TypeReference<>() {
+        });
+        recipeService.deleteRecipe(response.getRecipeId());
     }
 }

@@ -232,7 +232,7 @@ public class EndpointUtility {
                 .PUT(HttpRequest.BodyPublishers.ofString(data))
                 .build();
         try {
-            log.info("about to do client.send:" + request.toString());
+
             HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             int statusCode = httpResponse.statusCode();

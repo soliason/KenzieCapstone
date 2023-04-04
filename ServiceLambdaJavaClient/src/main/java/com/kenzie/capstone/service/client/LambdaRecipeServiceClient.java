@@ -43,7 +43,6 @@ public class LambdaRecipeServiceClient {
 
     public RecipeResponse setRecipeData(RecipeRequest recipeRequest) {
         EndpointUtility endpointUtility = new EndpointUtility();
-
         String request;
         try {
             request = mapper.writeValueAsString(recipeRequest);
@@ -70,7 +69,6 @@ public class LambdaRecipeServiceClient {
 
 
         EndpointUtility endpointUtility = new EndpointUtility();
-        //String response = endpointUtility.getEndpoint(GET_DIETARY_RESTRICTION_ENDPOINT);
         String response = endpointUtility.getEndpoint(
                 GET_DIETARY_RESTRICTION_ENDPOINT.replace("{isGlutenFree}", gluten)
                         .replace("{isDairyFree}", dairy)
@@ -91,21 +89,14 @@ public class LambdaRecipeServiceClient {
 
     public RecipeResponse updateRecipeData(RecipeUpdateRequestLambda recipeUpdateRequestLambda){
         EndpointUtility endpointUtility = new EndpointUtility();
-        log.info("LambdaRecipeServiceClient updateRecipeData method line 94 title:" + recipeUpdateRequestLambda.getTitle());
-        log.info("LambdaRecipeServiceClient updateRecipeData method line 95 id:" + recipeUpdateRequestLambda.getRecipeId());
-
         String request;
         try {
            request = mapper.writeValueAsString(recipeUpdateRequestLambda);
-///////            request = mapper.writeValueAsString(UPDATE_RATING_ENDPOINT.replace("{recipeId}", recipeUpdateRequestLambda.getRecipeId()));
-            log.info("LambdaRecipeServiceClient updateRecipeData method line 100 request:" + request.toString());
         } catch(JsonProcessingException e) {
             throw new ApiGatewayException("Unable to serialize request: " + e);
         }
 
         String response = endpointUtility.putEndpoint(UPDATE_RATING_ENDPOINT, request);
-//////        String response = endpointUtility.putEndpoint(request, recipeUpdateRequestLambda.setRatings();
-        log.info("LambdaRecipeServiceClient updateRecipeData method line 106 response:" + response.toString());
         RecipeResponse recipeResponse;
         try {
             recipeResponse = mapper.readValue(response, RecipeResponse.class);
@@ -118,20 +109,7 @@ public class LambdaRecipeServiceClient {
     public void deleteById(String recipeId) {
 
         EndpointUtility endpointUtility = new EndpointUtility();
-
-//        String request;
-//        try {
-//            request = mapper.writeValueAsString(recipeId);
-//        } catch(JsonProcessingException e) {
-//            throw new ApiGatewayException("Unable to serialize request: " + e);
-//        }
         String response = endpointUtility.deleteEndpoint(DELETE_RECIPE_ENDPOINT.replace("{recipeId}", recipeId));
-//        RecipeResponse recipeResponse;
-//        try {
-//            recipeResponse = mapper.readValue(response, RecipeResponse.class);
-//        } catch (Exception e) {
-//            throw new ApiGatewayException ("Unable to map deserialize JSON: " + e);
-//        }
 
     }
 }
