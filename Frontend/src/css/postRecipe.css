@@ -6,38 +6,22 @@
 }
 
 .background {
-    background-color: blue;
+    /*background-color: blue;*/
     margin: 0;
     counter-reset: section;
 }
 
-.header {
-    /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+.banner {
+    background-color: white;
+    height: 40vh;
+    min-height: 200px;
+    background-image: url('https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/321159_2200-1200x628.jpg');
+    background-position: center;
+    background-size: cover;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 0 20px;
+    flex-direction: column;
 }
 
-.header_home {
-    font-size: 36px;
-    line-height: 40px;
-    height: 100px;
-    text-decoration: none;
-    color: var(--secondary-color);
-}
-
-.header_nav_link {
-    margin-left: 20px;
-    vertical-align: top;
-    line-height: 40px;
-}
-
-.about {
-    margin-left: 20px;
-}
 
 .button, button {
     background: #aed9ff;
@@ -47,6 +31,7 @@
     color: black;
     border: 1px solid black;
     cursor: pointer;
+    position: center;
 }
 
 .button:hover, button:hover {
@@ -76,14 +61,58 @@
     flex-direction: column;
 }
 
-#concert-list li {
-    margin-bottom: 1rem;
+.section {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+}
+body  {
+    background-image: url('https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg');
+    background-size:cover;
+    -webkit-animation: slidein 100s;
+    animation: slidein 100s;
+
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
 }
 
-.state {
-    display: none;
+@-webkit-keyframes slidein {
+    from {background-position: top; background-size:3000px; }
+    to {background-position: -100px 0px;background-size:2750px;}
 }
 
-.state.active {
-    display: block;
+@keyframes slidein {
+    from {background-position: top;background-size:3000px; }
+    to {background-position: -100px 0px;background-size:2750px;}
+
+}
+
+
+
+.center
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(75, 75, 250, 0.3);
+    border-radius: 3px;
+}
+.center h1{
+    text-align:center;
+    color:white;
+    font-family: 'Source Code Pro', monospace;
+    text-transform:uppercase;
 }

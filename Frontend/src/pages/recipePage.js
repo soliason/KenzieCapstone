@@ -6,7 +6,7 @@ class RecipePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'rateMe', 'getRecipesMatchingDR', 'getRandomRecipe', 'onCreate', 'renderRecipe', 'renderRecipe2', 'getRecipe'], this);
+        this.bindClassMethods(['onGet', 'rateMe', 'getRecipesMatchingDR', 'getRandomRecipe', 'onCreate', 'renderRecipe', 'renderRecipeSummary', 'getRecipe'], this);
         this.dataStore = new DataStore();
     }
 
@@ -16,21 +16,21 @@ class RecipePage extends BaseClass {
         document.getElementById("result-getById").addEventListener('submit', this.rateMe);
         document.getElementById("submitBtn2").addEventListener('click', this.getRandomRecipe);
 
-
         this.client = new RecipeClient();
 
         this.dataStore.addChangeListener(this.renderRecipe)
-        this.dataStore.addChangeListener(this.renderRecipe2)
+        this.dataStore.addChangeListener(this.renderRecipeSummary)
     }
+
     // Render Methods --------------------------------------------------------------------------------------------------
 
     async renderRecipe() {
-            let resultArea = document.getElementById("result-getById");
+        let resultArea = document.getElementById("result-getById");
 
-            const recipe = this.dataStore.get("recipe");
+        const recipe = this.dataStore.get("recipe");
 
-            if (recipe) {
-                resultArea.innerHTML = `
+        if (recipe) {
+            resultArea.innerHTML = `
                     <h6>TITLE: </h6>
                     <p>${recipe.title}</p>
                     <div>Ingredients: ${recipe.ingredients}</div>
@@ -66,47 +66,32 @@ class RecipePage extends BaseClass {
                     <br>
                     <button type="submit"><a class="nav-link active" aria-current="page" href="recipe.html">Search For More Recipes</a></button>
                 `
-            } else {
-                resultArea.innerHTML = "No Item";
-            }
+        } else {
+            resultArea.innerHTML = "No Item";
         }
+    }
 
-    async renderRecipe2() {
-            // let resultArea = document.getElementById("result-getByDR");
+    async renderRecipeSummary() {
+        let resultArea = document.getElementById("result-getByDR");
+        const recipes = this.dataStore.get("recipeDR");
 
+        if (recipes) {
 
-        let resultsContainer = document.getElementById('result-getByDR');
-        let recipes = this.dataStore.get("recipeDR");
-        console.log(recipes, "recipes")
-        recipes.forEach((recipe) => {
-            const recipeCard = document.createElement('div');
-            recipeCard.classList.add('card');
-            recipeCard.innerHTML = `
-    <div class="card-body">
-      <h5 class="card-title">${recipe.recipeId}</h5>
-      <p class="card-text">${recipe.title}</p>
-      <h2 class="card-text">${recipe.averageRating} of 4 stars</h2>
-      <a href="#" class="btn btn-primary">View Recipe</a>
-    </div>
-  `;
-            resultsContainer.appendChild(recipeCard);
-        });
-
-
-        // if (recipes) {
-        //                 resultArea.innerHTML = `
-        //                         <div>
-        //             ${recipes.map((recipe) => ` <div>
-        //                                     <h1 id = ${recipe.recipeId}>${recipe.title}</h1>
-        //                                     <h2>Rating: ${recipe.averageRating} of 4 Stars</h2>
-        //                                 </div>
-        //                             `).join('')}
-        //             </div>
-        //                     `
-        //             } else {
-        //                 resultArea.innerHTML = "No Item";
-        //             }
+            resultArea.innerHTML = `
+                                <div>
+                    ${recipes.map((recipe) => ` <div class="card"></div><div class = "card-body">
+                                            <h5 class="card-title">${recipe.title}</h5>
+                                            <h2>Rating: ${recipe.averageRating} of 4 Stars</h2>
+                                            <a id=${recipe.recipeId} class="btn btn-primary">View Recipe</a>
+                                        </div>
+                                    `).join('')}
+                    </div>
+                    </div>
+                            `
+        } else {
+            resultArea.innerHTML = "No Item";
         }
+    }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
     async rateMe(event) {
@@ -117,7 +102,7 @@ class RecipePage extends BaseClass {
         let threeS = document.getElementById("threeS");
         let fourS = document.getElementById("fourS");
 
-        if(oneS.checked) {
+        if (oneS.checked) {
             let recipeId = oneS.name;
             let rating = 1;
             let result = await this.client.rate(recipeId, rating, this.errorHandler);
@@ -127,7 +112,7 @@ class RecipePage extends BaseClass {
                 this.showMessage("Your Rating Has Been Saved!")
             }
         }
-        if(twoS.checked) {
+        if (twoS.checked) {
             let recipeId = twoS.name;
             let rating = 2;
             let result = await this.client.rate(recipeId, rating, this.errorHandler);
@@ -137,7 +122,7 @@ class RecipePage extends BaseClass {
                 this.showMessage("Your Rating Has Been Saved!")
             }
         }
-        if(threeS.checked) {
+        if (threeS.checked) {
             let recipeId = threeS.name;
             let rating = 3;
             let result = await this.client.rate(recipeId, rating, this.errorHandler);
@@ -147,7 +132,7 @@ class RecipePage extends BaseClass {
                 this.showMessage("Your Rating Has Been Saved!")
             }
         }
-        if(fourS.checked) {
+        if (fourS.checked) {
             let recipeId = oneS.name;
             let rating = 4;
             let result = await this.client.rate(recipeId, rating, this.errorHandler);
@@ -212,12 +197,10 @@ class RecipePage extends BaseClass {
     async onGet(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
-        console.log("onGet");
 
         let id = event.target.id;
-        console.log(id)
 
-        this.dataStore.set("recipe", null);
+        this.dataStore.set("recipeDR", null);
         let dietaryRestrictions = document.getElementById("hideMe");
 
         let result = await this.client.getRecipeById(id, this.errorHandler);
@@ -283,7 +266,6 @@ class RecipePage extends BaseClass {
         resultsElement2.style.display = "none";
 
         this.dataStore.set("recipeDR", result);
-        console.log(this.dataStore.get("recipeDR"))
 
         if (!result) {
             this.errorHandler("Error doing GET!  Try again...");
