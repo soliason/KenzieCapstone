@@ -14,7 +14,6 @@ public class LambdaRecipeService {
 
     private RecipeDao recipeDao;
 
-    static final Logger log = LogManager.getLogger();
 
     @Inject
     public LambdaRecipeService(RecipeDao recipeDao) {
@@ -50,11 +49,9 @@ public class LambdaRecipeService {
 
         recipeDao.setRecipeData(recipeRecord);
 
-        RecipeResponse recipeResponse = new RecipeResponse(recipeId, recipeRequest.getTitle(), recipeRequest.getIngredients(),
+        return new RecipeResponse(recipeId, recipeRequest.getTitle(), recipeRequest.getIngredients(),
                 recipeRequest.getSteps(), recipeRequest.isGlutenFree(), recipeRequest.isDairyFree(), recipeRequest.isEggFree(),
                 recipeRequest.isVegetarian (), recipeRequest.isVegan(), recipeRequest.getRatings());
-
-        return recipeResponse;
     }
 
     public List<RecipeData> getRecipesByDietaryRestriction(DietaryRestrictionData data){
@@ -84,11 +81,9 @@ public class LambdaRecipeService {
 
         recipeDao.updateRecipeData(recipeRecord);
 
-        RecipeResponse recipeResponse = new RecipeResponse(recipeRequest.getRecipeId(), recipeRequest.getTitle(), recipeRequest.getIngredients(),
+        return new RecipeResponse(recipeRequest.getRecipeId(), recipeRequest.getTitle(), recipeRequest.getIngredients(),
                 recipeRequest.getSteps(), recipeRequest.isGlutenFree(), recipeRequest.isDairyFree(), recipeRequest.isEggFree(),
                 recipeRequest.isVegetarian (), recipeRequest.isVegan(), recipeRequest.getRatings());
-
-        return recipeResponse;
     }
 
     public void deleteRecipeData(String recipeId) {

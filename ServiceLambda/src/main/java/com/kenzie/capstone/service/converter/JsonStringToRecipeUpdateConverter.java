@@ -11,8 +11,7 @@ public class JsonStringToRecipeUpdateConverter {
         try {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            RecipeUpdateRequestLambda recipeRequest = gson.fromJson(body, RecipeUpdateRequestLambda.class);
-            return recipeRequest;
+            return gson.fromJson(body, RecipeUpdateRequestLambda.class);
         } catch (Exception e) {
             throw new InvalidDataException("Recipe Update Request could not be deserialized");
         }

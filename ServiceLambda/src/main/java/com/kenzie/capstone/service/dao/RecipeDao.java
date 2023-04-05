@@ -26,19 +26,6 @@ public class RecipeDao {
         this.mapper = mapper;
     }
 
-    public RecipeData storeRecipeData(RecipeData recipeData){
-        try {
-            mapper.save(recipeData, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "recipeId",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
-        } catch (ConditionalCheckFailedException e){
-            throw new IllegalArgumentException("recipeId has already been used");
-        }
-        return recipeData;
-    }
-
     public RecipeRecord getRecipeData(String recipeId) {
         RecipeRecord recipeRecord = new RecipeRecord();
         recipeRecord.setRecipeId(recipeId);
@@ -94,10 +81,8 @@ public class RecipeDao {
                     !dietaryRestrictionInfo.isVegetarian() &&
                     !dietaryRestrictionInfo.isVegan()){
                 try {
-                    PaginatedScanList<RecipeRecord> recipeList = mapper.scan(RecipeRecord.class, scanExpression);
-                    return recipeList;
+                    return mapper.scan(RecipeRecord.class, scanExpression);
                 } catch (Exception e) {
-                    log.error(e.getMessage());
                     throw new IllegalArgumentException("can't get all the recipes");
                 }
             }
@@ -134,12 +119,8 @@ public class RecipeDao {
             scanExpression.withFilterExpression(sb.toString());
             scanExpression.withExpressionAttributeValues(valueMap);
 
-            PaginatedScanList<RecipeRecord> recipeList = mapper.scan(RecipeRecord.class, scanExpression);
-
-            return recipeList;
-
+            return mapper.scan(RecipeRecord.class, scanExpression);
         } catch (Exception e) {
-            log.error(e.getMessage());
             throw new IllegalArgumentException("something else bad happened");
         }
     }
@@ -154,7 +135,5 @@ public class RecipeDao {
                         .withValue(new AttributeValue(recipeId))
                         .withExists(true)));
         mapper.delete(recipeRecord, deleteExpression);
-
     }
-
 }

@@ -8,11 +8,11 @@ import com.kenzie.appserver.service.RecipeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.kenzie.appserver.service.model.Recipe;
-import net.andreinc.mockneat.MockNeat;
+
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,8 +36,6 @@ class RecipeControllerTest {
 
     @Autowired
     RecipeService recipeService;
-
-    private final MockNeat mockNeat = MockNeat.threadLocal();
 
     private final ObjectMapper mapper = new ObjectMapper();
 

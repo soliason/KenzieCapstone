@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 public class EndpointUtility {
     private String apiEndpoint;
 
-    static final Logger log = LogManager.getLogger();
 
     public EndpointUtility() {
         this.apiEndpoint = getApiEndpint();
@@ -258,7 +257,6 @@ public class EndpointUtility {
                 .GET()
                 .build();
         try {
-            log.info("about to do client.send:" + request.toString());
             HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             int statusCode = httpResponse.statusCode();

@@ -43,13 +43,11 @@ public class RecipeService {
         // getting data from the lambda
         RecipeData recipeFromLambda = lambdaRecipeServiceClient.getRecipeData(recipeId);
 
-        Recipe recipe = new Recipe(recipeFromLambda.getRecipeId(),
+        return new Recipe(recipeFromLambda.getRecipeId(),
                 recipeFromLambda.getTitle(), recipeFromLambda.getIngredients(),
                 recipeFromLambda.getSteps(), recipeFromLambda.isGlutenFree(),
                 recipeFromLambda.isDairyFree(), recipeFromLambda.isEggFree(),
                 recipeFromLambda.isVegetarian(), recipeFromLambda.isVegan(), recipeFromLambda.getRatings());
-
-        return recipe;
     }
 
     public Recipe addNewRecipe(RecipeCreateRequest recipeCreateRequest) {
@@ -147,19 +145,17 @@ public class RecipeService {
         lambdaRecipeServiceClient.deleteById(recipeId);
 
         cache.evict(recipeId);
-
     }
+
     //helper methods
 
     private Recipe recipeDataToRecipe(RecipeData data){
 
-        Recipe recipe = new Recipe(data.getRecipeId(),
+        return new Recipe(data.getRecipeId(),
                 data.getTitle(), data.getIngredients(),
                 data.getSteps(), data.isGlutenFree(),
                 data.isDairyFree(), data.isEggFree(),
                 data.isVegetarian(), data.isVegan(), data.getRatings());
-
-        return recipe;
     }
 
     private DietaryRestrictionData dietaryRestrictionInfoRequestToData(DietaryRestrictionInfoRequest request){

@@ -25,8 +25,6 @@ public class LambdaRecipeServiceClient {
 
     private ObjectMapper mapper;
 
-    static final Logger log = LogManager.getLogger();
-
     public LambdaRecipeServiceClient() {this.mapper = new ObjectMapper();}
 
     public RecipeData getRecipeData(String recipeId) {
@@ -110,6 +108,5 @@ public class LambdaRecipeServiceClient {
 
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.deleteEndpoint(DELETE_RECIPE_ENDPOINT.replace("{recipeId}", recipeId));
-
     }
 }
