@@ -7,12 +7,12 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaRecipeService;
-import com.kenzie.capstone.service.converter.JsonStringToRecipeConverter;
+
 import com.kenzie.capstone.service.converter.JsonStringToRecipeUpdateConverter;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.exceptions.InvalidDataException;
-import com.kenzie.capstone.service.model.RecipeRequest;
+
 import com.kenzie.capstone.service.model.RecipeResponse;
 import com.kenzie.capstone.service.model.RecipeUpdateRequestLambda;
 import org.apache.logging.log4j.LogManager;
@@ -23,8 +23,6 @@ public class UpdateRecipeData implements RequestHandler<APIGatewayProxyRequestEv
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-
-        log.info("made it to the UpdateRecipeData!!!");
 
         JsonStringToRecipeUpdateConverter jsonStringToRecipeConverter = new JsonStringToRecipeUpdateConverter();
         GsonBuilder builder = new GsonBuilder();

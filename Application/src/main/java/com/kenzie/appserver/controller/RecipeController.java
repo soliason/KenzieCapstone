@@ -105,7 +105,6 @@ public class RecipeController {
         }
 
         return ResponseEntity.ok(responseList);
-
     }
 
     @PutMapping("/rating")

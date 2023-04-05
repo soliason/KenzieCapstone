@@ -7,7 +7,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaRecipeService;
-import com.kenzie.capstone.service.converter.JsonStringToDietaryRestrictionInfoConverter;
+
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.DietaryRestrictionData;
@@ -24,7 +24,6 @@ public class GetRecipesByDietaryRestriction implements RequestHandler<APIGateway
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-        JsonStringToDietaryRestrictionInfoConverter converter = new JsonStringToDietaryRestrictionInfoConverter();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
@@ -38,7 +37,6 @@ public class GetRecipesByDietaryRestriction implements RequestHandler<APIGateway
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        //String data = input.getBody();
         Map<String, String> data = input.getPathParameters();
 
         if (data == null || data.size() == 0) {

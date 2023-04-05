@@ -293,7 +293,6 @@ public class RecipeServiceTest {
         //WHEN
         //THEN
         Assertions.assertThrows(IllegalArgumentException.class, ()-> recipeService.deleteRecipe(id));
-
     }
 
     @Test
@@ -308,7 +307,6 @@ public class RecipeServiceTest {
         //WHEN
         //THEN
         Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.updateRecipe(recipeUpdateRequest));
-
     }
 
     @Test
@@ -323,7 +321,6 @@ public class RecipeServiceTest {
         //WHEN
         //THEN
         Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.updateRecipe(recipeUpdateRequest));
-
     }
 
     @Test
@@ -338,7 +335,6 @@ public class RecipeServiceTest {
         //WHEN
         //THEN
         Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.updateRecipe(recipeUpdateRequest));
-
     }
 
     @Test
@@ -353,6 +349,5 @@ public class RecipeServiceTest {
         //WHEN
         //THEN
         Assertions.assertThrows(IllegalArgumentException.class, () -> recipeService.updateRecipe(recipeUpdateRequest));
-
     }
 }

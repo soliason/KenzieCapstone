@@ -47,7 +47,6 @@ public class DeleteRecipeData implements RequestHandler<APIGatewayProxyRequestEv
             return response
                     .withStatusCode(200);
         } catch (Exception e) {
-            log.error(e.getMessage());
             return response
                     .withStatusCode(402)
                     .withBody(gson.toJson(e.getMessage()));
