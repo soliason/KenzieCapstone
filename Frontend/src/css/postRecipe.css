@@ -11,6 +11,10 @@
     counter-reset: section;
 }
 
+.navbar {
+    border: 2px solid grey;
+}
+
 .banner {
     background-color: white;
     height: 40vh;
@@ -64,8 +68,8 @@
 .section {
     margin: auto;
     width: 50%;
-    border: 3px solid green;
     padding: 10px;
+    border: 2px solid grey;
 }
 body  {
     background-image: url('https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg');

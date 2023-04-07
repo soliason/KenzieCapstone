@@ -31,40 +31,48 @@ class RecipePage extends BaseClass {
 
         if (recipe) {
             resultArea.innerHTML = `
-                    <h6>TITLE: </h6>
-                    <p>${recipe.title}</p>
-                    <div>Ingredients: ${recipe.ingredients}</div>
-                    <div>Steps: ${recipe.steps}</div>
-                    <br>
-                    <div>GlutenFree: ${recipe.isGlutenFree}</div>
-                    <div>EggFree: ${recipe.isEggFree}</div>
-                    <div>DairyFree: ${recipe.isDairyFree}</div>
-                    <div>Vegetarian: ${recipe.isVegetarian}</div>
-                    <div>Vegan: ${recipe.isVegan}</div>
-                    <br>
-                    <br>
-                    <h3>Rate Me</h3>
-                    <form>
-                            <label>
-                                <input type="checkbox" name=${recipe.recipeId} id="oneS" value=1> One Star
-                            </label>
+                <div class ="container">
+                    <div class="row">
+                        <div class="col">
+                            <h2 class="card-title">${recipe.title}</h2>
+                            <div class="card-text">
+                            <h5>Rating: ${recipe.averageRating} of 4 Stars</h5>
+                            <div>Ingredients: ${recipe.ingredients}</div>
                             <br>
-                            <label>
-                                <input type="checkbox" id="twoS" name=${recipe.recipeId} value=2> Two Stars
-                            </label>
+                            <div>Steps: ${recipe.steps}</div>
                             <br>
-                            <label>
-                                <input type="checkbox" id="threeS" name=${recipe.recipeId} value=3> Three Stars
-                            </label>
+                            <div>GlutenFree: ${recipe.isGlutenFree}</div>
+                            <div>EggFree: ${recipe.isEggFree}</div>
+                            <div>DairyFree: ${recipe.isDairyFree}</div>
+                            <div>Vegetarian: ${recipe.isVegetarian}</div>
+                            <div>Vegan: ${recipe.isVegan}</div>
                             <br>
-                            <label>
-                                <input type="checkbox" id="fourS" name=${recipe.recipeId} value=4> Four Stars
-                            </label>
                             <br>
-                            <button type="submit" id="recipeButton">Submit</button>
-                        </form>
-                    <br>
-                    <button type="submit"><a class="nav-link active" aria-current="page" href="recipe.html">Search For More Recipes</a></button>
+                            <h3>Rate This Recipe:</h3>
+                            <form>
+                                    <label>
+                                        <input type="checkbox" name=${recipe.recipeId} id="oneS" value=1> One Star
+                                    </label>
+                                    <br>
+                                    <label>
+                                        <input type="checkbox" id="twoS" name=${recipe.recipeId} value=2> Two Stars
+                                    </label>
+                                    <br>
+                                    <label>
+                                        <input type="checkbox" id="threeS" name=${recipe.recipeId} value=3> Three Stars
+                                    </label>
+                                    <br>
+                                    <label>
+                                        <input type="checkbox" id="fourS" name=${recipe.recipeId} value=4> Four Stars
+                                    </label>
+                                    <br>
+                                    <button type="submit" class="btn btn-secondary btn-lg btn-block" id="recipeButton">Submit</button>
+                            </form>
+                            <br>
+                            <button class="btn btn-secondary btn-lg btn-block" type="submit"><a href="recipe.html" Search For More Recipes</button>
+                        </div>
+                    </div>
+                </div>
                 `
         } else {
             resultArea.innerHTML = "No Item";
@@ -80,10 +88,17 @@ class RecipePage extends BaseClass {
 
                     resultArea.innerHTML = `
                     <div>
-                    ${recipes.map((recipe) => ` <div class = "card-body">
-                    <h5 class="card-title">${recipe.title}</h5>
-                    <h2>Rating: ${recipe.averageRating} of 4 Stars</h2>
-                    <a id=${recipe.recipeId} class="btn btn-primary">View Recipe</a>
+                    ${recipes.map((recipe) => `
+                    <div class ="container">
+                        <div class="row">
+                            <div class="col">
+                                <h2 class="card-title">${recipe.title}</h2>
+                                <div class="card-text">
+                                    <h5>Rating: ${recipe.averageRating} of 4 Stars</h5>
+                                    <button id=${recipe.recipeId} class="btn btn-secondary btn-lg btn-block">View Recipe</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     `).join('')}
                     </div>
@@ -97,6 +112,7 @@ class RecipePage extends BaseClass {
     // Event Handlers --------------------------------------------------------------------------------------------------
     async rateMe(event) {
         event.preventDefault();
+        console.log("rate me");
 
         let oneS = document.getElementById("oneS");
         let twoS = document.getElementById("twoS");
@@ -147,6 +163,7 @@ class RecipePage extends BaseClass {
 
     async getRandomRecipe(event) {
         event.preventDefault();
+        console.log("ongetrandomrecipe");
 
         this.dataStore.set("recipe", null);
 
@@ -182,12 +199,10 @@ class RecipePage extends BaseClass {
         let randomNumber = Math.floor(Math.random() * (max - 0));
         let recipeId = result[randomNumber].recipeId;
         let result2 = await this.client.getRecipeById(recipeId, this.errorHandler);
-        console.log("before hide");
         let dietaryRestrictions = document.getElementById("dietary-restrictions");
         let recipeToSee = document.getElementById("result3");
         dietaryRestrictions.style.display = "none";
         result3.style.display = "block";
-        console.log("after")
 
         this.dataStore.set("recipe", result2);
         if (!result) {
@@ -198,6 +213,7 @@ class RecipePage extends BaseClass {
     async onGet(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
+        console.log("onget");
 
         let id = event.target.id;
 

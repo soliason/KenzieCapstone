@@ -21,6 +21,27 @@
     background-size: cover;
     display: flex;
     flex-direction: column;
+
+}
+
+.navbar {
+    border: 2px solid grey;
+}
+
+.card-block {
+    padding: 10, 10, 10, 10;
+}
+
+.col-6 {
+    padding: 10px;
+
+    background-color: white;
+    border: 1px solid grey;
+}
+
+.card-block {
+    background-color: black;
+    margin: 80px, 80px, 80px, 80px;
 }
 
 .header {
@@ -29,6 +50,10 @@
     background-size: cover;
     background: url(https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Ffood-allergies&psig=AOvVaw2jSc5SGGIxhniR3cJrGrW-&ust=1680694280272000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCLj1wp-QkP4CFQAAAAAdAAAAABAE
     )
+}
+
+.row {
+    padding: 30px;
 }
 
 #hidden-results {
@@ -73,9 +98,7 @@
 .card {
     color: var(--bs-blue);
     background-color: var(--secondary-color);
-    margin: 20px;
-    padding: 10px 20px;
-    background-size: cover;
+
 }
 
 .validated-field:invalid {
@@ -102,6 +125,14 @@
 
 #dietary-restrictions {
     display: block;
+}
+
+h4 {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
 }
 
 body {

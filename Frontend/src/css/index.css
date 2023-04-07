@@ -4,6 +4,29 @@
     padding: 0;
 }
 
+.mode {
+    float: right;
+}
+
+.change {
+    cursor: pointer;
+    border: 1px solid #555;
+    border-radius: 40%;
+    width: 20px;
+    text-align: center;
+    padding: 5px;
+    margin-left: 8px;
+}
+
+.dark {
+    background-color: #222;
+    color: #e6e6e6;
+}
+
+.navbar {
+    border: 2px solid grey;
+}
+
 .banner {
     background-color: blue;
     height: 60vh;
@@ -22,9 +45,6 @@
     align-items: center;
     padding-left: 20px;
     padding-right: 20px;
-}
-
-.header {
     width: 100%;
     height: 100vh;
     background: url(https://wallpaper.wiki/wp-content/uploads/2017/05/wallpaper.wiki-Beautiful-Full-HD-Wallpaper-Download-Free-PIC-WPE0010098.jpg) no-repeat 50% 50%;
