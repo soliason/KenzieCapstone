@@ -69,7 +69,7 @@ class RecipePage extends BaseClass {
                                     <button type="submit" class="btn btn-secondary btn-lg btn-block" id="recipeButton">Submit</button>
                             </form>
                             <br>
-                            <button class="btn btn-secondary btn-lg btn-block" type="submit"><a href="recipe.html" Search For More Recipes</button>
+                            <button class="btn btn-secondary btn-lg btn-block" type="submit"><a href="recipe.html" /> Search For More Recipes</button>
                         </div>
                     </div>
                 </div>
@@ -84,9 +84,9 @@ class RecipePage extends BaseClass {
         let resultArea = document.getElementById("result-getByDR");
         const recipes = this.dataStore.get("recipeDR");
 
-            if (recipes) {
+        if (recipes) {
 
-                    resultArea.innerHTML = `
+            resultArea.innerHTML = `
                     <div>
                     ${recipes.map((recipe) => `
                     <div class ="container">
@@ -167,36 +167,26 @@ class RecipePage extends BaseClass {
 
         this.dataStore.set("recipe", null);
 
-        var gluten = document.getElementById("GF2");
-        var dairy = document.getElementById("DF2");
-        var egg = document.getElementById("EF2");
-        var vegetarian = document.getElementById("vegetarian2");
-        var vegan = document.getElementById("vegan2");
-        var glutenValue = false;
-        var dairyValue = false;
-        var eggValue = false;
-        var vegetarianValue = false;
-        var veganValue = false;
+        let gluten = document.getElementById("GF2");
+        let dairy = document.getElementById("DF2");
+        let egg = document.getElementById("EF2");
+        let vegetarian = document.getElementById("vegetarian2");
+        let vegan = document.getElementById("vegan2");
+        let glutenValue;
+        let dairyValue;
+        let eggValue;
+        let vegetarianValue;
+        let veganValue;
 
-        if (gluten.checked == true) {
-            glutenValue = true;
-        }
-        if (dairy.checked == true) {
-            dairyValue = true;
-        }
-        if (egg.checked == true) {
-            eggValue = true;
-        }
-        if (vegetarian.checked == true) {
-            vegetarianValue = true;
-        }
-        if (vegan.checked == true) {
-            veganValue = true;
-        }
+        glutenValue = gluten.checked;
+        dairyValue = dairy.checked;
+        eggValue = egg.checked;
+        vegetarianValue = vegetarian.checked;
+        veganValue = vegan.checked;
 
         let result = await this.client.getRecipeByDR(glutenValue, dairyValue, eggValue, vegetarianValue, veganValue, this.errorHandler);
         let max = result.length - 1;
-        let randomNumber = Math.floor(Math.random() * (max - 0));
+        let randomNumber = Math.floor(Math.random() * (max));
         let recipeId = result[randomNumber].recipeId;
         let result2 = await this.client.getRecipeById(recipeId, this.errorHandler);
         let dietaryRestrictions = document.getElementById("dietary-restrictions");
@@ -246,19 +236,19 @@ class RecipePage extends BaseClass {
         var vegetarianValue = false;
         var veganValue = false;
 
-        if (gluten.checked == true) {
+        if (gluten.checked === true) {
             glutenValue = true;
         }
-        if (dairy.checked == true) {
+        if (dairy.checked === true) {
             dairyValue = true;
         }
-        if (egg.checked == true) {
+        if (egg.checked === true) {
             eggValue = true;
         }
-        if (vegetarian.checked == true) {
+        if (vegetarian.checked === true) {
             vegetarianValue = true;
         }
-        if (vegan.checked == true) {
+        if (vegan.checked === true) {
             veganValue = true;
         }
 
@@ -312,6 +302,7 @@ class RecipePage extends BaseClass {
             this.errorHandler("Error creating!  Try again...");
         }
     }
+
 }
 
 /**

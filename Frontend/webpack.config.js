@@ -9,7 +9,6 @@ module.exports = {
     },
     entry: {
         indexPage: path.resolve(__dirname, 'src', 'pages', 'indexPage.js'),
-        examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
         recipeGuiPage: path.resolve(__dirname, 'src', 'pages', 'recipeGuiPage.js'),
         recipePage: path.resolve(__dirname, 'src', 'pages', 'recipePage.js'),
         postRecipePage: path.resolve(__dirname, 'src', 'pages', 'postRecipePage.js'),
@@ -43,11 +42,6 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: 'index.html',
-            inject: false
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/example.html',
-            filename: 'example.html',
             inject: false
         }),
         new HtmlWebpackPlugin({

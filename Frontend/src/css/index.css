@@ -4,25 +4,6 @@
     padding: 0;
 }
 
-.mode {
-    float: right;
-}
-
-.change {
-    cursor: pointer;
-    border: 1px solid #555;
-    border-radius: 40%;
-    width: 20px;
-    text-align: center;
-    padding: 5px;
-    margin-left: 8px;
-}
-
-.dark {
-    background-color: #222;
-    color: #e6e6e6;
-}
-
 .navbar {
     border: 2px solid grey;
 }
@@ -173,12 +154,20 @@ body  {
 
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
+    /**/
 
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
 
     -webkit-animation-direction: alternate;
     animation-direction: alternate;
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+body.dark-mode {
+    background-color: #000000;
+    color: #FFFFFF;
 }
 
 @-webkit-keyframes slidein {
