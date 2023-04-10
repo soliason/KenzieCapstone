@@ -67,6 +67,9 @@ class RecipeControllerTest {
         }
     }
 
+    //no bad case for get by dietary restriction because we use check boxes and there could always be recipes for any
+    //combination of true/false for the five dietary restriction options
+
     @Test
     public void getById_Exists() throws Exception {
 
@@ -77,6 +80,13 @@ class RecipeControllerTest {
                 .andExpect(jsonPath("title")
                         .value(is("Lemon Raspberry Gelatin Gummies")))
                 .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void getById_doesNotExist() throws Exception {
+        mvc.perform(get("/recipe/{recipeId}", "this is not an id")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -118,6 +128,33 @@ class RecipeControllerTest {
     }
 
     @Test
+    public void createRecipe_noTitle() throws Exception {
+        String title = "";
+        List<String> ingredients = new ArrayList<>();
+        ingredients.add("beast");
+        List<String> steps = new ArrayList<>();
+        steps.add("roast it");
+
+        RecipeCreateRequest recipeCreateRequest = new RecipeCreateRequest();
+        recipeCreateRequest.setTitle(title);
+        recipeCreateRequest.setIngredients(ingredients);
+        recipeCreateRequest.setSteps(steps);
+        recipeCreateRequest.setIsGlutenFree(true);
+        recipeCreateRequest.setIsDairyFree(true);
+        recipeCreateRequest.setIsEggFree(false);
+        recipeCreateRequest.setIsVegetarian(false);
+        recipeCreateRequest.setIsVegan(false);
+
+        mapper.registerModule(new JavaTimeModule());
+
+        ResultActions actions = mvc.perform(post("/recipe")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(recipeCreateRequest)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     public void updateRecipe() throws Exception {
         RecipeCreateRequest request = new RecipeCreateRequest();
         request.setTitle("testRecipe");
@@ -153,5 +190,36 @@ class RecipeControllerTest {
         RecipeResponse response = mapper.readValue(responseBody, new TypeReference<>() {
         });
         recipeService.deleteRecipe(response.getRecipeId());
+    }
+
+    @Test
+    public void updateRecipe_nullNewRating() throws Exception {
+        RecipeCreateRequest request = new RecipeCreateRequest();
+        request.setTitle("testRecipe");
+        request.setIngredients(new ArrayList<>());
+        request.setSteps(new ArrayList<>());
+        request.setIsGlutenFree(false);
+        request.setIsDairyFree(false);
+        request.setIsEggFree(false);
+        request.setIsVegetarian(false);
+        request.setIsVegan(false);
+
+        Recipe createdRecipe = recipeService.addNewRecipe(request);
+
+        RecipeUpdateRequest recipeUpdateRequest = new RecipeUpdateRequest();
+
+        recipeUpdateRequest.setRecipeId(createdRecipe.getRecipeId());
+        recipeUpdateRequest.setNewRating(null);
+
+        mapper.registerModule(new JavaTimeModule());
+
+        ResultActions actions = mvc.perform(put("/recipe/rating")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(recipeUpdateRequest)))
+                .andExpect(status().is4xxClientError());
+
+        //cleanup
+        recipeService.deleteRecipe(createdRecipe.getRecipeId());
     }
 }
