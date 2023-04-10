@@ -19,113 +19,68 @@
             integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <style>
-        .mode {
-            float: right;
-        }
 
-        .change {
-            cursor: pointer;
-            border: 1px solid #555;
-            border-radius: 40%;
-            width: 20px;
-            text-align: center;
-            padding: 5px;
-            margin-left: 8px;
-        }
-
-        .dark {
-            background-color: #222;
-            color: #e6e6e6;
-        }
-        .box {
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            width: 310px;
-            height: 310px;
-            border: 2px solid green;
-        }
-        .box div {
-            width: 100px;
-            padding: 15px;
-            text-align: center;
-            color: #000000;
-            font-family: arial, sans-serif;
-        }
-        .green {
-            background-color: green;
-        }
-        .blue {
-            background-color: blue;
-        }
-        .gray {
-            background-color: gray;
-        }
-        .pink {
-            background-color: pink;
-        }
-    </style>
 </head>
 <body class="wrapper">
-    <div class="banner">
-        <nav class="navbar navbar-expand-lg bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Dream Team Recipes</a>
-                <div class="mode">
-                    Dark mode:
-                    <span class="change">OFF</span>
-                </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="index.html">Home</a>
-                        <a class="nav-link active" aria-current="page" href="recipe.html">Recipes</a>
-                        <a class="nav-link" href="postRecipe.html">Add Your Own Recipe</a>
-                    </div>
+<div class="banner">
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Dream Team Recipes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link active" aria-current="page" href="recipe.html">Recipes</a>
+                    <a class="nav-link" href="postRecipe.html">Add Your Own Recipe</a>
                 </div>
             </div>
-        </nav>
-    </div>
-    <div class="container" id="dietary-restrictions">
-        <div class="row" >
-            <div class="col-6" id = "hideMe">
-                <h4 class="card-title">Choose Your Dietary Restrictions(s)</h4>
-                <div class="card-text">
-                    <form>
-                        <label>
-                            <input type="checkbox" id="GF" value="true"> Gluten Free
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" id="DF" value="true"> Dairy Free
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" id="EF" value="true"> Egg Free
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" id="vegetarian" value="true"> Vegetarian
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" id="vegan" value="true"> Vegan
-                        </label>
-                        <br>
-                        <br>
-                        <button type="submit" id="submitBtn" class="btn btn-secondary btn-lg btn-block">... And Search For Matching Recipes</button>
-                    </form>
-                </div>
+        </div>
+    </nav>
+</div>
+<div class="main">
+    <span class="content-box text">Dream Team Dietary Restrictions</span>
+    <img class="arrow" src="https://i.ibb.co/MSv2H70/arrow.png" alt="">
+</div>
+<div class="container" id="dietary-restrictions">
+    <div class="row">
+        <div class="col-6" id="hideMe">
+            <h4 class="card-title">Choose Your Dietary Restrictions(s)</h4>
+            <div class="card-text">
+                <form>
+                    <label>
+                        <input type="checkbox" id="GF" value="true"> Gluten Free
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" id="DF" value="true"> Dairy Free
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" id="EF" value="true"> Egg Free
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" id="vegetarian" value="true"> Vegetarian
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" id="vegan" value="true"> Vegan
+                    </label>
+                    <br>
+                    <br>
+                    <button type="submit" id="submitBtn" class="btn btn-secondary btn-lg btn-block">... And Search For
+                        Matching Recipes
+                    </button>
+                </form>
             </div>
-            <div class="col-6" id="hideMe2">
-                <h4 class="card-title">Or Select Your Dietary Restrictions</h4>
-                <div class="card-text">
+        </div>
+
+        <div class="col-6" id="hideMe2">
+            <h4 class="card-title">Or Select Your Dietary Restrictions</h4>
+            <div class="card-text">
                 <form>
                     <label>
                         <input type="checkbox" id="GF2" value="true"> Gluten Free
@@ -148,32 +103,34 @@
                     </label>
                     <br>
                     <br>
-                    <button type="submit" class="btn btn-secondary btn-lg btn-block" id="submitBtn2">... And Let Us Choose Your Meal</button>
+                    <button type="submit" class="btn btn-secondary btn-lg btn-block" id="submitBtn2">... And Let Us
+                        Choose Your Meal
+                    </button>
                 </form>
-                </div>
             </div>
         </div>
     </div>
-    <div id ="hidden-results">
-        <div class="card" id="result2">
-            <h1 class="card-title">Recipes:</h1>
-            <div id="result-getByDR"></div>
-        </div>
+</div>
+<div id="hidden-results">
+    <div class="card" id="result2">
+        <h1 class="card-title">Recipes:</h1>
+        <div id="result-getByDR"></div>
     </div>
-    <div class="card" id="result3">
-        <h1>Recipe:</h1>
-        <p id="result-getById"></p>
-    </div>
-    <script>
-        $(".change").on("click", function () {
-            if ($("body").hasClass("dark")) {
-                $("body").removeClass("dark");
-                $(".change").text("OFF");
-            } else {
-                $("body").addClass("dark");
-                $(".change").text("ON");
-            }
-        });
-    </script>
+</div>
+<div class="card" id="result3">
+    <h1>Recipe:</h1>
+    <p id="result-getById"></p>
+</div>
+<script>
+    $(".change").on("click", function () {
+        if ($("body").hasClass("dark")) {
+            $("body").removeClass("dark");
+            $(".change").text("OFF");
+        } else {
+            $("body").addClass("dark");
+            $(".change").text("ON");
+        }
+    });
+</script>
 </body>
 </html>

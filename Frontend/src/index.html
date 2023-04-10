@@ -18,6 +18,7 @@
             integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -25,11 +26,8 @@
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Dream Team Recipes</a>
-                <div class="mode">
-                    Dark mode:
-                    <span class="change">OFF</span>
-                </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup"
                         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -42,6 +40,10 @@
                 </div>
             </div>
         </nav>
+        <div class="main">
+            <span class="content-box text">Dream Team Dietary Restrictions</span>
+            <img class="arrow" src="https://i.ibb.co/MSv2H70/arrow.png" alt="">
+        </div>
     </div>
 </div>
 <div class="section1">
@@ -55,19 +57,9 @@
         </div>
     </div>
     <div class="right">
-        <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZWdnc3xlbnwwfHwwfHw%3D&w=1000&q=80" alt="egg">
+        <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZWdnc3xlbnwwfHwwfHw%3D&w=1000&q=80"
+             alt="egg">
     </div>
 </div>
-<script>
-    $(".change").on("click", function () {
-        if ($("body").hasClass("dark")) {
-            $("body").removeClass("dark");
-            $(".change").text("OFF");
-        } else {
-            $("body").addClass("dark");
-            $(".change").text("ON");
-        }
-    });
-</script>
 </body>
 </html>
