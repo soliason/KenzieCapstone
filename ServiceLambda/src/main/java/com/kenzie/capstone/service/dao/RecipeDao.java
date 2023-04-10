@@ -8,6 +8,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
+import com.kenzie.capstone.service.exceptions.InvalidDataException;
 import com.kenzie.capstone.service.model.DietaryRestrictionData;
 import com.kenzie.capstone.service.model.RecipeData;
 import com.kenzie.capstone.service.model.RecipeRecord;
@@ -27,14 +28,15 @@ public class RecipeDao {
     }
 
     public RecipeRecord getRecipeData(String recipeId) {
-        RecipeRecord recipeRecord = new RecipeRecord();
-        recipeRecord.setRecipeId(recipeId);
 
-        DynamoDBQueryExpression<RecipeRecord> queryExpression = new DynamoDBQueryExpression<RecipeRecord>()
-                .withHashKeyValues(recipeRecord)
-                .withConsistentRead(false);
+        RecipeRecord record = mapper.load(RecipeRecord.class, recipeId);
 
-        return mapper.load(RecipeRecord.class, queryExpression);
+        if(record == null) {
+            throw new InvalidDataException ("There is no recipe that matches that id");
+        }
+
+        return record;
+
     }
 
     public RecipeRecord setRecipeData(RecipeRecord recipeRecord) {

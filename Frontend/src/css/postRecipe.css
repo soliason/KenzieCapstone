@@ -18,18 +18,15 @@
 .banner {
     background-color: white;
     height: 40vh;
-    min-height: 200px;
+    min-height: 100px;
     background-image: url('https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/321159_2200-1200x628.jpg');
     background-position: center;
     background-size: cover;
     display: flex;
     flex-direction: column;
-<<<<<<< Updated upstream
-=======
     align-items: end;
     justify-content: flex-end;
-    padding: 0px;
->>>>>>> Stashed changes
+    padding:  10px;
 }
 
 
@@ -41,7 +38,7 @@
     color: black;
     border: 1px solid black;
     cursor: pointer;
-    position: center;
+    /*position: center;*/
 }
 
 .button:hover, button:hover {
@@ -58,7 +55,6 @@
 .validated-field:invalid {
     outline: 2px solid var(--error-color);
 }
-
 .validated-field:focus:invalid {
     color: var(--error-color);
 }
@@ -78,10 +74,9 @@
     padding: 10px;
     border: 2px solid grey;
 }
-
-body {
+body  {
     background-image: url('https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg');
-    background-size: cover;
+    background-size:cover;
     -webkit-animation: slidein 100s;
     animation: slidein 100s;
 
@@ -96,30 +91,15 @@ body {
 }
 
 @-webkit-keyframes slidein {
-    from {
-        background-position: top;
-        background-size: 3000px;
-    }
-    to {
-        background-position: -100px 0px;
-        background-size: 2750px;
-    }
+    from {background-position: top; background-size:3000px; }
+    to {background-position: -100px 0px;background-size:2750px;}
 }
 
 @keyframes slidein {
-    from {
-        background-position: top;
-        background-size: 3000px;
-    }
-    to {
-        background-position: -100px 0px;
-        background-size: 2750px;
-    }
+    from {background-position: top;background-size:3000px; }
+    to {background-position: -100px 0px;background-size:2750px;}
 
 }
-<<<<<<< Updated upstream
-=======
-
 .glow-on-hover {
     width: max-content;
     height: 50px;
@@ -138,7 +118,7 @@ body {
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
     position: absolute;
     top: -2px;
-    left: -2px;
+    left:-2px;
     background-size: 400%;
     z-index: -1;
     filter: blur(5px);
@@ -175,20 +155,15 @@ body {
 }
 
 @keyframes glowing {
-    0% {
-        background-position: 0 0;
-    }
-    50% {
-        background-position: 400% 0;
-    }
-    100% {
-        background-position: 0 0;
-    }
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
 }
->>>>>>> Stashed changes
 
 
-.center {
+
+.center
+{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -201,10 +176,9 @@ body {
     background: rgba(75, 75, 250, 0.3);
     border-radius: 3px;
 }
-
-.center h1 {
-    text-align: center;
-    color: white;
+.center h1{
+    text-align:center;
+    color:white;
     font-family: 'Source Code Pro', monospace;
-    text-transform: uppercase;
+    text-transform:uppercase;
 }
