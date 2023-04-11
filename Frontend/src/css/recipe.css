@@ -13,14 +13,18 @@
 }
 
 .banner {
-    background-color: blue;
+    background-color: white;
     height: 40vh;
-    min-height: 200px;
-    background-image: url('https://media.istockphoto.com/id/538167266/photo/allergy-food.jpg?s=612x612&w=0&k=20&c=3k4nZbId7-e4L21nXdgdFBNm9ShD2sLxhIx5XbdLYlc=');
-    background-position: center bottom;
+    min-height: 100px;
+    background-position: center;
     background-size: cover;
     display: flex;
     flex-direction: column;
+    align-items: end;
+    justify-content: flex-end;
+    padding:  15px;
+    background-image: url('https://media.istockphoto.com/id/538167266/photo/allergy-food.jpg?s=612x612&w=0&k=20&c=3k4nZbId7-e4L21nXdgdFBNm9ShD2sLxhIx5XbdLYlc=');
+
 /*    */
 
 }
@@ -112,7 +116,7 @@
 }
 
 .card-content .form-field {
-    display: flex;
+    display: inherit;
     flex-direction: column;
 }
 
@@ -177,27 +181,7 @@ button {
 
 /* creating css loader */
 
-#loading {
-    width: 2rem;
-    height: 2rem;
-    border: 5px solid #f3f3f3;
-    border-top: 6px solid #9c41f2;
-    border-radius: 100%;
-    margin: auto;
-    visibility: hidden;
-    animation: spin 1s infinite linear;
-}
-#loading.display {
-    visibility: visible;
-}
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
+
 .main {
     display: flex;
     flex-direction: column;
@@ -320,12 +304,12 @@ h1 {
     box-shadow: 0px 0px 1px 1px rgba(155, 155, 255, 0.2);
 
     background: #87e0fd; /* Old browsers */
-    background: -moz-radial-gradient(center, ellipse cover,  #87e0fd 0%, #53cbf1 40%, #05abe0 100%); /* FF3.6+ */
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#87e0fd), color-stop(40%,#53cbf1), color-stop(100%,#05abe0)); /* Chrome,Safari4+ */
-    background: -webkit-radial-gradient(center, ellipse cover,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-radial-gradient(center, ellipse cover,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* Opera 12+ */
-    background: -ms-radial-gradient(center, ellipse cover,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* IE10+ */
-    background: radial-gradient(ellipse at center,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); /* W3C */
+    /*background: -moz-radial-gradient(center, ellipse cover,  #87e0fd 0%, #53cbf1 40%, #05abe0 100%); !* FF3.6+ *!*/
+    /*background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#87e0fd), color-stop(40%,#53cbf1), color-stop(100%,#05abe0)); !* Chrome,Safari4+ *!*/
+    /*background: -webkit-radial-gradient(center, ellipse cover,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); !* Chrome10+,Safari5.1+ *!*/
+    /*background: -o-radial-gradient(center, ellipse cover,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); !* Opera 12+ *!*/
+    /*background: -ms-radial-gradient(center, ellipse cover,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); !* IE10+ *!*/
+    /*background: radial-gradient(ellipse at center,  #87e0fd 0%,#53cbf1 40%,#05abe0 100%); !* W3C *!*/
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
 }

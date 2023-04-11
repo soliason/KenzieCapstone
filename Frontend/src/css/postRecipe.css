@@ -1,7 +1,7 @@
 :root {
     /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
     --primary-color: #131921;
-    --secondary-color: #fff;
+    /*--secondary-color: #fff;*/
     --error-color: rgba(194, 0, 0, 0.71);
 }
 
@@ -16,7 +16,7 @@
 }
 
 .banner {
-    background-color: white;
+    /*background-color: white;*/
     height: 40vh;
     min-height: 100px;
     background-image: url('https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/321159_2200-1200x628.jpg');
@@ -38,7 +38,7 @@
     color: black;
     border: 1px solid black;
     cursor: pointer;
-    /*position: center;*/
+    position: relative;
 }
 
 .button:hover, button:hover {
@@ -160,25 +160,3 @@ body  {
     100% { background-position: 0 0; }
 }
 
-
-
-.center
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(75, 75, 250, 0.3);
-    border-radius: 3px;
-}
-.center h1{
-    text-align:center;
-    color:white;
-    font-family: 'Source Code Pro', monospace;
-    text-transform:uppercase;
-}
