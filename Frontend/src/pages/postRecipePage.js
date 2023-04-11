@@ -65,14 +65,14 @@ class PostRecipePage extends BaseClass {
             this.errorHandler("Error creating!  Try again...");
         }
     }
-}z
+}
 
 /**
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
     const postRecipePage = new PostRecipePage();
-    postRecipePage.mount();
+    await postRecipePage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
