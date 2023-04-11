@@ -5,6 +5,8 @@ import com.amazonaws.services.apigateway.AmazonApiGatewayClientBuilder;
 import com.amazonaws.services.apigateway.model.GetRestApisRequest;
 import com.amazonaws.services.apigateway.model.GetRestApisResult;
 import com.amazonaws.services.apigateway.model.RestApi;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -29,6 +31,7 @@ import java.util.regex.Pattern;
 
 public class EndpointUtility {
     private String apiEndpoint;
+
 
     public EndpointUtility() {
         this.apiEndpoint = getApiEndpint();
@@ -228,6 +231,7 @@ public class EndpointUtility {
                 .PUT(HttpRequest.BodyPublishers.ofString(data))
                 .build();
         try {
+
             HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             int statusCode = httpResponse.statusCode();
@@ -260,6 +264,34 @@ public class EndpointUtility {
                 return httpResponse.body();
             } else {
                 throw new ApiGatewayException("GET request failed: " + statusCode + " status code received");
+            }
+        } catch (IOException | InterruptedException e) {
+            return e.getMessage();
+        }
+    }
+
+    public String deleteEndpoint(String endpoint) {
+
+        String api = getApiEndpint();
+        String url = api + endpoint;
+
+        HttpClient client = HttpClient.newHttpClient();
+        URI uri = URI.create(url);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .header("Accept", "application/json")
+                .DELETE()
+                .build();
+
+        try {
+
+            HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int statusCode = httpResponse.statusCode();
+            if (statusCode == 200) {
+                return httpResponse.body();
+            } else {
+                throw new ApiGatewayException("DELETE request failed: " + statusCode + " status code received");
             }
         } catch (IOException | InterruptedException e) {
             return e.getMessage();

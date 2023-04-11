@@ -1,93 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Add Recipe</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/postRecipe.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
     <script type="text/javascript" src="postRecipePage.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+            integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+            crossorigin="anonymous"></script>
 </head>
-<body>
-<div class="wrapper">
-    <div class="banner">
-        <div class="header">
-            <div class="menu">
-                <span><a class="nav-links" href="index.html">Home</a></span>
-                <span> <a class="nav-links" href="recipe.html">Recipe</a></span>
-                <span><a class="nav-links" href="postRecipe.html">Add Recipe</a></span>
-                <span> <a class="nav-links" href="recipeGui.html">RecipeGui</a></span>
+<body class="background">
+<div class="banner">
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Dream Team Recipes</a>
 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link" aria-current="page" href="recipe.html">Recipes</a>
+                    <a class="nav-link active" href="postRecipe.html">Add Your Own Recipe</a>
+                </div>
             </div>
         </div>
-        <div class="main">
-            <span class="content-box slide-in text">Dream Team Dietary Restrictions</span>
-            <img class="arrow" src="https://i.ibb.co/MSv2H70/arrow.png" alt="">
-        </div>
-    </div>
-    <div class="card">
-        <h1>Create Recipe</h1>
-        <form class="card-content" id="create-form">
-            <p class="form-field">
-                <label>Title</label>
-                <input type="text" required class="validated-field" id="title">
-            </p>
-            <p class="form-field">
-                <label>Ingredients</label>
-                <input type="text" required class="validated-field" id="ingredients">
-            </p>
-            <p class="form-field">
-                <label>Steps</label>
-                <input type="text" required class="validated-field" id="steps">
-            </p>
-            <p class="form-field">
-                <label>Gluten Free</label>
-                <select class="form-select" id="gluten" aria-label="Default select example">
-                    <option selected>True or False</option>
-                    <option value=true>True</option>
-                    <option value=false>False</option>
-                </select>
-            </p>
-            <p class="form-field">
-                <label>Egg Free</label>
-                <select class="form-select" id="egg" aria-label="Default select example">
-                    <option selected>True or False</option>
-                    <option value=true>True</option>
-                    <option value=false>False</option>
-                </select>
-            </p>
-            <p class="form-field">
-                <label>Dairy Free</label>
-                <select class="form-select" id="dairy" aria-label="Default select example">
-                    <option selected>True or False</option>
-                    <option value=true>True</option>
-                    <option value=false>False</option>
-                </select>
-            </p>
-            <p class="form-field">
-                <label>Vegetarian</label>
-                <select class="form-select" id="vegetarian" aria-label="Default select example">
-                    <option selected>True or False</option>
-                    <option value=true>True</option>
-                    <option value=false>False</option>
-                </select>
-            </p>
-            <p class="form-field">
-                <label>Vegan</label>
-                <select class="form-select" id="vegan" aria-label="Default select example">
-                    <option selected>True or False</option>
-                    <option value=true>True</option>
-                    <option value=false>False</option>
-                </select>
-            </p>
-
-            <button type="submit">Post Recipe</button>
-        </form>
-    </div>
+    </nav>
+</div>
+<div class="section">
+    <h1>Create Recipe</h1>
+    <form class="card-content" id="create-form">
+        <p class="form-field">
+            <label for="title">Title</label>
+            <input type="text" id="title" required>
+        </p>
+        <p class="form-field">
+            <label for="ingredients">Ingredients</label>
+            <input type="text" id="ingredients" required>
+        </p>
+        <p class="form-field">
+            <label for="steps">Steps</label>
+            <input type="text" id="steps" required>
+        </p>
+        <label>
+            <input type="checkbox" id="gluten" value="true"> Gluten Free
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" id="egg" value="true"> Dairy Free
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" id="dairy" value="true"> Egg Free
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" id="vegetarian" value="true"> Vegetarian
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" id="vegan" value="true"> Vegan
+        </label>
+        <br>
+        <br>
+        <button class="btn glow-on-hover" type="submit">Post Recipe</button>
+    </form>
 </div>
 </body>
 </html>

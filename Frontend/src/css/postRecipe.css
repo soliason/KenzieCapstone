@@ -6,38 +6,29 @@
 }
 
 .background {
-    background-color: #eaeded;
+    /*background-color: blue;*/
     margin: 0;
     counter-reset: section;
 }
 
-.header {
-    /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+.navbar {
+    border: 2px solid grey;
+}
+
+.banner {
+    background-color: white;
+    height: 40vh;
+    min-height: 100px;
+    background-image: url('https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/321159_2200-1200x628.jpg');
+    background-position: center;
+    background-size: cover;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 0 20px;
+    flex-direction: column;
+align-items: end;
+    justify-content: flex-end;
+    padding:  10px;
 }
 
-.header_home {
-    font-size: 36px;
-    line-height: 40px;
-    height: 100px;
-    text-decoration: none;
-    color: var(--secondary-color);
-}
-
-.header_nav_link {
-    margin-left: 20px;
-    vertical-align: top;
-    line-height: 40px;
-}
-
-.about {
-    margin-left: 20px;
-}
 
 .button, button {
     background: #aed9ff;
@@ -47,6 +38,7 @@
     color: black;
     border: 1px solid black;
     cursor: pointer;
+    /*position: center;*/
 }
 
 .button:hover, button:hover {
@@ -76,14 +68,117 @@
     flex-direction: column;
 }
 
-#concert-list li {
-    margin-bottom: 1rem;
+.section {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    border: 2px solid grey;
+}
+body  {
+    background-image: url('https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg');
+    background-size:cover;
+    -webkit-animation: slidein 100s;
+    animation: slidein 100s;
+
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
 }
 
-.state {
-    display: none;
+@-webkit-keyframes slidein {
+    from {background-position: top; background-size:3000px; }
+    to {background-position: -100px 0px;background-size:2750px;}
 }
 
-.state.active {
-    display: block;
+@keyframes slidein {
+    from {background-position: top;background-size:3000px; }
+    to {background-position: -100px 0px;background-size:2750px;}
+
+}
+.glow-on-hover {
+    width: max-content;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+
+
+.center
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(75, 75, 250, 0.3);
+    border-radius: 3px;
+}
+.center h1{
+    text-align:center;
+    color:white;
+    font-family: 'Source Code Pro', monospace;
+    text-transform:uppercase;
 }

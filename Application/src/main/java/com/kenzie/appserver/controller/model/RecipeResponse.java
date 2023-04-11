@@ -1,11 +1,13 @@
 package com.kenzie.appserver.controller.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RecipeResponse {
 
     @JsonProperty("recipeId")
@@ -37,6 +39,9 @@ public class RecipeResponse {
 
     @JsonProperty("ratings")
     private List<Integer> ratings;
+
+    @JsonProperty("averageRating")
+    private Double averageRating;
 
     public String getRecipeId() {
         return recipeId;
@@ -74,7 +79,7 @@ public class RecipeResponse {
         return isGlutenFree;
     }
 
-    public void setGlutenFree(boolean glutenFree) {
+    public void setIsGlutenFree(boolean glutenFree) {
         isGlutenFree = glutenFree;
     }
 
@@ -82,7 +87,7 @@ public class RecipeResponse {
         return isDairyFree;
     }
 
-    public void setDairyFree(boolean dairyFree) {
+    public void setIsDairyFree(boolean dairyFree) {
         isDairyFree = dairyFree;
     }
 
@@ -90,7 +95,7 @@ public class RecipeResponse {
         return isEggFree;
     }
 
-    public void setEggFree(boolean eggFree) {
+    public void setIsEggFree(boolean eggFree) {
         isEggFree = eggFree;
     }
 
@@ -98,7 +103,7 @@ public class RecipeResponse {
         return isVegetarian;
     }
 
-    public void setVegetarian(boolean vegetarian) {
+    public void setIsVegetarian(boolean vegetarian) {
         isVegetarian = vegetarian;
     }
 
@@ -106,7 +111,7 @@ public class RecipeResponse {
         return isVegan;
     }
 
-    public void setVegan(boolean vegan) {
+    public void setIsVegan(boolean vegan) {
         isVegan = vegan;
     }
 
@@ -116,5 +121,16 @@ public class RecipeResponse {
 
     public void setRatings(List<Integer> ratings) {
         this.ratings = ratings;
+    }
+
+    public double getAverageRating(){
+        return ratings.stream()
+                .mapToDouble(a -> a)
+                .average()
+                .orElse(0.0);
+    }
+
+    public void setAverageRating() {
+        this.averageRating = Math.ceil(getAverageRating());
     }
 }

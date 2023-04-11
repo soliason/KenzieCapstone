@@ -1,28 +1,16 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
 
-/**
- * Client to call the MusicPlaylistService.
- *
- * This could be a great place to explore Mixins. Currently the client is being loaded multiple times on each page,
- * which we could avoid using inheritance or Mixins.
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
- * https://javascript.info/mixins
- */
 export default class RecipeClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getRecipeByDR', 'getRecipeById', 'createRecipe'];
+        const methodsToBind = ['clientLoaded', 'getRecipeByDR', 'getRecipeById', 'createRecipe', 'rate'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
     }
 
-    /**
-     * Run any functions that are supposed to be called once the client has loaded successfully.
-     * @param client The client that has been successfully loaded.
-     */
     clientLoaded(client) {
         this.client = client;
         if (this.props.hasOwnProperty("onReady")){
@@ -30,20 +18,27 @@ export default class RecipeClient extends BaseClass {
         }
     }
 
-    /**
-     * Gets the concert for the given ID.
-     * @param id Unique identifier for a concert
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The concert
-     */
     async getRecipeById(id, errorCallback) {
-    console.log("got here");
       try {
         const response = await this.client.get(`/recipe/${id}`);
         return response.data;
       } catch (error) {
         this.handleError("getRecipe", error, errorCallback);
       }
+    }
+
+    async rate(recipeId, rating, errorCallback) {
+            console.log("got here");
+              try {
+                const response = await this.client.put(`/recipe/rating`, {
+                    recipeId: recipeId,
+                    newRating: rating,
+
+                });
+                return response.data;
+              } catch (error) {
+                this.handleError("getRecipe", error, errorCallback);
+              }
     }
 
     async getRecipeByDR(gluten, dairy, egg, vegetarian, vegan, errorCallback) {

@@ -8,10 +8,10 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
+import com.kenzie.capstone.service.exceptions.InvalidDataException;
 import com.kenzie.capstone.service.model.DietaryRestrictionData;
 import com.kenzie.capstone.service.model.RecipeData;
 import com.kenzie.capstone.service.model.RecipeRecord;
-import com.kenzie.capstone.service.model.RecipeRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,28 +27,16 @@ public class RecipeDao {
         this.mapper = mapper;
     }
 
-    public RecipeData storeRecipeData(RecipeData recipeData){
-        try {
-            mapper.save(recipeData, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "recipeId",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
-        } catch (ConditionalCheckFailedException e){
-            throw new IllegalArgumentException("recipeId has already been used");
+    public RecipeRecord getRecipeData(String recipeId) {
+
+        RecipeRecord record = mapper.load(RecipeRecord.class, recipeId);
+
+        if(record == null) {
+            throw new InvalidDataException ("There is no recipe that matches that id");
         }
-        return recipeData;
-    }
 
-    public List<RecipeRecord> getRecipeData(String recipeId) {
-        RecipeRecord recipeRecord = new RecipeRecord();
-        recipeRecord.setRecipeId(recipeId);
+        return record;
 
-        DynamoDBQueryExpression<RecipeRecord> queryExpression = new DynamoDBQueryExpression<RecipeRecord>()
-                .withHashKeyValues(recipeRecord)
-                .withConsistentRead(false);
-
-        return mapper.query(RecipeRecord.class, queryExpression);
     }
 
     public RecipeRecord setRecipeData(RecipeRecord recipeRecord) {
@@ -72,7 +60,7 @@ public class RecipeDao {
             mapper.save(recipeRecord, new DynamoDBSaveExpression()
                     .withExpected(ImmutableMap.of(
                             "recipeId",
-                            new ExpectedAttributeValue().withExists(true)
+                                new ExpectedAttributeValue().withValue(new AttributeValue(recipeRecord.getRecipeId())).withExists(true)
                     )));
         } catch (ConditionalCheckFailedException e) {
             throw new IllegalArgumentException("recipeId does not exist");
@@ -88,6 +76,18 @@ public class RecipeDao {
             DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
             StringBuilder sb = new StringBuilder();
             List<String> filterExpressions = new ArrayList<>();
+
+            if (!dietaryRestrictionInfo.isGlutenFree() &&
+                    !dietaryRestrictionInfo.isDairyFree() &&
+                    !dietaryRestrictionInfo.isEggFree() &&
+                    !dietaryRestrictionInfo.isVegetarian() &&
+                    !dietaryRestrictionInfo.isVegan()){
+                try {
+                    return mapper.scan(RecipeRecord.class, scanExpression);
+                } catch (Exception e) {
+                    throw new IllegalArgumentException("can't get all the recipes");
+                }
+            }
 
             if (dietaryRestrictionInfo.isGlutenFree()) {
                 valueMap.put(":glutenFree", new AttributeValue().withN(String.valueOf(1)));
@@ -121,15 +121,21 @@ public class RecipeDao {
             scanExpression.withFilterExpression(sb.toString());
             scanExpression.withExpressionAttributeValues(valueMap);
 
-            PaginatedScanList<RecipeRecord> recipeList = mapper.scan(RecipeRecord.class, scanExpression);
-
-            return recipeList;
-
+            return mapper.scan(RecipeRecord.class, scanExpression);
         } catch (Exception e) {
-            log.error(e.getMessage());
             throw new IllegalArgumentException("something else bad happened");
         }
     }
-    
 
+    public void deleteRecipeData(String recipeId) {
+
+        log.info("RecipeID: " + recipeId);
+        RecipeRecord recipeRecord = new RecipeRecord();
+        recipeRecord.setRecipeId(recipeId);
+        DynamoDBDeleteExpression deleteExpression = new DynamoDBDeleteExpression()
+                .withExpected(ImmutableMap.of("recipeId", new ExpectedAttributeValue()
+                        .withValue(new AttributeValue(recipeId))
+                        .withExists(true)));
+        mapper.delete(recipeRecord, deleteExpression);
+    }
 }

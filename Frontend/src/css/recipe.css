@@ -1,3 +1,4 @@
+
 :root {
     /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
     --primary-color: #131921;
@@ -11,43 +12,84 @@
     counter-reset: section;
 }
 
-.header {
-    /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+.banner {
+    background-color: blue;
+    height: 40vh;
+    min-height: 200px;
+    background-image: url('https://media.istockphoto.com/id/538167266/photo/allergy-food.jpg?s=612x612&w=0&k=20&c=3k4nZbId7-e4L21nXdgdFBNm9ShD2sLxhIx5XbdLYlc=');
+    background-position: center bottom;
+    background-size: cover;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 0 20px;
+    flex-direction: column;
+
 }
 
-.header_home {
-    font-size: 36px;
-    line-height: 40px;
-    height: 100px;
-    text-decoration: none;
-    color: var(--secondary-color);
+.navbar {
+    border: 2px solid grey;
 }
 
-.header_nav_link {
-    margin-left: 20px;
-    vertical-align: top;
-    line-height: 40px;
+/*.card-block {*/
+/*    padding: 10, 10, 10, 10;*/
+/*}*/
+
+.col-6 {
+    padding: 10px;
+
+    background-color: white;
+    border: 1px solid grey;
 }
 
-.about {
-    margin-left: 20px;
+/*.card-block {*/
+/*    background-color: black;*/
+/*    margin: 80px, 80px, 80px, 80px;*/
+/*}*/
+
+.header {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background: url(https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Ffood-allergies&psig=AOvVaw2jSc5SGGIxhniR3cJrGrW-&ust=1680694280272000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCLj1wp-QkP4CFQAAAAAdAAAAABAE
+    )
 }
 
-.button, button {
-    background: #aed9ff;
-    padding: 3px;
-    border-radius: 3px;
-    text-decoration: none;
-    color: black;
-    border: 1px solid black;
+.row {
+    padding: 30px;
+}
+
+#hidden-results {
+    display: none;
+}
+
+#result3 {
+    display: none;
     cursor: pointer;
 }
+
+#result2 {
+    cursor: pointer;
+}
+
+#dietary-restrictions {
+    display: block;
+}
+
+#hideMe {
+    display: inline-block;
+}
+
+#hideMe2 {
+    display: inline-block;
+}
+
+/*.button, button {*/
+/*    background: #aed9ff;*/
+/*    padding: 3px;*/
+/*    border-radius: 3px;*/
+/*    text-decoration: none;*/
+/*    color: black;*/
+/*    border: 1px solid black;*/
+/*    cursor: pointer;*/
+/*}*/
 
 .button:hover, button:hover {
     background: #9cc3e4;
@@ -56,13 +98,13 @@
 .card {
     color: var(--primary-color);
     background-color: var(--secondary-color);
-    margin: 20px;
-    padding: 10px 20px;
+
 }
 
 .validated-field:invalid {
     outline: 2px solid var(--error-color);
 }
+
 .validated-field:focus:invalid {
     color: var(--error-color);
 }
@@ -78,16 +120,88 @@
 
 #hidden-results {
     display: none;
+    cursor: pointer;
 }
 
-#concert-list li {
-    margin-bottom: 1rem;
-}
-
-.state {
-    display: none;
-}
-
-.state.active {
+#dietary-restrictions {
     display: block;
 }
+
+h4 {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+body {
+    background-image: url('https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    -webkit-animation: slidein 30s;
+    animation: slidein 30s;
+
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+}
+.container {
+    max-width: 550px;
+    margin: auto;
+    padding: 0 1rem;
+}
+textarea {
+    width: 100%;
+    height: 8rem;
+}
+button {
+    margin: 2rem 0;
+    width: 100%;
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+/* creating css loader */
+
+#loading {
+    width: 2rem;
+    height: 2rem;
+    border: 5px solid #f3f3f3;
+    border-top: 6px solid #9c41f2;
+    border-radius: 100%;
+    margin: auto;
+    visibility: hidden;
+    animation: spin 1s infinite linear;
+}
+#loading.display {
+    visibility: visible;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 70px;
+    flex-grow: 1;
+    color: white;
+    font-weight: bold;
+}
+
+
+
+
+
+

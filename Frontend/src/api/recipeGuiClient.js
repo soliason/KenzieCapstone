@@ -13,7 +13,7 @@ export default class RecipeGuiClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getRecipeByDR', 'getRecipeById', 'createRecipe'];
+        const methodsToBind = ['clientLoaded', 'testPut', 'getRecipeByDR', 'getRecipeById', 'createRecipe'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -36,6 +36,20 @@ export default class RecipeGuiClient extends BaseClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
+    async testPut(errorCallback) {
+
+          try {
+            const response = await this.client.put(`/recipe/rating`, {
+                recipeId: recipeId,
+                newRating: rating,
+
+            });
+            return response.data;
+          } catch (error) {
+            this.handleError("getRecipe", error, errorCallback);
+          }
+    }
+
     async getRecipeById(id, errorCallback) {
         console.log("hitting here");
       try {

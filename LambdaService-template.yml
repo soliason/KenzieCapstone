@@ -6,54 +6,6 @@ Parameters:
     Type: String
     Default: dev
 Resources:
-  GetExampleDataFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.GetExampleData
-      Runtime: java11
-      Description: Get Example Data for given id
-      MemorySize: 512
-      Timeout: 240
-      # Function's execution role
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AWSLambda_ReadOnlyAccess
-        - AWSXrayWriteOnlyAccess
-        - AWSLambdaVPCAccessExecutionRole
-        - AmazonS3FullAccess
-        - AmazonDynamoDBFullAccess
-      Tracing: Active
-      Events:
-        UpdateResource:
-          Type: Api
-          Properties:
-            Path: /example/{id}
-            Method: get
-  SetExampleDataFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.SetExampleData
-      Runtime: java11
-      Description: Set Example Data
-      MemorySize: 512
-      Timeout: 240
-      # Function's execution role
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AWSLambda_ReadOnlyAccess
-        - AWSXrayWriteOnlyAccess
-        - AWSLambdaVPCAccessExecutionRole
-        - AmazonS3FullAccess
-        - AmazonDynamoDBFullAccess
-      Tracing: Active
-      Events:
-        UpdateResource:
-          Type: Api
-          Properties:
-            Path: /example
-            Method: post
   GetRecipeDataFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -132,7 +84,7 @@ Resources:
       CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
       Handler: com.kenzie.capstone.service.lambda.UpdateRecipeData
       Runtime: java11
-      Description: Update Rating for Recipe
+      Description: Update Recipe Data ratings
       MemorySize: 512
       Timeout: 240
       # Function's execution role
@@ -150,3 +102,29 @@ Resources:
           Properties:
             Path: /recipe/rating
             Method: put
+  DeleteRecipeDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.DeleteRecipeData
+      Runtime: java11
+      Description: Delete Recipe Data for given id
+      MemorySize: 512
+      Timeout: 240
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        UpdateResource:
+          Type: Api
+          Properties:
+            Path: /recipe/delete/{recipeId}
+            Method: delete
+ 
+
