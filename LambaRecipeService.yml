@@ -15,7 +15,6 @@ Resources:
       Description: Get Recipe Data for recipe id
       MemorySize: 512
       Timeout: 240
-      # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSLambda_ReadOnlyAccess
@@ -39,7 +38,6 @@ Resources:
       Description: Set Recipe Data
       MemorySize: 512
       Timeout: 240
-      # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSLambda_ReadOnlyAccess
@@ -63,7 +61,6 @@ Resources:
       Description: Get Recipe Data for dietary restrictions
       MemorySize: 512
       Timeout: 240
-      # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSLambda_ReadOnlyAccess
@@ -87,7 +84,6 @@ Resources:
       Description: Update Recipe Data ratings
       MemorySize: 512
       Timeout: 240
-      # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSLambda_ReadOnlyAccess
@@ -111,7 +107,6 @@ Resources:
       Description: Delete Recipe Data for given id
       MemorySize: 512
       Timeout: 240
-      # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSLambda_ReadOnlyAccess
