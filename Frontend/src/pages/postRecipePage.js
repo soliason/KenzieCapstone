@@ -48,7 +48,8 @@ class PostRecipePage extends BaseClass {
         let vegetarian = document.getElementById("vegetarian").checked;
         let vegan = document.getElementById("vegan").checked;
 
-
+        console.log(gluten);
+        console.log(dairy);
         const createdRecipe = await this.client.createRecipe(title, ingredients, steps, gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
         this.dataStore.set("recipe", createdRecipe);
 

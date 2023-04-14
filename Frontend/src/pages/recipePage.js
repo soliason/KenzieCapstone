@@ -257,6 +257,9 @@ class RecipePage extends BaseClass {
             veganValue = true;
         }
 
+        console.log(glutenValue);
+        console.log(dairyValue);
+
         this.dataStore.set("recipeDR", null);
 
         let result = await this.client.getRecipeByDR(glutenValue, dairyValue, eggValue, vegetarianValue, veganValue, this.errorHandler);

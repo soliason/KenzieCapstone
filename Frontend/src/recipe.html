@@ -21,58 +21,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 </head>
-<div class="wrapper">
-    <div class="banner">
-        <nav class="navbar navbar-expand-lg bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Dream Team Recipes</a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="index.html">Home</a>
-                        <a class="nav-link" aria-current="page" href="recipe.html">Recipes</a>
-                        <a class="nav-link active" href="postRecipe.html">Add Your Own Recipe</a>
-                    </div>
+<body class="wrapper">
+<div class="banner">
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Dream Team Recipes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link active" aria-current="page" href="recipe.html">Recipes</a>
+                    <a class="nav-link" href="postRecipe.html">Add Your Own Recipe</a>
                 </div>
             </div>
-        </nav>
-        <div class="main">
-            <span class="text">Dream Team Dietary Restrictions</span>
         </div>
+    </nav>
+    <div class="main">
+        <span class="content-box text">Dream Team Dietary Restrictions</span>
+        <img class="arrow" src="https://i.ibb.co/MSv2H70/arrow.png" alt="">
     </div>
 </div>
-
 <div class="container" id="dietary-restrictions">
     <div class="row">
         <div class="col" id="hideMe">
             <h4 class="card-title">Choose Your Dietary Restrictions(s)</h4>
             <div class="card-text">
-<!--                  <div class="btn-container">-->
                 <form>
                     <label>
-<<<<<<< Updated upstream
-                        <input type="checkbox" id="GF" value="true"  class="toggle"> Gluten Free
-                    </label>
-                    <br>
-                    <label>
-                        <input type="checkbox" id="DF" value="true" class="toggle"> Dairy Free
-                    </label>
-                    <br>
-                    <label>
-                        <input type="checkbox" id="EF" value="true" class="toggle"> Egg Free
-                    </label>
-                    <br>
-                    <label>
-                        <input type="checkbox" id="vegetarian" value="true" class="toggle"> Vegetarian
-                    </label>
-                    <br>
-                    <label>
-                        <input type="checkbox" id="vegan" value="true" class="toggle"> Vegan
-=======
                         <input type="checkbox" id="GF"> Gluten Free
                     </label>
                     <br>
@@ -85,12 +63,11 @@
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" id="vegetarian" > Vegetarian
+                        <input type="checkbox" id="vegetarian"> Vegetarian
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" id="vegan" > Vegan
->>>>>>> Stashed changes
+                        <input type="checkbox" id="vegan"> Vegan
                     </label>
                     <br>
                     <br>
@@ -106,39 +83,23 @@
             <div class="card-text">
                 <form>
                     <label>
-<<<<<<< Updated upstream
-                        <input type="checkbox" id="GF2" value="true" class="toggle"> Gluten Free
+                        <input type="checkbox" id="GF2"> Gluten Free
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" id="DF2" value="true" class="toggle" > Dairy Free
-=======
-                        <input type="checkbox" id="GF2" > Gluten Free
+                        <input type="checkbox" id="DF2"> Dairy Free
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" id="DF2" > Dairy Free
->>>>>>> Stashed changes
+                        <input type="checkbox" id="EF2"> Egg Free
                     </label>
                     <br>
                     <label>
-                        <input type="checkbox" id="EF2" value="true" class="toggle"> Egg Free
-                    </label>
-                    <br>
-                    <label>
-<<<<<<< Updated upstream
-                        <input type="checkbox" id="vegetarian2" value="true" class="toggle"> Vegetarian
-                    </label>
-                    <br>
-                    <label>
-                        <input type="checkbox" id="vegan2" value="true" class="toggle"> Vegan
-=======
                         <input type="checkbox" id="vegetarian2"> Vegetarian
                     </label>
                     <br>
                     <label>
                         <input type="checkbox" id="vegan2"> Vegan
->>>>>>> Stashed changes
                     </label>
                     <br>
                     <br>
@@ -160,5 +121,16 @@
     <h1>Recipe:</h1>
     <p id="result-getById"></p>
 </div>
+<script>
+    $(".change").on("click", function () {
+        if ($("body").hasClass("dark")) {
+            $("body").removeClass("dark");
+            $(".change").text("OFF");
+        } else {
+            $("body").addClass("dark");
+            $(".change").text("ON");
+        }
+    });
+</script>
 </body>
 </html>
