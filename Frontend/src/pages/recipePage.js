@@ -183,6 +183,11 @@ class RecipePage extends BaseClass {
         eggValue = egg.checked;
         vegetarianValue = vegetarian.checked;
         veganValue = vegan.checked;
+        console.log(glutenValue);
+        console.log(dairyValue);
+        console.log(eggValue);
+        console.log(vegetarianValue);
+        console.log(veganValue);
 
         let result = await this.client.getRecipeByDR(glutenValue, dairyValue, eggValue, vegetarianValue, veganValue, this.errorHandler);
         let max = result.length - 1;
@@ -224,7 +229,7 @@ class RecipePage extends BaseClass {
     async getRecipesMatchingDR(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
-
+        console.log("get by DR");
         var gluten = document.getElementById("GF");
         var dairy = document.getElementById("DF");
         var egg = document.getElementById("EF");

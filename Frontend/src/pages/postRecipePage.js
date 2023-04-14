@@ -42,19 +42,12 @@ class PostRecipePage extends BaseClass {
         let title = document.getElementById("title").value;
         let ingredients = document.getElementById("ingredients").value;
         let steps = document.getElementById("steps").value;
-        let gluten = document.getElementById("gluten").value;
-        let dairy = document.getElementById("dairy").value;
-        let egg = document.getElementById("egg").value;
-        let vegetarian = document.getElementById("vegetarian").value;
-        let vegan = document.getElementById("vegan").value;
-        console.log(title);
-        console.log(ingredients);
-        console.log(steps);
-        console.log(gluten);
-        console.log(dairy);
-        console.log(egg);
-        console.log(vegetarian);
-        console.log(vegan);
+        let gluten = document.getElementById("gluten").checked;
+        let dairy = document.getElementById("dairy").checked;
+        let egg = document.getElementById("egg").checked;
+        let vegetarian = document.getElementById("vegetarian").checked;
+        let vegan = document.getElementById("vegan").checked;
+
 
         const createdRecipe = await this.client.createRecipe(title, ingredients, steps, gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
         this.dataStore.set("recipe", createdRecipe);
