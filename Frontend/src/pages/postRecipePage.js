@@ -42,20 +42,14 @@ class PostRecipePage extends BaseClass {
         let title = document.getElementById("title").value;
         let ingredients = document.getElementById("ingredients").value;
         let steps = document.getElementById("steps").value;
-        let gluten = document.getElementById("gluten").value;
-        let dairy = document.getElementById("dairy").value;
-        let egg = document.getElementById("egg").value;
-        let vegetarian = document.getElementById("vegetarian").value;
-        let vegan = document.getElementById("vegan").value;
-        console.log(title);
-        console.log(ingredients);
-        console.log(steps);
+        let gluten = document.getElementById("gluten").checked;
+        let dairy = document.getElementById("dairy").checked;
+        let egg = document.getElementById("egg").checked;
+        let vegetarian = document.getElementById("vegetarian").checked;
+        let vegan = document.getElementById("vegan").checked;
+
         console.log(gluten);
         console.log(dairy);
-        console.log(egg);
-        console.log(vegetarian);
-        console.log(vegan);
-
         const createdRecipe = await this.client.createRecipe(title, ingredients, steps, gluten, dairy, egg, vegetarian, vegan, this.errorHandler);
         this.dataStore.set("recipe", createdRecipe);
 
@@ -65,14 +59,14 @@ class PostRecipePage extends BaseClass {
             this.errorHandler("Error creating!  Try again...");
         }
     }
-}z
+}
 
 /**
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
     const postRecipePage = new PostRecipePage();
-    postRecipePage.mount();
+    await postRecipePage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
